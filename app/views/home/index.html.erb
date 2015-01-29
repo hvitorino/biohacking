@@ -1,0 +1,8 @@
+<% if user_signed_in? %>
+
+  <%= link_to "logout", destroy_user_session_path %>
+  <%= current_user.name %>
+  
+<% else %>
+  <%= link_to "Ola, preciso me logar ", new_user_session_path %>
+<% end %>
