@@ -230,7 +230,7 @@ Devise.setup do |config|
   config.sign_out_via = :get
   
   require "omniauth-facebook"
-  config.omniauth :facebook, "1375898999306739", "9b7ef5266b63cf95c44ea7305c47f6f3",
+  config.omniauth :facebook, "812577155445730", "375b11b173ad6b2ed2d8ea9531da08c8",
                   :strategy_class => OmniAuth::Strategies::Facebook,
                   :scope => "email,offline_access,user_likes,user_interests,publish_actions,publish_stream", :display => 'popup'
 
