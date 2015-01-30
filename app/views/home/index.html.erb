@@ -1,7 +1,18 @@
 <% if user_signed_in? %>
 
   <%= link_to "logout", destroy_user_session_path %>
-  <%= current_user.name %>
+  
+  <div class="profile">
+    <div class="photo">
+      <%= current_user.picture_facebook_square %>
+    </div>
+    
+    <div class="name">
+      <%= current_user.name %>
+    </div>
+    
+  </div>
+  
   
 <% else %>
   <%= link_to "Ola, preciso me logar ", new_user_session_path %>

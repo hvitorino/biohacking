@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get "sign_out", :to => "devise/sessions#destroy"
   end
   
+  resources :logs
+  
   root 'home#index'
   
 end
