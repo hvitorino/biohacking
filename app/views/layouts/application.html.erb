@@ -4,7 +4,11 @@
   <title>Biohacking</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   
-  <script src="/assets/djr.js"></script>
+  <% if Rails.env == "production" %>
+    <script src="/assets/djr.js"></script>
+  <% end %>
+  
+  <%= javascript_include_tag application if Rails.env == "production" %>
 	<%= javascript_include_tag djr_url %>
   
   <%= csrf_meta_tags %>
