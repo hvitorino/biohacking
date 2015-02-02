@@ -3,10 +3,8 @@ class LogsController < ApplicationController
   respond_to :json
   
   def index
-    
-    @logs = Log.where(user_id: current_user.id).order(:logged_at)
+    @logs = Log.search current_user, params
     respond_with @logs
-    
   end
   
   def create

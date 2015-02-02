@@ -2,10 +2,15 @@
 <html>
 <head>
   <title>Biohacking</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
   <%= stylesheet_link_tag    'application', media: 'all' %>
   
-  <% if Rails.env == "production" %>
+  <% if Rails.env != "production" %>
     <script src="/assets/djr.js"></script>
+    <script src="/assets/grid.js"></script>
   <% end %>
   
   <%= javascript_include_tag "application" if Rails.env == "production" %>

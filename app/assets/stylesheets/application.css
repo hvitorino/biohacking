@@ -13,3 +13,69 @@
  *= require_tree .
  *= require_self
  */
+
+.profile {
+  height: 55px;
+  background: #32363A;
+  width: 500px;
+  margin: auto; 
+}
+
+.profile > .photo {
+  float: left;
+  margin: 5px;
+}
+
+.profile > .photo > img {
+  width: 50px;
+  height: 50px;
+
+  background-color: #222;
+}
+
+.profile > .info {
+  height: 60px;
+}
+
+.profile > .info > .name {
+  color: #79C5CE;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 30px;
+  padding-top: 5px;
+}
+
+.profile > .info > .logout {
+  height: 16px;
+}
+
+.profile > .info > .logout > a {
+  color: #fff;
+  font-size: 14px;
+  padding-left: 2px;
+}
+
+
+.filter {
+  height: 50px;
+  width: 100%;
+  background-color: #222;
+}
+
+.filter > .form-inline {
+  color: #fff;
+  padding-top: 3px;
+  padding-left: 10px;
+  width: 80%;
+  float: left;
+}
+
+.filter > button {
+  float: right;
+  margin-top: 3px;
+  margin-right: 5px;
+}
+
+.form-inline .form-group {
+  margin-left: 20px;
+}

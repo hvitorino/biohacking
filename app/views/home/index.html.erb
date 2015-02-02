@@ -1,18 +1,99 @@
 <% if user_signed_in? %>
-
-  <%= link_to "logout", destroy_user_session_path %>
   
   <div class="profile">
     <div class="photo">
       <%= image_tag current_user.picture_facebook_square %>
     </div>
     
-    <div class="name">
-      <%= current_user.name %>
+    <div class="info">
+      <div class="name">
+        <%= current_user.name %>
+      </div>
+
+      <div class="logout">
+        <%= link_to "Log Out", destroy_user_session_path %>
+      </div>
+      
     </div>
+
+  </div>
+  
+  <div class="filter">
+    
+    <form class="form-inline">
+      
+      <div class="form-group">
+        <label for="kind">Kind</label>
+        <select name="kind" class="form-control">
+          <option>ALL</option>
+          <option value="1">WEIGHT</option>
+          <option value="2">EAT</option>
+          <option value="3">DRINK</option>
+          <option value="4">WORKOUT</option>
+          <option value="5">HUNGRY</option>
+          <option value="6">SLEEP</option>
+          <option value="7">WAKEUP</option>
+          <option value="8">URINATE</option>
+          <option value="9">DEFECATE</option>
+          <option value="10">SEX</option>
+          <option value="11">BATH</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" name="description" placeholder="Description">
+      </div>
+      
+      <div class="form-group">
+        <label for="logged_at_begin">Begin</label>
+        <input type="text" class="form-control" name="logged_at_begin" placeholder="">
+      </div>
+      
+      <div class="form-group">
+        <label for="logged_at_end">End</label>
+        <input type="text" class="form-control" name="logged_at_end" placeholder="">
+      </div>
+
+      <button type="submit" class="btn btn-default">SEARCH</button>
+    </form>
+    
+    <button class="btn btn-default">LOG</button>
     
   </div>
   
+  <table name="logs" class="table table-condensed">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Kind</th>
+        <th>Description</th>
+        <th>Logged At</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  
+  <script>
+    var grid = new Grid("logs");
+    var logsController = new LogsController;
+    document.querySelector("form").addEventListener("submit", function(evt){
+      evt.preventDefault();
+      var logFilter = {};
+      Array.prototype.forEach.call(document.querySelectorAll(".form-control"), function(item){
+        if(item.value && item.value !== "ALL" ) {
+          logFilter[item.name] = item.value;
+        }
+      });
+      console.log(logFilter);
+      logsController.index(logFilter, function(logs){
+        grid.load(logs);
+      });
+    });
+  </script>
   
 <% else %>
   <%= link_to "Ola, preciso me logar ", new_user_session_path %>
