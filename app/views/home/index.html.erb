@@ -58,7 +58,7 @@
       <button type="submit" class="btn btn-default">SEARCH</button>
     </form>
     
-    <button class="btn btn-default">LOG</button>
+    <button class="btn btn-default log">LOG</button>
     
   </div>
   
@@ -78,12 +78,40 @@
   </table>
   
   <script>
+  
+  window.layout = {
+     sections:[{
+       description: '',
+       fields: [{
+         name: 'kind',
+         mandatory: true,
+         type: 'combo',
+         options: KIND
+       },{
+         name: 'description',
+         mandatory: true,
+         type: 'text'
+       },{
+         name: 'logged_at',
+         mandatory: true,
+         type: 'text'
+       }]
+     },{
+       description: '',
+       fields: [{
+          name: 'submit',
+          type: 'button'
+       }]
+     }]
+  };
+  
     var grid = new Grid("logs");
     var logsController = new LogsController;
-    document.querySelector("form").addEventListener("submit", function(evt){
+    var formFilter = document.querySelector(".filter > form");
+    formFilter.addEventListener("submit", function(evt){
       evt.preventDefault();
       var logFilter = {};
-      Array.prototype.forEach.call(document.querySelectorAll(".form-control"), function(item){
+      Array.prototype.forEach.call(formFilter.querySelectorAll(".form-control"), function(item){
         if(item.value && item.value !== "ALL" ) {
           logFilter[item.name] = item.value;
         }
@@ -93,6 +121,22 @@
         grid.load(logs);
       });
     });
+    
+    formBuilder = new FormEngine.Builder;
+    formBuilder.save = function(log) {
+       logsController.create(log, function(log){
+         console.log( "Update grid with", log );
+       });
+    };
+    var log = document.querySelector(".log");
+    log.addEventListener("click", function(evt){
+      evt.preventDefault();
+      new DialogWindow({
+        title: "Log",
+        content: formBuilder.render(window.layout).getForm()
+      }).show();
+    });
+    
   </script>
   
 <% else %>
