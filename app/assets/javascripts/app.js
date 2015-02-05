@@ -24,8 +24,6 @@ window.layout = {
      }]
    }]
 };
-  
-  console.log("Onload");
 
   var grid = new Grid("logs");
   var logsController = new LogsController;

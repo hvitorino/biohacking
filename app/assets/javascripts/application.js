@@ -1,3 +1,6 @@
 //
 //= require djr
-//= require_tree .
+//= require dialog
+//= require formEngine
+//= require grid
+//= require app
