@@ -30,5 +30,12 @@ module Biohacking
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    config.active_record.default_timezone = :local
+    config.i18n.default_locale = "pt-BR"
+    config.encoding = "utf-8"
+    config.active_record.default_timezone = :local
+    config.active_record.time_zone_aware_attributes = false
+        
   end
 end

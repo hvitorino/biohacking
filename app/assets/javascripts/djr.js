@@ -158,7 +158,9 @@ var DJR = function() {
         if(method === "DELETE") object = null;
 
         var formattedUrl = this.formatURL(url, params);
-        formattedUrl += "?authenticity_token=" + document.querySelector("meta[name='csrf-token']").content;
+
+        var authenticity_token = document.querySelector("meta[name='csrf-token']").content;
+        formattedUrl += "?authenticity_token=" + authenticity_token;
         
         if(method === "GET") {
           for(var property in object) {
@@ -172,6 +174,7 @@ var DJR = function() {
         request.setRequestHeader('Accept', 'application/json');
         request.setRequestHeader("Cache-Control", "no-cache");
         request.setRequestHeader("Pragma", "no-cache");
+        request.setRequestHeader("X-CSRF-Token", authenticity_token);
         
         request.onreadystatechange = function() {
           if (this.readyState === 4) {
@@ -183,7 +186,7 @@ var DJR = function() {
             }
           }
         };
-        request.send(JSON.stringify(object));
+        request.send(object);
     };
     for (var action in this.routes) {
         this[action] = function(act) {

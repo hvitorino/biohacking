@@ -8,13 +8,10 @@ class LogsController < ApplicationController
   end
   
   def create
-    @log = Log.create user_id: current_user.id,
-                      kind: params[:kind],
-                      description: params[:description], 
-                      logged_at: params[:logged_at]
-    
+    @log = Log.new params.require(:log).permit!
+    @log.user_id = current_user.id    
+    @log.save
 #     Log.create user_id:1, kind: Log::HUNGRY, description: "#soft", logged_at: "2015-01-30 15:24:00"
-    
     respond_with @log
   end
   

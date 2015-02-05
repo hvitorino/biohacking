@@ -23,6 +23,12 @@ FormEngine.Field = {
     
   },
   
+  date: function(field) {
+    var input = FormEngine.Field.text.call(this, field);
+    input.value = moment().format();
+    return input;
+  },
+  
   combo: function(field) {
     var input = document.createElement("select");
     input.setAttribute("id", field.id || field.name);
