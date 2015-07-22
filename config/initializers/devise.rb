@@ -232,7 +232,7 @@ Devise.setup do |config|
   require "omniauth-facebook"
   config.omniauth :facebook, "812577155445730", "375b11b173ad6b2ed2d8ea9531da08c8",
                   :strategy_class => OmniAuth::Strategies::Facebook,
-                  :scope => "email,offline_access,user_likes,user_interests,publish_actions,publish_stream", :display => 'popup'
+                  :scope => "email,user_likes,user_interests,publish_actions", :display => 'popup'
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
