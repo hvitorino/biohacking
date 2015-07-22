@@ -50,10 +50,8 @@ window.layout = {
     
     var formBuilder = new FormEngine.Builder;
     formBuilder.save = function(json) {
-      
-      var logJSON = {
-        log: json
-      };
+
+      var logJSON = { log: json };
       
        logsController.create(logJSON, function(savedLog){
          console.log( "Update grid with", savedLog );

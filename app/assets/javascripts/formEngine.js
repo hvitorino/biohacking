@@ -19,7 +19,7 @@ FormEngine.Field = {
     var input = document.createElement("input");
     input.setAttribute("id", field.id || field.name);
     input.setAttribute("name", field.name);
-    input.setAttribute("class", "form-control");
+    input.setAttribute("class", "form-control field");
     input.setAttribute("placeholder", "Enter text");
     input.setAttribute("mandatory", field.mandatory );
     
@@ -72,7 +72,7 @@ FormEngine.Field = {
   combo: function(field) {
 
     var input = document.createElement("select");
-    input.setAttribute("class", "form-control");
+    input.setAttribute("class", "form-control field");
     input.setAttribute("placeholder", "Choose");
         
     if( field && field.options ) {
@@ -95,6 +95,7 @@ FormEngine.Field = {
   button: function(field) {
     var input = FormEngine.Field.text.call(this, field);
         input.setAttribute("type", "button");
+        input.setAttribute("class", "form-control");
         input.setAttribute("value", field.name);
         
         /* 
@@ -193,7 +194,7 @@ FormEngine.Builder = function(model) {
   };
   
   this.submit = function() {
-    var json = this.fieldList.reduce( function(object, item){
+    var json = Array.prototype.reduce.call(this.form.querySelectorAll(".field"), function(object, item){
       if(item.name && item.value) object[item.name] = item.value;
       return object;
     }, {});
