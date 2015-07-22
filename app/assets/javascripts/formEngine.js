@@ -1,6 +1,18 @@
+//http://fullcalendar.io/
+
 var FormEngine = {};
 
 FormEngine.Field = {
+  
+  sorter: function(a, b){
+    if (a.innerHTML > b.innerHTML) {
+      return 1;
+    }
+    if (a.innerHTML < b.innerHTML) {
+      return -1;
+    }
+    return 0;
+  },
   
   text: function(field) {
 
@@ -24,27 +36,57 @@ FormEngine.Field = {
   },
   
   date: function(field) {
+    
+    var datetimepicker = document.createElement("div");
+    datetimepicker.setAttribute("class", "input-group date");
+    
     var input = FormEngine.Field.text.call(this, field);
     input.value = moment().format();
-    return input;
+    
+    var glyphicon = document.createElement("span");
+    glyphicon.setAttribute("class", "glyphicon glyphicon-calendar");
+    var addon = document.createElement("span");
+    addon.setAttribute("class", "input-group-addon");
+    addon.appendChild( glyphicon );
+    
+    datetimepicker.appendChild( input );
+    datetimepicker.appendChild( addon );
+    
+    //dever de casa
+    //https://github.com/Eonasdan/bootstrap-datetimepicker/blob/master/src/js/bootstrap-datetimepicker.js
+    //jQuery( datetimepicker ).datetimepicker();
+    
+    //input.type = "datetime-local";
+    //input.valueAsNumber = moment();
+
+    return datetimepicker;
+  },
+  
+  createOption: function(key) {
+    var option = document.createElement("option");
+    option.setAttribute("value", key);
+    option.innerHTML = this[key];      
+    return option;
   },
   
   combo: function(field) {
+
     var input = document.createElement("select");
-    input.setAttribute("id", field.id || field.name);
-    input.setAttribute("name", field.name);
     input.setAttribute("class", "form-control");
     input.setAttribute("placeholder", "Choose");
-    input.setAttribute("mandatory", field.mandatory );
+        
+    if( field && field.options ) {
 
-    if( field.options ) {
-      for(var item in field.options) {
-        var option = document.createElement("option");
-        option.setAttribute("value", item);
-        option.innerHTML = field.options[item];
-        input.appendChild(option);
-      }
-    }
+      input.setAttribute("id", field.id || field.name);
+      input.setAttribute("name", field.name);
+      input.setAttribute("mandatory", field.mandatory );
+      
+      Object.keys(field.options)
+            .map(FormEngine.Field.createOption, field.options)
+            .sort(FormEngine.Field.sorter)
+            .forEach(input.appendChild, input);
+      
+    } 
     
     return input;
 

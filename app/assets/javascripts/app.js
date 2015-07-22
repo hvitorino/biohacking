@@ -25,11 +25,12 @@ window.layout = {
    }]
 };
 
-  var grid = new Grid("logs");
+  var grid = new Grid("logs");  
   var logsController = new LogsController;
   var formFilter = document.querySelector(".filter > form");
   formFilter.addEventListener("submit", function(evt){
     evt.preventDefault();
+    grid.reset();
     var logFilter = {};
     Array.prototype.forEach.call(formFilter.querySelectorAll(".form-control"), function(item){
       if(item.value && item.value !== "ALL" ) {
@@ -38,6 +39,7 @@ window.layout = {
     });
     console.log(logFilter);
     logsController.index(logFilter, function(logs){
+
       grid.load(logs);
     });
   });
@@ -55,13 +57,15 @@ window.layout = {
       
        logsController.create(logJSON, function(savedLog){
          console.log( "Update grid with", savedLog );
+         dialog.close();
        });
     };
     var form = formBuilder.render(window.layout);
     
-    new DialogWindow({
+    dialog = new DialogWindow({
       title: "Log",
       content: form.getForm()
-    }).show();
+    });
+    dialog.show();
     
   });
