@@ -15,7 +15,7 @@
  */
 
 .profile {
-  height: 55px;
+  height: 60px;
   background: #32363A;
   width: 500px;
   margin: auto; 
@@ -56,26 +56,58 @@
 }
 
 
-.filter {
-  height: 50px;
+.filter{
+  height: 40px;
   width: 100%;
   background-color: #222;
+  display: table;
 }
 
-.filter > .form-inline {
+.filter .form-inline {
   color: #fff;
-  padding-top: 3px;
-  padding-left: 10px;
-  width: 80%;
+  padding: 5px 10px;
   float: left;
 }
 
-.filter > button {
+.filter > .collapse-filter > button {
   float: right;
-  margin-top: 3px;
+  margin-top: 5px;
   margin-right: 5px;
 }
 
 .form-inline .form-group {
   margin-left: 20px;
+}
+
+.form-inline .form-2group {
+  float: left;
+}
+
+.collapse-button{
+  display: none;
+  float: right;
+  background: #AAA;
+  width: 30px; height: 30px;  
+}
+
+#collapsed-filter{
+  display: none;
+}
+
+@media screen and (max-width: 767px){
+  .collapse-button{
+    display: table;
+  }
+  .form-inline  button{
+    margin-left: 20px;
+  }
+  .filter .form-inline {
+    width: 80%; 
+  }
+  .collapse-filter{
+    display: none;
+  }
+  #collapsed-filter:checked + .collapse-filter{
+    display: block;
+  }
 }
