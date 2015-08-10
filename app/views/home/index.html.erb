@@ -19,47 +19,54 @@
   </div>
   
   <div class="filter">
-    
-    <form class="form-inline">
-      
-      <div class="form-group">
-        <label for="kind">Kind</label>
-        <select name="kind" class="form-control">
-          <option>ALL</option>
-          <option value="1">WEIGHT</option>
-          <option value="2">EAT</option>
-          <option value="3">DRINK</option>
-          <option value="4">WORKOUT</option>
-          <option value="5">HUNGRY</option>
-          <option value="6">SLEEP</option>
-          <option value="7">WAKEUP</option>
-          <option value="8">URINATE</option>
-          <option value="9">DEFECATE</option>
-          <option value="10">SEX</option>
-          <option value="11">BATH</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" name="description" placeholder="Description">
-      </div>
-      
-      <div class="form-group">
-        <label for="logged_at_begin">Begin</label>
-        <input type="text" class="form-control" name="logged_at_begin" placeholder="">
-      </div>
-      
-      <div class="form-group">
-        <label for="logged_at_end">End</label>
-        <input type="text" class="form-control" name="logged_at_end" placeholder="">
-      </div>
+    <label class="collapse-button" for="collapsed-filter">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </label>
+    <input id="collapsed-filter" type="checkbox" name="collapsed-filter"/>
+    <div class="collapse-filter">
+            <div class="filter-title"></div>    
+            <form class="form-inline">
+              
+              <div class="form-group">
+                <label for="kind">Kind</label>
+                <select name="kind" class="form-control">
+                  <option>ALL</option>
+                  <option value="1">WEIGHT</option>
+                  <option value="2">EAT</option>
+                  <option value="3">DRINK</option>
+                  <option value="4">WORKOUT</option>
+                  <option value="5">HUNGRY</option>
+                  <option value="6">SLEEP</option>
+                  <option value="7">WAKEUP</option>
+                  <option value="8">URINATE</option>
+                  <option value="9">DEFECATE</option>
+                  <option value="10">SEX</option>
+                  <option value="11">BATH</option>
+                </select>
+              </div>
 
-      <button type="submit" class="btn btn-default">SEARCH</button>
-    </form>
-    
-    <button class="btn btn-default log">LOG</button>
-    
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" name="description" placeholder="Description">
+              </div>
+
+              <div class="form-group">
+                <label for="logged_at_begin">Begin</label>
+                <input type="text" class="form-control" name="logged_at_begin" placeholder="">
+              </div>
+              
+              <div class="form-group">
+                <label for="logged_at_end">End</label>
+                <input type="text" class="form-control" name="logged_at_end" placeholder="">
+              </div>
+
+              <button type="submit" class="btn btn-default">SEARCH</button>
+            </form>
+            
+            <button class="btn btn-default log">LOG</button>
+    </div> 
   </div>
   
   <table name="logs" class="table table-condensed">

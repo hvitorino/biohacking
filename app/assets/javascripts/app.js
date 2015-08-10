@@ -27,7 +27,7 @@ window.layout = {
 
   var grid = new Grid("logs");  
   var logsController = new LogsController;
-  var formFilter = document.querySelector(".filter > form");
+  var formFilter = document.querySelector(".filter > .collapse-filter > form");
   formFilter.addEventListener("submit", function(evt){
     evt.preventDefault();
     grid.reset();
