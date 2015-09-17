@@ -1,3 +1,51 @@
+Biohacking.KIND = {
+  11: "BATH",
+  9: "DEFECATE",
+  3: "DRINK",
+  2: "EAT",
+  5: "HUNGRY",
+  10: "SEX",
+  6: "SLEEP",
+  8: "URINATE",  
+  7: "WAKEUP",    
+  1: "WEIGHT",
+  4: "WORKOUT"
+};
+
+var i18n = {
+  en: {
+    "kind": "Kind",
+    "loggedAt": "Logged At",
+    "description": "Description"
+  },
+  ptBR: {
+    "kind": "Tipo",
+    "loggedAt": "Registrado Em",
+    "description": "Descrição"    
+  }
+};
+
+var columns = [
+  {
+    title: "#",
+    mapping: "id"
+  },
+  {
+    title: "kind",
+    formatter: function(value){ 
+      return Biohacking.KIND[ Number(value) ];
+    }
+  },
+  "description",
+  {
+    title: "loggedAt",
+    formatter: function(value){ 
+      return moment( value ).format('MMMM Do YYYY, h:mm:ss a');
+    }
+  },
+  "",
+  ""
+];
 
 window.layout = {
    sections:[{
@@ -6,7 +54,7 @@ window.layout = {
        name: 'kind',
        mandatory: true,
        type: 'combo',
-       options: KIND
+       options: Biohacking.KIND
      },{
        name: 'description',
        mandatory: true,
@@ -25,10 +73,14 @@ window.layout = {
    }]
 };
 
+  var area = document.querySelector("[name=logs]");
   var messages = new Messages;
 
-  var grid = new Grid("logs");
+  var grid = new Biohacking.Grid();
+  grid.setI18n(i18n.ptBR);
   grid.setMessages(messages);
+  area.appendChild(   grid.render(columns) );
+  
   var logsController = new LogsController;
   var formFilter = document.querySelector(".filter > .collapse-filter > form");
   formFilter.addEventListener("submit", function(evt){
@@ -60,6 +112,7 @@ window.layout = {
          console.log( "Update grid with", savedLog );
          dialog.close();
        });
+       
     };
     var form = formBuilder.render(window.layout);
     

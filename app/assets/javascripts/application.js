@@ -1,4 +1,5 @@
 //
+//= require packages
 //= require djr
 //= require messages
 //= require dialog
