@@ -14,6 +14,8 @@ gem "rails_12factor"
 
 gem 'djr'
 
+gem 'permanent_records'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

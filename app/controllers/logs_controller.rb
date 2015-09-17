@@ -15,4 +15,16 @@ class LogsController < ApplicationController
     respond_with @log
   end
   
+  def destroy
+    @log = Log.find params[:id]
+    @log.destroy
+    render json: @log
+  end
+  
+  def revive
+    @log = Log.find params[:id]
+    @log.revive
+    respond_with @log
+  end
+  
 end

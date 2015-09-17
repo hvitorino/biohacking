@@ -15,6 +15,12 @@ var KIND = {
 
 var Grid = function(name) {
   
+  this.messages;
+  
+  this.setMessages = function(messages) {
+    this.messages = messages;
+  };
+  
   var tableEl = document.querySelector("[name="+name+"]");
   var tbody = tableEl.querySelector("tbody");
   
@@ -23,6 +29,18 @@ var Grid = function(name) {
   };
   
   var docFragment = document.createDocumentFragment();
+  
+  this.insertRevived = function(row) {
+    
+    if( row.children[3].textContent === "Invalid date" ) {
+      tbody.appendChild(row);
+    } else {
+      var columns = Array.prototype.map.call(tbody.querySelectorAll("tr"), function(tr){ return tr.children[3].textContent; });
+      //achar o index
+      //inserir
+    }
+    
+  };
   
   this.insertItems = function(item) {
     
@@ -40,10 +58,21 @@ var Grid = function(name) {
     
     var columnLoggedAt = document.createElement("td");
     columnLoggedAt.innerHTML = moment( item.logged_at ).format('MMMM Do YYYY, h:mm:ss a');
-
     
     var deleteButton = document.createElement("a");
     deleteButton.setAttribute("class", "glyphicon glyphicon-remove text-danger");
+    deleteButton.addEventListener("click", function(){
+      var controller = new LogsController
+      controller.destroy({id:item.id}, function(log){
+        this.messages.display(function() {
+          console.log("desfez!");
+          debugger;
+          this.insertRevived(row);
+          this.messages.hide();
+        }.bind(this));
+        tbody.removeChild( row );
+      }.bind(this));
+    }.bind(this));
 
     var exclude = document.createElement("td");
     exclude.setAttribute("class", "text-danger");

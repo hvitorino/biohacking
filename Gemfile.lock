@@ -100,6 +100,9 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    permanent_records (4.0.0)
+      activerecord (= 4.2.0)
+      activesupport (= 4.2.0)
     pg (0.18.1)
     rack (1.6.0)
     rack-test (0.6.3)
@@ -184,6 +187,7 @@ DEPENDENCIES
   djr
   jbuilder (~> 2.0)
   omniauth-facebook
+  permanent_records
   pg
   rails (= 4.2.0)
   rails_12factor

@@ -15,9 +15,9 @@ class Log < ActiveRecord::Base
   
   def self.search user, params
     query = where(user_id: user.id)
-    
     query = query.where("description like ?", "%#{params[:description]}%") if params[:description].present?
     query = query.where(kind: params[:kind]) if params[:kind].present?
+    query = query.where("deleted_at IS NULL")
     
     #logged_at_begin: "2015", logged_at_end: "2015"
     

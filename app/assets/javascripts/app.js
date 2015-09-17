@@ -25,7 +25,10 @@ window.layout = {
    }]
 };
 
-  var grid = new Grid("logs");  
+  var messages = new Messages;
+
+  var grid = new Grid("logs");
+  grid.setMessages(messages);
   var logsController = new LogsController;
   var formFilter = document.querySelector(".filter > .collapse-filter > form");
   formFilter.addEventListener("submit", function(evt){
