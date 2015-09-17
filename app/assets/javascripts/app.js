@@ -15,13 +15,13 @@ Biohacking.KIND = {
 var i18n = {
   en: {
     "kind": "Kind",
-    "loggedAt": "Logged At",
+    "logged_at": "Logged At",
     "description": "Description"
   },
   ptBR: {
     "kind": "Tipo",
-    "loggedAt": "Registrado Em",
-    "description": "Descrição"    
+    "logged_at": "Registrado Em",
+    "description": "Descrição"
   }
 };
 
@@ -38,13 +38,33 @@ var columns = [
   },
   "description",
   {
-    title: "loggedAt",
-    formatter: function(value){ 
+    title: "logged_at",
+    formatter: function(value){
       return moment( value ).format('MMMM Do YYYY, h:mm:ss a');
     }
   },
-  "",
-  ""
+  {
+    title: "",
+    formatter: function(){
+      return "";
+    }
+  },
+  {
+    title: "",
+    formatter: function(value, log, column, grid){
+      
+      var deleteButton = document.createElement("a");
+      deleteButton.setAttribute("class", "glyphicon glyphicon-remove text-danger");
+      deleteButton.addEventListener("click", function(log){
+        
+        
+      }.bind(grid, log));
+      
+      column.setAttribute("class", "text-danger");
+      column.appendChild( deleteButton );
+      return null;
+    }
+  }
 ];
 
 window.layout = {

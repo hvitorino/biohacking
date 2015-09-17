@@ -37,54 +37,6 @@ Biohacking.Grid = function() {
     
   };
   
-  this.insertItems = function(item) {
-    
-    var row = document.createElement("tr");
-    
-    var columnId = document.createElement("td");
-    columnId.setAttribute("data-id", item.id);
-    columnId.innerHTML = item.id;
-    
-    var columnKind = document.createElement("td");
-    columnKind.innerHTML = item.kind + " - " + Biohacking.KIND[ Number(item.kind) ];
-    
-    var columnDescription = document.createElement("td");
-    columnDescription.innerHTML = item.description;
-    
-    var columnLoggedAt = document.createElement("td");
-    columnLoggedAt.innerHTML = moment( item.logged_at ).format('MMMM Do YYYY, h:mm:ss a');
-    
-    var deleteButton = document.createElement("a");
-    deleteButton.setAttribute("class", "glyphicon glyphicon-remove text-danger");
-    deleteButton.addEventListener("click", function(){
-      var controller = new LogsController
-      controller.destroy({id:item.id}, function(log){
-        this.messages.display(function() {
-          console.log("desfez!");
-          debugger;
-          this.insertRevived(row);
-          this.messages.hide();
-        }.bind(this));
-        tbody.removeChild( row );
-      }.bind(this));
-    }.bind(this));
-
-    var exclude = document.createElement("td");
-    exclude.setAttribute("class", "text-danger");
-    exclude.appendChild( deleteButton );
-
-    row.appendChild( columnId );    
-    row.appendChild( columnKind );
-    row.appendChild( columnDescription );
-    row.appendChild( columnLoggedAt );
-    row.appendChild( exclude );
-    row.appendChild(  document.createElement("td") );
-    
-    docFragment.appendChild(row);
-    //tbody.appendChild(row);
-    
-  };
-  
   this.formatTitle = function(title) {
     var translated = this.i18n[title];
     if(translated) title = translated;
@@ -104,7 +56,7 @@ Biohacking.Grid = function() {
       }
       
       if( column.formatter ) {
-        value = column.formatter( log[mappedBy], log, columnHtml );
+        value = column.formatter( log[mappedBy], log, columnHtml, this );
       } else {
         value = new String( log[mappedBy] ).toString();
       }
