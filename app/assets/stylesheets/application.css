@@ -1,14 +1,4 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
  *
  *= require_tree .
  *= require_self
@@ -37,6 +27,7 @@
 
 .profile > .info > .name {
   color: #79C5CE;
+  color: #EFE8E1!important;
   font-weight: bold;
   font-size: 1em;
   line-height: 30px;
@@ -172,6 +163,8 @@ li.list-group-item:hover {
 li.list-group-item {
     cursor: pointer;
     text-align: center;
+    color: #A53B3D!important;
+    font-weight: bold;
 }
 
 
@@ -203,4 +196,21 @@ body {
     background-color: #222;
     position: absolute;
     overflow-y: auto;
+}
+
+.container {
+  padding: 0;
+}
+
+.btn-primary, .btn-primary.active, .btn-primary:active {
+    background: rgb(108, 3, 6);
+    border-color: rgb(147, 44, 44);
+    font-size: 1em;
+    line-height: 1;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {      
+  background: url(/assets/background_noise.png) 50% 50% repeat #A53B3D;
+  color: #EFE8E1!important;
+  border-color: #EFE8E1!important;
 }

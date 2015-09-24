@@ -78,17 +78,8 @@ var columns = [
   var logsController = new LogsController;
   var formFilter = document.querySelector(".filter");
   
-  formBuilder = new Biohacking.FormBuilderA;
-  formBuilder.render(window.layout);
-  
-  formBuilder.sections[0].fields[0].register({
-      selected: { 
-        handler: function(){ console.log(arguments); }, 
-        scope: formBuilder
-      }
-  });
-  
-  formFilter.appendChild( formBuilder.el );
+  formBuilder = new Biohacking.TrackFormBuilder;  
+  formFilter.appendChild( formBuilder.render(window.layout).el );
   
 /*
   formFilter.addEventListener("submit", function(evt){

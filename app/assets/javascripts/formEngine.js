@@ -164,7 +164,7 @@ Biohacking.Fields.Button = function() {
   this.render = function(field) {
     this._oldRender(field);
     this.el.setAttribute("type", "button");
-    this.el.setAttribute("class", "form-control");
+    this.el.setAttribute("class", "form-control btn btn-primary");
     this.el.setAttribute("value", field.title || field.name);
     return this;
   };
@@ -263,7 +263,7 @@ Biohacking.FormBuilder = function(){
   
 };
 
-Biohacking.FormBuilderA = function() {
+Biohacking.TrackFormBuilder = function() {
   
   this.layout = {
 
@@ -305,13 +305,13 @@ Biohacking.FormBuilderA = function() {
   };
   
   this.afterRender = function() {
-    var input = this.el.querySelector("#buttondescription");
-    var description = this.findField("description");
-    input.addEventListener("click", function(evt){
-      evt.preventDefault();          
-      description.toggle();
-    }.bind(this) );
+    // var input = this.el.querySelector("#buttondescription");
+    // var description = this.findField("description");
+    // input.addEventListener("click", function(evt){
+    //   evt.preventDefault();          
+    //   description.toggle();
+    // }.bind(this) );
   };
   
 };
-Biohacking.FormBuilderA.prototype = new Biohacking.FormBuilder;
+Biohacking.TrackFormBuilder.prototype = new Biohacking.FormBuilder;
