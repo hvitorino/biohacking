@@ -1,8 +1,8 @@
 <% if user_signed_in? %>
   
-  <div class="head">
+  <div class="navbar navbar-fixed-top navbar-fixed-width">
     
-    <div class="profile">
+    <div class="profile navbar">
        <div class="photo">
          <%= image_tag current_user.picture_facebook_square %>
        </div>
@@ -18,7 +18,7 @@
     
   </div>
   
-  <div class="main">
+  <div class="container main">
     
     <div class="filter"></div>    
     
