@@ -1,47 +1,190 @@
 //http://fullcalendar.io/
 
-var FormEngine = {};
+Biohacking.Fields = {};
 
-FormEngine.Field = {
+Biohacking.Fields.Field = function() {
   
-  sorter: function(a, b){
-    if (a.innerHTML > b.innerHTML) {
+  this._listeners = {};
+  this.el;
+  
+  this.register = function( events ) {
+    Object.keys(events).forEach(function(event) {
+      this._listeners[event] = events[event];
+    }, this);
+  };
+  
+  this.fireEvent = function(event) {
+    var listener = this._listeners[event];
+    if( listener ) {
+      listener.handler.call( listener.scope || this, this );
+    }
+  };
+  
+  this.render = function(config){
+    this.name = config.name;
+    this.el = document.createElement("div");
+    return this;
+  };
+  
+  this.toggle = function() {
+    this.el.style.display = (this.el.style.display === "none")? "flex":"none";
+  };
+  
+};
+
+Biohacking.Fields.LookupOption = function() {
+  
+  Biohacking.Fields.Field.apply(this, arguments);
+      
+  this.el = document.createElement("li");
+  
+  this.deselect = function() {
+    this.el.setAttribute("class", "list-group-item");
+  };
+  
+  this.select = function() {
+    this.el.setAttribute("class", "list-group-item active");
+  }
+    
+  this.render = function(config) {
+    
+    this.el.setAttribute("name", config.key);
+    this.el.setAttribute("class", "list-group-item");
+    this.el.innerHTML = config.value;
+
+    this.el.addEventListener("click", function(evt){
+      evt.preventDefault();          
+      this.select();
+      this.fireEvent("selected");
+    }.bind(this) );
+    
+    return this;
+    
+  };
+  
+};
+
+
+Biohacking.Fields.Lookup = function() {
+  Biohacking.Fields.Field.apply(this, arguments);
+  
+  this.options = [];
+  
+  this.sorter = function(a, b){
+    if (a.el.innerHTML > b.el.innerHTML) {
       return 1;
     }
-    if (a.innerHTML < b.innerHTML) {
+    if (a.el.innerHTML < b.el.innerHTML) {
       return -1;
     }
     return 0;
-  },
+  };
   
-  text: function(field) {
-
-    var input = document.createElement("input");
-    input.setAttribute("id", field.id || field.name);
-    input.setAttribute("name", field.name);
-    input.setAttribute("class", "form-control field");
-    input.setAttribute("placeholder", "Enter text");
-    input.setAttribute("mandatory", field.mandatory );
-    
-    var mandatory = function(event) { 
-      /* dever de casa */
-      console.log(event.target.value, event.target.checked);
-    };
-    
-    input.addEventListener("keyup", mandatory.bind(input) );
-    input.addEventListener("change", mandatory.bind(input) );
-
-    return input;
-    
-  },
+  this.deselectAll = function(lookupOption) {
+    this.options.forEach(function(option) {
+      if(option !== lookupOption) option.deselect();
+    });
+  };
   
-  date: function(field) {
+  this.createOption = function(config) {
+    var option = new Biohacking.Fields.LookupOption;
+    option.register({
+      selected: {
+        handler: function(lookupOption) {
+          this.deselectAll(lookupOption);
+          this.fireEvent("selected");
+        },
+        scope: this
+      }
+    });
+    return option.render(config); 
+  };
+  
+  this.render = function(config){
+    this.el = document.createElement("ul");
+    this.el.setAttribute("class", "list-group");
     
-    var datetimepicker = document.createElement("div");
-    datetimepicker.setAttribute("class", "input-group date");
+    this.options = Object.keys(config.options).map(function(key){
+      var conf = { 
+        key: key, 
+        value: config.options[key]
+      };
+      return this.createOption(conf);
+    }, this);
     
-    var input = FormEngine.Field.text.call(this, field);
-    input.value = moment().format();
+    this.options.sort(this.sorter)
+                .map(function(option){ return option.el; })
+                .forEach(this.el.appendChild, this.el);
+          
+    return this;
+  };
+  
+};
+
+Biohacking.Fields.Text = function() {
+  Biohacking.Fields.Field.apply(this, arguments);
+  
+  this.el = document.createElement("input");
+  
+  var mandatory = function(event) { 
+    /* dever de casa */
+    console.log(event.target.value, event.target.checked);
+  };
+  
+  this.el.addEventListener("keyup", mandatory.bind(this.el) );
+  this.el.addEventListener("change", mandatory.bind(this.el) );
+  
+  this.render = function(field) {
+    
+    if(field.hidden) {
+      this.toggle();
+    }
+    
+    var name = field.id || field.name;
+    this.name = name;
+    
+    if(name) { 
+      this.el.setAttribute("id", name);
+      this.el.setAttribute("name", name);
+    }
+    this.el.setAttribute("class", "form-control field");
+    this.el.setAttribute("placeholder", "Enter text");
+    this.el.setAttribute("mandatory", !!field.mandatory );
+    return this;
+  };
+  
+};
+
+Biohacking.Fields.Button = function() {
+  
+  Biohacking.Fields.Text.apply(this, arguments);
+  
+  this._oldRender = this.render;
+  
+  this.render = function(field) {
+    this._oldRender(field);
+    this.el.setAttribute("type", "button");
+    this.el.setAttribute("class", "form-control");
+    this.el.setAttribute("value", field.title || field.name);
+    return this;
+  };
+  
+};
+
+
+Biohacking.Fields.Date = function() {
+  Biohacking.Fields.Text.apply(this, arguments);
+  
+  this._oldRender = this.render;
+  
+  this.render = function(field) {
+    this._oldRender(field);
+    
+    this._oldEl = this.el;
+    this._oldEl.value = moment().format();
+        
+    this.el = document.createElement("div");
+    this.el.setAttribute("class", "input-group date");
     
     var glyphicon = document.createElement("span");
     glyphicon.setAttribute("class", "glyphicon glyphicon-calendar");
@@ -49,171 +192,118 @@ FormEngine.Field = {
     addon.setAttribute("class", "input-group-addon");
     addon.appendChild( glyphicon );
     
-    datetimepicker.appendChild( input );
-    datetimepicker.appendChild( addon );
-    
-    //dever de casa
-    //https://github.com/Eonasdan/bootstrap-datetimepicker/blob/master/src/js/bootstrap-datetimepicker.js
-    //jQuery( datetimepicker ).datetimepicker();
-    
-    //input.type = "datetime-local";
-    //input.valueAsNumber = moment();
+    this.el.appendChild( this._oldEl );
+    this.el.appendChild( addon );
 
-    return datetimepicker;
-  },
-  
-  createOption: function(key) {
-    var option = document.createElement("option");
-    option.setAttribute("value", key);
-    option.innerHTML = this[key];      
-    return option;
-  },
-  
-  combo: function(field) {
-
-    var input = document.createElement("select");
-    input.setAttribute("class", "form-control field");
-    input.setAttribute("placeholder", "Choose");
-        
-    if( field && field.options ) {
-
-      input.setAttribute("id", field.id || field.name);
-      input.setAttribute("name", field.name);
-      input.setAttribute("mandatory", field.mandatory );
-      
-      Object.keys(field.options)
-            .map(FormEngine.Field.createOption, field.options)
-            .sort(FormEngine.Field.sorter)
-            .forEach(input.appendChild, input);
-      
-    } 
-    
-    return input;
-
-  },
-  
-  button: function(field) {
-    var input = FormEngine.Field.text.call(this, field);
-        input.setAttribute("type", "button");
-        input.setAttribute("class", "form-control");
-        input.setAttribute("value", field.name);
-        
-        /* 
-          dever de casa generalizar buttons, aqui convencionei 
-          que só teremos submit
-        */
-        input.addEventListener("click", function(evt){
-          evt.preventDefault();          
-          evt.target.formParent.submit();
-        }.bind(input) );
-    
-    return input;
-  }
-  
-}
-
-FormEngine.Builder = function(model) {
-  
-  this.form = document.createElement("form");
-  this.fieldList = [];
-  this.buttonList = [];
-  
-  var _model = model;
-  this.getModel = function() {
-    return _model || {};
+    return this;
   };
-  this.setModel = function(model) {
-    _model = model;
-  };
+};
 
-  this.save = function(json) {
-    
-    if( this.getModel().id ) {
-      console.log("Atualiza", json);
-    } else {
-      console.log("Cria", json);
-    }
-
-  };
-  
-  this.createLabel = function(field) {
-    
-    var label = document.createElement("label");
-        label.setAttribute("for", field.name);
-        label.innerHTML = field.name; //Dever de casa, fazer I18n aqui
-        
-    return label;
-    
-  };
-  
-  this.createInput = function(field) {
-    var constructor = FormEngine.Field[field.type] || FormEngine.Field['text'];
-    var input = new constructor(field);
-    input.formParent = this;
-    if( field.type !== 'button') {
-      this.fieldList.push( input );
-    } else {
-      this.buttonList.push( input );
-    }
-    return input;
-  };
+Biohacking.Section = function() {
+  this.fields = [];
+  this.el = document.createElement("div");
+  this.el.setAttribute("class", "section");
   
   this.createField = function(field) {
-    
-    var formGroup = document.createElement("div");
-    formGroup.setAttribute("class", "form-group");
-    if( field.type !== 'button') {
-      formGroup.appendChild( this.createLabel(field) );
-    }
-    formGroup.appendChild( this.createInput(field) );
-    return formGroup;
-    
+      var item = Biohacking.Fields[field.type] || Biohacking.Fields.Field;
+      return (new item).render(field);
   };
   
-  this.createFields = function(sectionArea, section) {
-    if( Array.isArray(section.fields) ) {
-      
-      section.fields.forEach( function(field){
-        sectionArea.appendChild( this.createField( field) );
-      }, this );
-      
-    }
-  };
-  
-  this.createSection = function(section) {
-    var sectionArea = document.createElement('div');
-    sectionArea.className = 'section';
-    
-    var description = document.createElement("h3");
-    description.innerHTML = section.description;
-    
-    sectionArea.appendChild( description );
-     
-    this.createFields(sectionArea, section);
-    this.form.appendChild( sectionArea );
-  };
-  
-  this.submit = function() {
-    var json = Array.prototype.reduce.call(this.form.querySelectorAll(".field"), function(object, item){
-      if(item.name && item.value) object[item.name] = item.value;
-      return object;
-    }, {});
-    this.save(json);
-  };
-  
-  this.render = function(layout) {
-
-    if( layout && layout.sections) {
-      layout.sections.forEach(this.createSection, this);
-    }
+  this.render = function(section) {
+    this.fields = section.fields.map(this.createField, this);
+    this.fields.forEach(function(field){
+      this.el.appendChild( field.el );
+    }, this);
     return this;
-  
   };
-  
-  this.getForm = function() {
-    return this.form;
-  };
-  
-  return this;
   
 };
+
+Biohacking.FormBuilder = function(){
+
+  this.layout;
+  this.sections = [];
+  this.el = document.createElement("form");
+  this.afterRender = function(){ console.log("Original"); };
+
+  this.createSection = function(section){
+      var sectionComponent = new Biohacking.Section;
+      sectionComponent.render(section);
+      return sectionComponent;
+  };
+  
+  this.findField = function(fieldName) {
+    
+    return this.sections.reduce(function(founded, section){
+      section.fields.forEach(function(field){
+        if(fieldName === field.name) founded = field;
+      });
+      return founded;
+    }, null);
+    
+  };
+
+  this.render = function(layout){
+    if(layout) this.layout = layout;
+    this.sections = this.layout.sections.map( this.createSection, this );
+    var sections = document.createDocumentFragment();
+    this.sections.map(function(section){ return section.el; })
+                 .forEach( sections.appendChild, sections );
+    this.el.appendChild( sections );
+    this.afterRender();
+    return this;
+  };
+  
+};
+
+Biohacking.FormBuilderA = function() {
+  
+  this.layout = {
+
+     sections:[
+      {
+        fields: [{
+          name: 'kind',
+          mandatory: true,
+          type: 'Lookup',
+          options: Biohacking.KIND
+        }]
+      },
+      {
+        fields: [{
+          name: 'logged_at',
+          mandatory: true,
+          type: 'Date'
+        },{
+          title: 'description',
+          name: 'buttondescription',
+          type: 'Button',
+          handler: function(event, field, form){ 
+
+          }
+        }]
+     },{
+       fields: [{
+          name: 'description',
+          type: 'Text',
+          hidden: true
+       }]
+     },{
+       fields: [{
+          name: 'Add',
+          type: 'Button'
+       }]
+     }]
+  };
+  
+  this.afterRender = function() {
+    var input = this.el.querySelector("#buttondescription");
+    var description = this.findField("description");
+    input.addEventListener("click", function(evt){
+      evt.preventDefault();          
+      description.toggle();
+    }.bind(this) );
+  };
+  
+};
+Biohacking.FormBuilderA.prototype = new Biohacking.FormBuilder;
