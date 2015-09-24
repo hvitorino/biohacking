@@ -6,6 +6,11 @@ Biohacking.Fields.Field = function() {
   
   this._listeners = {};
   this.el;
+  this.config = {};
+  
+  this.getValue = function() {
+    return this.el.innerHTML;
+  };
   
   this.register = function( events ) {
     Object.keys(events).forEach(function(event) {
@@ -21,8 +26,19 @@ Biohacking.Fields.Field = function() {
   };
   
   this.render = function(config){
-    this.name = config.name;
+    this.config = config;
     this.el = document.createElement("div");
+    
+    this.name = config.name;
+    
+    if(this.name) {
+      this.el.setAttribute("name", this.name);
+    }
+    
+    if(config["class"]) {
+      this.el.setAttribute("class", config["class"]);
+    }
+        
     return this;
   };
   
@@ -32,22 +48,41 @@ Biohacking.Fields.Field = function() {
   
 };
 
+Biohacking.Fields.Display = function() {
+  Biohacking.Fields.Field.apply(this, arguments);
+  
+  this._oldRender = this.render;
+  
+  this.render = function(field) {
+    this._oldRender(field);
+    this.el.innerHTML = field.message;
+    return this;
+  };
+  
+};
+
 Biohacking.Fields.LookupOption = function() {
   
   Biohacking.Fields.Field.apply(this, arguments);
       
   this.el = document.createElement("li");
+  this.selected = false;
+  
+  this.getValue = function() {
+    return this.el.getAttribute("name");
+  };
   
   this.deselect = function() {
     this.el.setAttribute("class", "list-group-item");
   };
   
   this.select = function() {
+    this.selected = true;
     this.el.setAttribute("class", "list-group-item active");
   }
     
   this.render = function(config) {
-    
+    this.config = config;
     this.el.setAttribute("name", config.key);
     this.el.setAttribute("class", "list-group-item");
     this.el.innerHTML = config.value;
@@ -64,11 +99,17 @@ Biohacking.Fields.LookupOption = function() {
   
 };
 
-
 Biohacking.Fields.Lookup = function() {
   Biohacking.Fields.Field.apply(this, arguments);
   
   this.options = [];
+  
+  this.getValue = function() {
+    var founded = this.options.filter(function(option) {
+      return option.selected;
+    })[0];    
+    return (founded)? founded.getValue() : null;
+  };
   
   this.sorter = function(a, b){
     if (a.el.innerHTML > b.el.innerHTML) {
@@ -101,13 +142,15 @@ Biohacking.Fields.Lookup = function() {
   };
   
   this.render = function(config){
+    this.config = config;
     this.el = document.createElement("ul");
-    this.el.setAttribute("class", "list-group");
+    this.el.setAttribute("class", "list-group");    
+    this.name = this.config.name;
     
-    this.options = Object.keys(config.options).map(function(key){
+    this.options = Object.keys(this.config.options).map(function(key){
       var conf = { 
         key: key, 
-        value: config.options[key]
+        value: this.config.options[key]
       };
       return this.createOption(conf);
     }, this);
@@ -134,7 +177,12 @@ Biohacking.Fields.Text = function() {
   this.el.addEventListener("keyup", mandatory.bind(this.el) );
   this.el.addEventListener("change", mandatory.bind(this.el) );
   
+  this.getValue = function() {
+    return this.el.value;
+  };
+  
   this.render = function(field) {
+    this.config = field;
     
     if(field.hidden) {
       this.toggle();
@@ -148,7 +196,7 @@ Biohacking.Fields.Text = function() {
       this.el.setAttribute("name", name);
     }
     this.el.setAttribute("class", "form-control field");
-    this.el.setAttribute("placeholder", "Enter text");
+    this.el.setAttribute("placeholder", field.placeholder || "Enter text");
     this.el.setAttribute("mandatory", !!field.mandatory );
     return this;
   };
@@ -176,6 +224,10 @@ Biohacking.Fields.Date = function() {
   Biohacking.Fields.Text.apply(this, arguments);
   
   this._oldRender = this.render;
+  
+  this.getValue = function() {
+    return this._oldEl.value;
+  };
   
   this.render = function(field) {
     this._oldRender(field);
@@ -249,6 +301,23 @@ Biohacking.FormBuilder = function(){
     }, null);
     
   };
+  
+  this.getValues = function() {
+    
+    return this.sections.reduce(function(values, section){
+      section.fields.forEach(function(field){
+        var value = field.getValue();
+        
+        console.log( field.config, field.name, value )
+        
+        if(value && field.name && field.config.type !== "Button") {
+          values[field.name] = value;
+        }
+      });
+      return values;
+    }, {});
+    
+  };
 
   this.render = function(layout){
     if(layout) this.layout = layout;
@@ -268,6 +337,14 @@ Biohacking.TrackFormBuilder = function() {
   this.layout = {
 
      sections:[
+     {
+       hidden: true,
+       fields: [{
+         "class": "display",
+         message: 'Atividade inserida com sucesso!',
+         type: 'Display'
+       }]
+     },
       {
         fields: [{
           name: 'kind',
@@ -282,25 +359,28 @@ Biohacking.TrackFormBuilder = function() {
           name: 'logged_at',
           mandatory: true,
           type: 'Date'
-        },{
-          title: 'description',
-          name: 'buttondescription',
-          type: 'Button',
-          handler: function(event, field, form){ 
-
-          }
         }]
      },{
+       hidden: true,
        fields: [{
           name: 'description',
-          type: 'Text',
-          hidden: true
+          placeholder: "Enter tags to edit",
+          type: 'Text'
        }]
      },{
        fields: [{
           name: 'Add',
           type: 'Button'
        }]
+     },{
+       hidden: true,
+       fields: [{
+            name: 'Delete',
+            type: 'Button'
+         },{
+           name: 'Done',
+           type: 'Button'
+        }]
      }]
   };
   

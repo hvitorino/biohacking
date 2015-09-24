@@ -203,8 +203,8 @@ body {
 }
 
 .btn-primary, .btn-primary.active, .btn-primary:active {
-    background: rgb(108, 3, 6);
-    border-color: rgb(147, 44, 44);
+    background: rgb(108, 3, 6)!important;
+    border-color: rgb(147, 44, 44)!important;
     font-size: 1em;
     line-height: 1;
 }
@@ -213,4 +213,12 @@ body {
   background: url(/assets/background_noise.png) 50% 50% repeat #A53B3D;
   color: #EFE8E1!important;
   border-color: #EFE8E1!important;
+}
+
+.display {
+    text-align: center;
+    margin: auto;
+    background-color: #fff;
+    width: 100%;
+    padding: 2em;
 }
