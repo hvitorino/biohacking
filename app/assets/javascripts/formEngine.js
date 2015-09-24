@@ -209,7 +209,14 @@ Biohacking.Section = function() {
       return (new item).render(field);
   };
   
+  this.hide = function() {
+    this.el.style.display = "none";
+  };
+  
   this.render = function(section) {
+    
+    if(section.hidden) this.hide();
+    
     this.fields = section.fields.map(this.createField, this);
     this.fields.forEach(function(field){
       this.el.appendChild( field.el );
@@ -270,6 +277,7 @@ Biohacking.FormBuilderA = function() {
         }]
       },
       {
+        hidden: true,
         fields: [{
           name: 'logged_at',
           mandatory: true,

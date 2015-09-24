@@ -133,13 +133,14 @@
 }
 
 
-/* FormBuilder  */
-@media screen and (min-width: 768px) {
+/* FormBuilder
+@media only screen and (min-width: 768px) {
   .section {
       margin: auto;
       width: 30%;
   }
 }
+*/
   
 .section {
     display: flex;
@@ -159,6 +160,7 @@
 
 .list-group {
     width: 100%;
+    margin-bottom: 0;
 }
 
 li.list-group-item:hover {
@@ -174,7 +176,8 @@ li.list-group-item {
 
 body {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
+  font-size: 2em;  
 }
 
 .head {
