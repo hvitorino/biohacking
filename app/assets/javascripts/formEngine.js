@@ -54,7 +54,7 @@ Biohacking.Fields.Display = function() {
   this._oldRender = this.render;
   
   this.render = function(field) {
-    this._oldRender(field);
+    this._oldRender(field);    
     this.el.innerHTML = field.message;
     return this;
   };
@@ -65,7 +65,7 @@ Biohacking.Fields.LookupOption = function() {
   
   Biohacking.Fields.Field.apply(this, arguments);
       
-  this.el = document.createElement("li");
+  this.el = document.createElement("div");
   this.selected = false;
   
   this.getValue = function() {
@@ -143,7 +143,7 @@ Biohacking.Fields.Lookup = function() {
   
   this.render = function(config){
     this.config = config;
-    this.el = document.createElement("ul");
+    this.el = document.createElement("div");
     this.el.setAttribute("class", "list-group");    
     this.name = this.config.name;
     
@@ -214,6 +214,11 @@ Biohacking.Fields.Button = function() {
     this.el.setAttribute("type", "button");
     this.el.setAttribute("class", "form-control btn btn-primary");
     this.el.setAttribute("value", field.title || field.name);
+    
+    if( field.handler ) {
+      this.el.addEventListener("click", field.handler);
+    }
+    
     return this;
   };
   
@@ -265,6 +270,10 @@ Biohacking.Section = function() {
     this.el.style.display = "none";
   };
   
+  this.toggle = function() {
+    this.el.style.display = (this.el.style.display === "none")? "flex":"none";
+  };
+  
   this.render = function(section) {
     
     if(section.hidden) this.hide();
@@ -282,6 +291,7 @@ Biohacking.FormBuilder = function(){
 
   this.layout;
   this.sections = [];
+  this._model;
   this.el = document.createElement("form");
   this.afterRender = function(){ console.log("Original"); };
 
@@ -289,6 +299,10 @@ Biohacking.FormBuilder = function(){
       var sectionComponent = new Biohacking.Section;
       sectionComponent.render(section);
       return sectionComponent;
+  };
+  
+  this.setModel = function(model) {
+    this._model = model;
   };
   
   this.findField = function(fieldName) {
@@ -307,9 +321,6 @@ Biohacking.FormBuilder = function(){
     return this.sections.reduce(function(values, section){
       section.fields.forEach(function(field){
         var value = field.getValue();
-        
-        console.log( field.config, field.name, value )
-        
         if(value && field.name && field.config.type !== "Button") {
           values[field.name] = value;
         }
@@ -331,67 +342,3 @@ Biohacking.FormBuilder = function(){
   };
   
 };
-
-Biohacking.TrackFormBuilder = function() {
-  
-  this.layout = {
-
-     sections:[
-     {
-       hidden: true,
-       fields: [{
-         "class": "display",
-         message: 'Atividade inserida com sucesso!',
-         type: 'Display'
-       }]
-     },
-      {
-        fields: [{
-          name: 'kind',
-          mandatory: true,
-          type: 'Lookup',
-          options: Biohacking.KIND
-        }]
-      },
-      {
-        hidden: true,
-        fields: [{
-          name: 'logged_at',
-          mandatory: true,
-          type: 'Date'
-        }]
-     },{
-       hidden: true,
-       fields: [{
-          name: 'description',
-          placeholder: "Enter tags to edit",
-          type: 'Text'
-       }]
-     },{
-       fields: [{
-          name: 'Add',
-          type: 'Button'
-       }]
-     },{
-       hidden: true,
-       fields: [{
-            name: 'Delete',
-            type: 'Button'
-         },{
-           name: 'Done',
-           type: 'Button'
-        }]
-     }]
-  };
-  
-  this.afterRender = function() {
-    // var input = this.el.querySelector("#buttondescription");
-    // var description = this.findField("description");
-    // input.addEventListener("click", function(evt){
-    //   evt.preventDefault();          
-    //   description.toggle();
-    // }.bind(this) );
-  };
-  
-};
-Biohacking.TrackFormBuilder.prototype = new Biohacking.FormBuilder;

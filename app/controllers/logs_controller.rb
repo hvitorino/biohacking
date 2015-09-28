@@ -15,6 +15,12 @@ class LogsController < ApplicationController
     respond_with @log
   end
   
+  def update
+    @log = Log.find params[:id]
+    @log.update_attributes params.require(:log).permit!
+    respond_with @log
+  end
+  
   def destroy
     @log = Log.find params[:id]
     @log.destroy

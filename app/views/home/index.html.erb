@@ -4,11 +4,11 @@
     
     <div class="profile navbar">
        <div class="photo">
-         <%= image_tag current_user.picture_facebook_square %>
+         <img src="http://graph.facebook.com/10153029196192667/picture?type=square" alt="Picture?type=square">
        </div>
        <div class="info">
          <div class="name">
-           <%= current_user.name %>
+           Christiano Martins Milfont de Almeida
          </div>
          <div class="logout">
            <%= link_to "Log Out", destroy_user_session_path %>
