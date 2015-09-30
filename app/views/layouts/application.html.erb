@@ -19,21 +19,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
 
-<% if Rails.env != "production" %>
-  <script src="/assets/packages.js"></script>
-  <script src="/assets/djr.js"></script>
-  <script src="/assets/messages.js"></script>
-  <script src="/assets/dialog.js"></script>
-  <script src="/assets/grid.js"></script>
-  <script src="/assets/formEngine.js"></script>
-<% end %>
-
 <%= javascript_include_tag djr_url %>
-<%= javascript_include_tag "application" if Rails.env == "production" %>
-
-<% if Rails.env != "production" %>
-  <script src="/assets/app.js"></script>
-<% end %>
+<%= javascript_include_tag "application"%>
 
 </body>
 </html>

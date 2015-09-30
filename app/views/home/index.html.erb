@@ -3,17 +3,28 @@
   <div class="navbar navbar-fixed-top navbar-fixed-width">
     
     <div class="profile navbar">
-       <div class="photo">
-         <img src="http://graph.facebook.com/10153029196192667/picture?type=square" alt="Picture?type=square">
+       <div class="logo">
+         <img src="/assets/biologo.png" alt="Logo">
        </div>
        <div class="info">
          <div class="name">
-           Christiano Martins Milfont de Almeida
+           Biohacking
          </div>
          <div class="logout">
            <%= link_to "Log Out", destroy_user_session_path %>
          </div>
        </div>
+       
+       <div class="menu">
+
+            <%= link_to "Filter", "/filter" %>
+            
+            <%= link_to "Today", "/today" %>
+            
+            <%= link_to "Charts", "/charts" %>
+
+       </div>
+       
      </div>
     
   </div>
@@ -23,9 +34,6 @@
     <div class="filter"></div>    
     
   </div>
-  
- 
-
   
   <div class="messages"></div>
   <div name="logs"></div>

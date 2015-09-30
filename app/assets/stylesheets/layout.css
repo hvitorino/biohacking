@@ -1,20 +1,27 @@
-* {
-  /* border: 1px solid red; */
-}
-
 body {
-    background-color: #EFE8E1;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
 }
 
 .navbar.navbar-fixed-top.navbar-fixed-width {
-    background-color: #EFE8E1;
-    color: #727A7D;
-    font-size: large;
-    font-weight: bold;
+  color: #A53B3D;
+  font-size: large;
+  font-weight: bold;
+  top: 0;
+  margin-top: 0;
+  padding: 2px;
 }
 
 .navbar {
   display: flex;
+}
+
+.logo img {
+  border-radius: 100px;
+  width: 45px;
+  height: 45px;
+  background-color: #D0B690;
 }
 
 .logout {
@@ -25,6 +32,10 @@ body {
   color: #1D5272;
   font-size: 0.8em;
   text-decoration: none;
+}
+
+.info {
+  min-width: 200px;
 }
 
 .name {
@@ -53,7 +64,7 @@ input {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background: #A53B3D;
+    background-color: #A53B3D;
 }
 
 .display { 
@@ -63,8 +74,10 @@ input {
   text-align: center;
   font-family: Verdana;
   font-weight: bold;
-  color: #EFE8E1;
+  color: #fff;
   border: 1px solid #A53B3D;
+  background: #A53B3D;
+  position: relative;
 }
 
 .list-group {
@@ -85,20 +98,24 @@ input {
   font-weight: bold;
   font-family: Verdana;
   padding: 1em 1em 1em 1em;
-  border: 1px solid #EFE8E1;
+  border: 1px solid #eee;
 
   cursor: pointer;
-  background: #A53B3D;
-  color: #EFE8E1;
+
+  color: #D1B892;
+  
+  color: #A53B3D;
+  background-color: #fff;
   
 }
 
 .list-group-item.active, .list-group-item.active:focus, 
 .list-group-item.active:hover, .list-group-item:hover {      
-  color: #A53B3D;
-  background: #EFE8E1;
+  color: #D1B892;
+  background: #A53B3D;
+  border: 1px solid #ccc;
   
-  border: 2px solid #A53B3D;
+  color: #fff;
 }
 
 
@@ -107,9 +124,10 @@ input {
     border-color: rgb(147, 44, 44)!important;
     font-size: 1em;
     line-height: 1em;
-    color: #EFE8E1;
     
-    background: #581718!important
+    color: #EFE8E1;
+
+    background: #581718!important;
 }
 
 input[type="button"] {
@@ -170,6 +188,19 @@ input[type="button"] {
     padding-left: 0;
 }
 
+span.input-group-addon span {
+    line-height: 32px;
+}
+
+.display-hide-button {
+  width: 20px;
+  height: 20px;
+  background-color: #581718!important;
+  position: absolute!important;
+  right: 1px;
+  font-size: 20px;
+  border: 0;
+}
 
 @font-face{
   font-family:'Glyphicons Halflings';

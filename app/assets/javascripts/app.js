@@ -28,38 +28,136 @@ var i18n = {
 
 var formFilter = document.querySelector(".filter");
 
+Biohacking.Attribute = {};
+Biohacking.Attribute.Date = function(value){
+  return moment(value, "DD/MM/YYYY HH:mm:ss").format();
+};
+
+
+Biohacking.Model = function(attributes) {
+  this.attributes = attributes || {};
+  
+  this.get = function(attribute) {
+    var attr = this.attributes[attribute];
+    return ( attr )? attr.value : "";
+  };
+
+  this.setValues = function(json, formatted){
+    for(var key in json) {
+       var attribute = this.attributes[key];
+       if(attribute) {
+
+         var value = json[key];
+         
+         if( !formatted ) {
+           var handler = Biohacking.Attribute[attribute.type];
+           if(handler) value = handler(value);           
+         }
+         
+         this.attributes[key].value = value;
+       }
+    }
+  };
+
+  this.getValues = function() {
+    return Object.keys(this.attributes)
+                 .reduce(function(json, key){
+      var value = this.attributes[key].value;
+      if( value ) json[key] = value;
+      return json;
+    }.bind(this), {});
+  }
+  
+  this.reset = function() {
+    for(var key in this.attributes) {
+      this.attributes[key].value = "";
+    }
+  }
+
+};
+
+Biohacking.LogModel = function() {
+  Biohacking.Model.call(this);
+  this.attributes = {
+     id: {},
+     kind: {},
+     logged_at: { type: "Date" },
+     description: {}
+  };
+}
+
+// var attributes = {
+//    logged_at: { type: "Date" },
+//    description: { type: "string" }
+// };
+// var log = new Biohacking.Model(attributes);
+// log.setValues({ 
+//     display: "mensagem qualquer",
+//     description: "#vine",
+//     logged_at: "29/09/2015"
+// });
+// log.getValues();
+
+
+
 Biohacking.TrackFormBuilder = function() {
+  
+  this.resetModel = function() {
+    this._model.reset();
+  };
+  
+  this.loadModel = function(json) {
+    this._model.setValues(json, true);
+  };
 
   var logsController = new LogsController;
   
+  this.toggleSections = function() {
+    this.sections.forEach(function(section){
+      section.toggle();
+    });
+  };
+  
+  this.displayMessage = function(message) {
+    var field = this.findField("display");
+    field.setText(message);
+  };
+  
   this.destroy = function() {
-    logsController.destroy({id: this._model.id}, function(){
-      
-      this.setModel( null );
-      
-      var field = this.findField("display");
-      field.el.innerHTML = "Registro excluído com sucesso";
-      
-      this.sections.forEach(function(section){
-        section.toggle();
-      }, this);
+
+    logsController.destroy({id: this._model.get("id") }, function(){
+
+      this.resetModel();
+      this.toggleSections();
+      this.findField("kind").deselectAll();
+      this.displayMessage("Registro excluído com sucesso");
+      this.findField("display").getParent().toggle();
       
     }.bind(this) );
   };
   
   this.done = function() {
     
-    var description = this.findField("description");
-    this._model.description = description.getValue();
-    
-    logsController.update(this._model, function(){
+    logsController.update(this._model.getValues(), function(){
       
-      this.setModel( null );
-      this.sections.forEach(function(section){
-        section.toggle();
-      }, this);
+      this.resetModel();
+      this.toggleSections();
+      this.findField("kind").deselectAll();
       
     }.bind(this) );
+  };
+  
+  this.create = function() {
+
+      logsController.create( this._model.getValues(), function(xhr) {
+        
+        this.loadModel( JSON.parse(xhr.responseText) );
+        this.toggleSections();
+
+        this.displayMessage( Biohacking.KIND[this._model.attributes.kind.value] );
+        
+      }.bind(this));
+      
   };
   
   this.layout = {
@@ -114,28 +212,19 @@ Biohacking.TrackFormBuilder = function() {
     
     this.findField("kind").register({
       selected: {
-        handler:function(){
-          logsController.create(this.getValues(), function(xhr) {
-            
-            this.setModel( JSON.parse(xhr.responseText) );
-            
-            var field = this.findField("display");
-            field.el.innerHTML = field.el.innerHTML + "<div>" + Biohacking.KIND[this._model.kind] + "</div>";
-            
-            this.sections.forEach(function(section){
-              section.toggle();
-            }, this);
-            
-          }.bind(this));
-        },
+        handler: this.create,
         scope: this
       }
     });
     
+    var model = new Biohacking.LogModel;
+    model.reset();
+    this.setModel(model);
+    
   };
   
 };
-Biohacking.TrackFormBuilder.prototype = new Biohacking.FormBuilder;
+Biohacking.TrackFormBuilder.prototype = new Biohacking.form.Builder;
 
 formBuilder = new Biohacking.TrackFormBuilder;
 formFilter.appendChild( formBuilder.render(window.layout).el );
