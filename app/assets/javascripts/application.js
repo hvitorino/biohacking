@@ -1,16 +1,9 @@
 //
-//= require packages
-//= require djr
-//= require form/fields/Field
-//= require form/fields/Text
-//= require form/fields/Button
-//= require form/fields/Date
-//= require form/fields/Display
-//= require form/fields/LookupOption
-//= require form/fields/Lookup
-//= require form/Section
-//= require form/Builder
-//= require messages
-//= require dialog
-//= require grid
-//= require app
+//= require ext-all
+//= require_tree ./app/model
+//= require_tree ./app/store
+//= require_tree ./app/view
+//= require_tree ./app/controller
+//= require ./app/view/Grid
+//= require appExt
+
