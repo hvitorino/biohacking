@@ -1,31 +1,39 @@
 <% if user_signed_in? %>
   
-  <div class="head">
+  <div class="navbar navbar-fixed-top navbar-fixed-width">
     
-    <div class="profile">
-       <div class="photo">
-         <%= image_tag current_user.picture_facebook_square %>
+    <div class="profile navbar">
+       <div class="logo">
+         <img src="/assets/biologo.png" alt="Logo">
        </div>
        <div class="info">
          <div class="name">
-           <%= current_user.name %>
+           Biohacking
          </div>
          <div class="logout">
            <%= link_to "Log Out", destroy_user_session_path %>
          </div>
        </div>
+       
+       <div class="menu">
+
+            <%= link_to "Filter", "/filter" %>
+            
+            <%= link_to "Today", "/today" %>
+            
+            <%= link_to "Charts", "/charts" %>
+
+       </div>
+       
      </div>
     
   </div>
   
-  <div class="main">
+  <div class="container main">
     
     <div class="filter"></div>    
     
   </div>
-  
- 
-
   
   <div class="messages"></div>
   <div name="logs"></div>

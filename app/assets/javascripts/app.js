@@ -226,5 +226,5 @@ Biohacking.TrackFormBuilder = function() {
 };
 Biohacking.TrackFormBuilder.prototype = new Biohacking.form.Builder;
 
-formBuilder = new Biohacking.TrackFormBuilder;
-formFilter.appendChild( formBuilder.render(window.layout).el );
+//formBuilder = new Biohacking.TrackFormBuilder;
+//formFilter.appendChild( formBuilder.render(window.layout).el );
