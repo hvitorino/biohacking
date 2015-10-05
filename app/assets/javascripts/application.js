@@ -1,9 +1,8 @@
 //
-//= require ext-all
-//= require_tree ./app/model
-//= require_tree ./app/store
-//= require_tree ./app/view
-//= require_tree ./app/controller
-//= require ./app/view/Grid
-//= require appExt
-
+//= require packages
+//= require djr
+//= require messages
+//= require dialog
+//= require formEngine
+//= require grid
+//= require app

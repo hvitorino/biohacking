@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   
   resources :logs
   
+  get 'extjs', to: "home#extjs"
+  
   root 'home#index'
   
 end
