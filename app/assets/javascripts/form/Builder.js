@@ -1,6 +1,21 @@
 //http://fullcalendar.io/
 
 Biohacking.form.Builder = function(){
+  
+  this._listeners = {};
+  
+  this.register = function( events ) {
+    Object.keys(events).forEach(function(event) {
+      this._listeners[event] = events[event];
+    }, this);
+  };
+  
+  this.fireEvent = function(event, options) {
+    var listener = this._listeners[event];
+    if( listener ) {
+      listener.handler.call( listener.scope || this, this, options );
+    }
+  };
 
   this.layout;
   this.sections = [];
@@ -25,6 +40,10 @@ Biohacking.form.Builder = function(){
       section.fields.forEach(this.binding, this);
     }, this);
     
+  };
+  
+  this.hide = function() {
+    this.el.style.display = "none";
   };
   
   this.findField = function(fieldName) {
