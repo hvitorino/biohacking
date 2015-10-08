@@ -1,3 +1,5 @@
+/* Hack, Log, Analize, Hack */
+
 Biohacking.KIND = {
   11: "BATH",
   9: "DEFECATE",

@@ -15,7 +15,7 @@ Ext.Ajax.extraParams = {
 
 Ext.application({
     name: 'Biohacking',
-    appFolder: '/assets/app',
+    appFolder: '/assets/appExt',
     autoCreateViewport: 'Biohacking.view.Main',
     controllers: ['Logs']
 });

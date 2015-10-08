@@ -1,6 +1,6 @@
 //
-//= require packages
 //= require djr
+//= require biohacking/packages
 //= require form/fields/Field
 //= require form/fields/Text
 //= require form/fields/Button
