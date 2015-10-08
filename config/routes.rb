@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   
   get 'extjs', to: "home#extjs"
   
+  get 'angular', to: "home#angular"
+  
   root 'home#index'
   
 end

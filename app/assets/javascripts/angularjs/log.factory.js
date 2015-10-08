@@ -6,7 +6,7 @@
   };
 
   angular
-      .module('app')
+      .module('Biohacking')
       .factory('LogFactory', LogFactory);
         
 })();

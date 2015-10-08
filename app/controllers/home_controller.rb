@@ -6,4 +6,7 @@ class HomeController < ApplicationController
   def extjs
   end
   
+  def angular
+  end
+  
 end

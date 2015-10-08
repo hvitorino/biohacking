@@ -16,7 +16,7 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body ng-app="Biohacking">
 
   <% if user_signed_in? %>
 
@@ -49,16 +49,16 @@
 
     </div>
 
-    <div class="container main">
+    <div class="container main" ng-controller="LogController as logController">
 
       <div class="filter"></div>
 
-      <div class="list">
-
-        <div class="row">
+      <div class="list" ng-repeat="log in logController.logs">
+        
+        <div class="row" data-id="{{log.id}}">
 
           <div class="kind-info">
-            <div class="kind"><a>WORKOUT</a></div>
+            <div class="kind"><a> {{logController.getKind(log.kind)}} </a></div>
             <div class="date">28/09/2015 06:00</div>
           </div>
 
@@ -70,44 +70,9 @@
 
         </div>
 
-        <div class="row">
-
-          <div class="kind-info">
-            <div class="kind"><a>EAT</a></div>
-            <div class="date">28/09/2015 07:00</div>
-          </div>
-
-          <div class="tags">
-            <a>#coffee</a>
-            <a>#bulletproof</a>
-            <a>#coconutoil</a>
-            <a>#mct</a>
-            <a>#butter</a>
-          </div>
-
-        </div>
-
-        <div class="row">
-
-          <div class="kind-info">
-            <div class="kind"><a>EAT</a></div>
-            <div class="date">28/09/2015 19:00</div>
-          </div>
-
-          <div class="tags">
-            <a>#meat</a>
-            <a>#pork</a>
-            <a>#500g</a>
-          </div>
-
-        </div>
-
       </div>
 
     </div>
-
-    <div class="messages"></div>
-    <div name="logs"></div>
 
   <% else %>
     <%= link_to "Ola, preciso me logar ", new_user_session_path %>
@@ -115,8 +80,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
 
-<%= javascript_include_tag djr_url %>
-<%= javascript_include_tag "application"%>
+<%= javascript_include_tag "appAngular"%>
 
 </body>
 </html>
