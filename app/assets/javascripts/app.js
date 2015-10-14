@@ -26,9 +26,7 @@ var i18n = {
     "description": "Descrição"
   }
 };
-  
 
-var formFilter = document.querySelector(".filter");
 
 Biohacking.Attribute = {};
 Biohacking.Attribute.Date = function(value){
@@ -88,145 +86,28 @@ Biohacking.LogModel = function() {
   };
 }
 
-// var attributes = {
-//    logged_at: { type: "Date" },
-//    description: { type: "string" }
-// };
-// var log = new Biohacking.Model(attributes);
-// log.setValues({ 
-//     display: "mensagem qualquer",
-//     description: "#vine",
-//     logged_at: "29/09/2015"
-// });
-// log.getValues();
+Biohacking.App = function(){
 
-
-
-Biohacking.TrackFormBuilder = function() {
-  
-  this.resetModel = function() {
-    this._model.reset();
-  };
-  
-  this.loadModel = function(json) {
-    this._model.setValues(json, true);
+  this.newLog = function(){
+      this._formBuilder.show();
   };
 
-  var logsController = new LogsController;
-  
-  this.toggleSections = function() {
-    this.sections.forEach(function(section){
-      section.toggle();
-    });
+  this.created = function(form, log){
+     this._formBuilder.hide();
   };
-  
-  this.displayMessage = function(message) {
-    var field = this.findField("display");
-    field.setText(message);
-  };
-  
-  this.destroy = function() {
 
-    logsController.destroy({id: this._model.get("id") }, function(){
+  this._formFilter = document.querySelector(".filter");
 
-      this.resetModel();
-      this.toggleSections();
-      this.findField("kind").deselectAll();
-      this.displayMessage("Registro excluído com sucesso");
-      this.findField("display").getParent().toggle();
-      
-    }.bind(this) );
-  };
+  this._formBuilder = new Biohacking.form.LogCreate;
+  this._formBuilder.render();
+  this._formBuilder.register({
+    created: {
+      handler: this.created, scope: this
+    }
+  });
   
-  this.done = function() {
-    
-    logsController.update(this._model.getValues(), function(){
-      
-      this.resetModel();
-      this.toggleSections();
-      this.findField("kind").deselectAll();
-      
-    }.bind(this) );
-  };
-  
-  this.create = function() {
+  this._formFilter.appendChild( this._formBuilder.el );
 
-      logsController.create( this._model.getValues(), function(xhr) {
-        
-        this.loadModel( JSON.parse(xhr.responseText) );
-        this.toggleSections();
+}
 
-        this.displayMessage( Biohacking.KIND[this._model.attributes.kind.value] );
-        
-      }.bind(this));
-      
-  };
-  
-  this.layout = {
-
-     sections:[
-     {
-       hidden: true,
-       fields: [{
-         name: 'display',
-         "class": "display",
-         message: 'Atividade inserida com sucesso!',
-         type: 'Display'
-       }]
-     },
-      {
-        fields: [{
-          name: 'kind',
-          mandatory: true,
-          type: 'Lookup',
-          options: Biohacking.KIND
-        }]
-      },
-      {
-        hidden: true,
-        fields: [{
-          name: 'logged_at',
-          mandatory: true,
-          type: 'Date'
-        }]
-     },{
-       hidden: true,
-       fields: [{
-          name: 'description',
-          placeholder: "Enter tags to edit",
-          type: 'Text'
-       }]
-     },{
-        hidden: true,
-        fields: [{
-            name: 'Delete',
-            type: 'Button',
-            handler: this.destroy.bind(this)
-         },{
-           name: 'Done',
-           type: 'Button',
-           handler: this.done.bind(this)
-        }]
-     }]
-  };
-  
-  this.afterRender = function() {
-    
-    this.findField("kind").register({
-      selected: {
-        handler: this.create,
-        scope: this
-      }
-    });
-    
-    var model = new Biohacking.LogModel;
-    model.reset();
-    this.setModel(model);
-    
-  };
-  
-};
-Biohacking.TrackFormBuilder.prototype = new Biohacking.form.Builder;
-
-//formBuilder = new Biohacking.TrackFormBuilder;
-//formFilter.appendChild( formBuilder.render(window.layout).el );
+app = new Biohacking.App();

@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   
   get 'angular', to: "home#angular"
   
-  root 'home#index'
+  root 'home#angular'
   
 end

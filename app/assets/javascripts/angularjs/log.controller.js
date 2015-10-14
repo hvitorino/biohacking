@@ -1,22 +1,22 @@
 (function() {
     'use strict';
 
-  function LogController($scope, $http) {
+  function LogController($scope, logs) {
+
+    $scope.logs = logs.query();
     
-    $scope.logs = [];
-    $http.get('/logs.json').success(function(response) {
-        $scope.logs = response.data
-        console.log($scope.logs);
-    });
+    // $http.get('/logs.json').success(function(response) {
+    //     $scope.logs = response.data
+    //     console.log($scope.logs, response.data);
+    // });
     
     $scope.getKind = function(kind) {
-      return Biohacking.KIND[kind];
+      //return Biohacking.KIND[kind];
+      return teste;
     };
     
   };
 
-  angular
-      .module('Biohacking')
-      .controller('LogController', LogController);
+  Biohacking.controller('LogController', ['$scope', "logsServices", LogController]);
 
 })();

@@ -53,19 +53,16 @@
 
       <div class="filter"></div>
 
-      <div class="list" ng-repeat="log in logController.logs">
+      <div class="list" >
         
-        <div class="row" data-id="{{log.id}}">
+        <div class="row" ng-repeat="log in logs" ng-click="this.$location.path('/logs/'+log.id);">
 
-          <div class="kind-info">
-            <div class="kind"><a> {{logController.getKind(log.kind)}} </a></div>
+          <div class="kind-info" data-id="{{log.id}}">
+            <div class="kind"><a> {{getKind(log.kind)}} </a></div>
             <div class="date">28/09/2015 06:00</div>
           </div>
 
-          <div class="tags">
-            <a>#calisthenics</a>
-            <a>#press</a>
-            <a>#push up</a>
+          <div class="tags" ng-bind-html="this.formatTags()">
           </div>
 
         </div>
@@ -73,12 +70,14 @@
       </div>
 
     </div>
+    
+    <div ng-view class="log-edit" >
+      {{this.log.id}}
+    </div>
 
   <% else %>
     <%= link_to "Ola, preciso me logar ", new_user_session_path %>
   <% end %>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
 
 <%= javascript_include_tag "appAngular"%>
 

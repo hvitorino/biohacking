@@ -2,9 +2,9 @@
 //   $http.defaults.headers.common['X-CSRF-Token'] = document.querySelector("meta[name='csrf-token']").content;
 // });
 
-angular.module('Biohacking', []);
+Biohacking = angular.module('Biohacking', ['ngRoute', 'ngResource', 'ngSanitize']);
 
-angular.module('Biohacking').factory('httpRequestInterceptor', function () {
+Biohacking.factory('httpRequestInterceptor', function () {
   return {
     request: function (config) {
       config.headers['X-CSRF-Token'] =  document.querySelector("meta[name='csrf-token']").content;
@@ -13,6 +13,25 @@ angular.module('Biohacking').factory('httpRequestInterceptor', function () {
   };
 });
 
-angular.module('Biohacking').config(function ($httpProvider) {
+Biohacking.config(function ($httpProvider) {
   $httpProvider.interceptors.push('httpRequestInterceptor');
 });
+
+Biohacking.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
+    // $routeProvider
+    //   .when('/logs/:id', {
+    //     controller: 'LogController',
+    //     resolve: {
+    //       'Strategy': 'edit'
+    //     }
+    //   })
+    //   .when('/', {
+    //     controller: 'LogController'
+    //   });
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
