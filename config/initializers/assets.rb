@@ -11,7 +11,3 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.precompile += %w( moment-with-locales.min.js)
-Rails.application.config.assets.precompile += %w( angular.min.js )
-Rails.application.config.assets.precompile += %w( angular-route.min.js )
-Rails.application.config.assets.precompile += %w( angular-resource.min.js )
-Rails.application.config.assets.precompile += %w( angular-sanitize.min.js )
