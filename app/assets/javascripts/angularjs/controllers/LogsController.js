@@ -1,9 +1,8 @@
 (function() {
     'use strict';
 
-  function LogController($scope, logs, $interpolate, $location) {
 
-    $scope.logs = logs.query();
+  function LogController($scope, LogsServices, $interpolate, $location, $route) {
     
     $scope.$interpolate = $interpolate;
     $scope.$location = $location;
@@ -22,9 +21,13 @@
       4: "WORKOUT"
     };
     
-    $scope.edit = function() {
-      debugger;
-
+    $scope.create = function(kind) {
+      this.logController.logsServices.save({
+        kind: kind
+      }, function(model) {
+         this.logController.$location.path("/logs/" + model.id);
+      }.bind(this));
+      
     };
     
     $scope.getKind = function(kind) {
@@ -40,25 +43,52 @@
         }, this).join(" ") : "";
       
     };
+    
+    $scope.logs = LogsServices.query(function(list) {
+      
+      if($route.current.params.id) {
+        this.model = list.filter(function(log){ return log.id == $route.current.params.id })[0];
+      }
+      
+    }.bind(this));
+    
+    this.$route = $route;
+    this.$location = $location;
+    this.logsServices = LogsServices;
+    
+    this.reload = function(){
+      this.$location.path("/");
+      $route.reload();
+    }.bind(this);
+    
+    this.done = function() {
+      this.model.$update(this.reload);
+    };
+    
+    this.destroy = function() {
+      this.model.$delete(this.reload);
+    };
         
   };
-
+  
   Biohacking.config(['$routeProvider',
     function($routeProvider) {
       $routeProvider
+        .when('/', {
+          controller: 'LogController',
+          controllerAs: 'logController',
+          templateUrl: 'loglist.html'
+        })
         .when('/logs/:id', {
-          controller: 'EditLogController',
-          controllerAs: 'editLog',
-          template: "log-edit"
+          controller: 'LogController',
+          controllerAs: 'logController',
+          templateUrl: 'loglist.html'
+        })
+        .when('/add', {
+          controller: 'LogController',
+          controllerAs: 'logController',
+          templateUrl: 'add.html'
         });
-
-  }]).controller('LogController', ['$scope', "LogsServices", '$interpolate', '$location', LogController]);
-  
-  function EditLogController($scope, logs, $routeParams, $location) {    
-    $scope.log = $routeParams;
-    debugger;
-  };
-  
-  Biohacking.controller('EditLogController', ['$scope', "LogsServices", '$routeParams', '$location', EditLogController]);
+  }]).controller('LogController', ['$scope', "LogsServices", '$interpolate', '$location', '$route', LogController]);
 
 })();

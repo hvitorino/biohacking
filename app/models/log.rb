@@ -19,6 +19,8 @@ class Log < ActiveRecord::Base
     query = query.where(kind: params[:kind]) if params[:kind].present?
     query = query.where("deleted_at IS NULL")
     
+    query = query.where("logged_at > now()::date")
+    
     #logged_at_begin: "2015", logged_at_end: "2015"
     
     query.order(:logged_at)

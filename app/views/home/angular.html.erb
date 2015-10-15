@@ -3,6 +3,11 @@
 <head>
   <title>Biohacking</title>
   
+  <%= favicon_link_tag 'favicon/android-icon-192x192.png', rel: 'icon', type: 'image/png', sizes: "192x192" %>
+  <%= favicon_link_tag 'favicon/favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: "32x32" %>
+  <%= favicon_link_tag 'favicon/favicon-96x96.png', rel: 'icon', type: 'image/png', sizes: "96x96" %>
+  <%= favicon_link_tag 'favicon/favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: "16x16" %>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
@@ -15,6 +20,7 @@
 -->
 
   <%= csrf_meta_tags %>
+  
 </head>
 <body ng-app="Biohacking">
 
@@ -33,13 +39,18 @@
            <div class="logout">
              <%= link_to "Log Out", destroy_user_session_path %>
            </div>
+           
+           <div class="add">
+             <%= link_to "+", "/add" %>
+           </div>
+           
          </div>
 
          <div class="menu">
 
               <%= link_to "Filter", "/filter" %>
 
-              <%= link_to "Today", "/today" %>
+              <%= link_to "Today", "/" %>
 
               <%= link_to "Charts", "/charts" %>
 
@@ -49,37 +60,68 @@
 
     </div>
 
-    <div class="container main" ng-controller="LogController as logController">
-
-      <div class="filter"></div>
-
-      <div class="list" >
-        
-        <div class="row" ng-repeat="log in logs" ng-click="this.$location.path('/logs/'+log.id);">
-
-          <div class="kind-info" data-id="{{log.id}}">
-            <div class="kind"><a> {{getKind(log.kind)}} </a></div>
-            <div class="date">28/09/2015 06:00</div>
-          </div>
-
-          <div class="tags" ng-bind-html="this.formatTags()">
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-    
-    <div ng-view class="log-edit" >
-      {{this.log.id}}
+    <div class="container main"> 
+      <div ng-view></div>
     </div>
 
   <% else %>
     <%= link_to "Ola, preciso me logar ", new_user_session_path %>
   <% end %>
 
+  <script type="text/ng-template" id="logedit.html">    
+    <form class="bioform">
+      <div class="section" style="display: flex;">
+          <div name="display" class="display">
+             <div>{{ this.getKind( logController.model.kind )  }}</div>
+          </div>
+      </div>
+      <div class="section" style="display: flex;">
+          <div class="input-group date">
+            <input id="logged_at" name="logged_at" ng-model="logController.model.logged_at" class="form-control field" placeholder="Enter text" mandatory="true">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+      </div>
+      <div class="section" style="display: flex;">
+          <input id="description" name="description" ng-model="logController.model.description" class="form-control field" placeholder="Enter tags to edit" mandatory="false">
+      </div>
+      <div class="section" style="display: flex;">
+          <input id="Delete" name="Delete" class="form-control btn btn-primary" placeholder="Enter text" mandatory="false" type="button" value="Delete" ng-click="logController.destroy()">
+          <input id="Done" name="Done" class="form-control btn btn-primary btn-done" placeholder="Enter text" mandatory="false" type="button" value="Done" ng-click="logController.done()">
+      </div>
+    </form>
+    
+    
+  </script>
+  
+  <script type="text/ng-template" id="loglist.html">
+    <div class="list">
+    
+      <div ng-show="logController.model.id" ng-include="'logedit.html'"></div>
+    
+      <div class="row" ng-repeat="log in logs track by log.id" ng-click="logController.model = log">
+
+        <div class="kind-info" data-id="{{log.id}}">
+          <div class="kind"><a> {{getKind(log.kind)}} </a></div>
+          <div class="date">28/09/2015 06:00</div>
+        </div>
+
+        <div class="tags" ng-bind-html="this.formatTags()">
+        </div>
+
+      </div>
+
+    </div>
+  </script>
+  
+  <script type="text/ng-template" id="add.html">
+  <div class="list-group">
+    <div class="list-group-item" ng-repeat="(key, value) in KIND" ng-click="create(key)">{{value}}</div>
+  </div>
+  </script>
+    
+
 <%= javascript_include_tag "appAngular"%>
+
 
 </body>
 </html>

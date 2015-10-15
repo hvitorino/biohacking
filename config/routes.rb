@@ -9,8 +9,14 @@ Rails.application.routes.draw do
     get "sign_up",  :to => "devise/registrations#new"
     get "sign_out", :to => "devise/sessions#destroy"
   end
-  
-  resources :logs
+
+  constraints(format: "json") do
+    resources :logs
+  end
+
+  constraints(format: "html") do
+    get '*path', to: 'home#angular'
+  end
   
   get 'extjs', to: "home#extjs"
   
