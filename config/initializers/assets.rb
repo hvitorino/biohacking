@@ -10,4 +10,8 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-Rails.application.config.assets.precompile += %w( moment-with-locales.min.js angular.min.js angular-route.min.js angular-resource.min.js angular-sanitize.min.js ")
+Rails.application.config.assets.precompile += %w( moment-with-locales.min.js)
+Rails.application.config.assets.precompile += %w( angular.min.js )
+Rails.application.config.assets.precompile += %w( angular-route.min.js )
+Rails.application.config.assets.precompile += %w( angular-resource.min.js )
+Rails.application.config.assets.precompile += %w( angular-sanitize.min.js )
