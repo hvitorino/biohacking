@@ -5,6 +5,11 @@ body {
     font-family: 'PT Sans', sans-serif;
 }
 
+p.ng-scope {
+    font-family: 'PT Sans', sans-serif;
+    text-align: center;
+}
+
 .add {
     position: absolute;
     top: 6px;
@@ -29,7 +34,7 @@ body {
 .menu a {
     color: #D0B690;
     text-decoration: none;
-    font-family: PT Sans;
+    font-family: 'PT Sans', sans-serif;
     margin: 1em;
 }
 
