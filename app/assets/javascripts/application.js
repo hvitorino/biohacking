@@ -8,6 +8,10 @@
 //= require angularjs/services/LogsServices
 //= require angularjs/controllers/LogsController
 
-angular.element(document).ready(function() {
-  angular.bootstrap(document, ['Biohacking']);
-});
+;(function() {
+  
+  angular.element(document).ready(function() {
+    angular.bootstrap(document, ['Biohacking']);
+  });
+
+})();
