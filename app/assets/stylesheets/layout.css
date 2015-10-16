@@ -11,27 +11,19 @@ body {
     left: 215px;
 }
 
-.add a {
-    background: #1D5272;
-    border-radius: 100%;
-    width: 40px;
-    padding: 5px;
-    position: absolute;
-    text-align: center;
-    font-size: 1.5em;
-    text-decoration: none;
-    color: #fff;
-    
-    
-    background: #1D5272;
-    border-radius: 100%;
-    width: 40px;
-    padding: 0px;
-    position: absolute;
-    text-align: center;
-    font-size: 2em;
-    text-decoration: none;
-    color: #fff;
+.add a {    
+  background: #1D5272;
+  border-radius: 100%;
+  width: 49px;
+  padding: 0px;
+  position: absolute;
+  text-align: center;
+  font-size: 1.5em;
+  text-decoration: none;
+  color: #fff;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
 }
 
 .menu a {
