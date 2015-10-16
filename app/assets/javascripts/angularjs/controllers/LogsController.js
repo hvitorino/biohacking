@@ -1,6 +1,3 @@
-(function() {
-    'use strict';
-
 
   function LogController($scope, LogsServices, $interpolate, $location, $route) {
     
@@ -90,5 +87,3 @@
           templateUrl: 'add.html'
         });
   }]).controller('LogController', ['$scope', "LogsServices", '$interpolate', '$location', '$route', LogController]);
-
-})();

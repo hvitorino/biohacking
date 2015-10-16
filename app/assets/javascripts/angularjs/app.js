@@ -1,26 +1,18 @@
-var Biohacking = angular.module('Biohacking', ['ngRoute', 'ngResource', 'ngSanitize']);
+;var Biohacking = angular.module('Biohacking', ['ngRoute', 'ngResource', 'ngSanitize']);
 
-(function() {
-  
-  Biohacking.factory('httpRequestInterceptor', function () {
-    return {
-      request: function (config) {
-        config.headers['X-CSRF-Token'] =  document.querySelector("meta[name='csrf-token']").content;
-        return config;
-      }
-    };
-  });
-
-  Biohacking.config(function ($httpProvider) {
-    $httpProvider.interceptors.push('httpRequestInterceptor');
-  });
-
-  Biohacking.config(['$routeProvider', '$locationProvider',
-    function($routeProvider, $locationProvider) {
-      $locationProvider.html5Mode({
-          enabled: true,
-          requireBase: false
-      });
-  }]);
-  
-})();
+Biohacking.factory('httpRequestInterceptor', function () {
+  return {
+    request: function (config) {
+      config.headers['X-CSRF-Token'] =  document.querySelector("meta[name='csrf-token']").content;
+      return config;
+    }
+  };
+}).config(function ($httpProvider) {
+  $httpProvider.interceptors.push('httpRequestInterceptor');
+}).config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
