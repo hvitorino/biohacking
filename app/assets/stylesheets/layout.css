@@ -7,8 +7,8 @@ body {
 
 .add {
     position: absolute;
-    top: 32px;
-    left: 220px;
+    top: 6px;
+    left: 215px;
 }
 
 .add a {
@@ -25,11 +25,11 @@ body {
     
     background: #1D5272;
     border-radius: 100%;
-    width: 30px;
+    width: 40px;
     padding: 0px;
     position: absolute;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 2em;
     text-decoration: none;
     color: #fff;
 }

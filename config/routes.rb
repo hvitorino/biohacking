@@ -10,9 +10,7 @@ Rails.application.routes.draw do
     get "sign_out", :to => "devise/sessions#destroy"
   end
 
-  constraints(format: "json") do
-    resources :logs
-  end
+  resources :logs
 
   constraints(format: "html") do
     get '*path', to: 'home#angular'
