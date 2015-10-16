@@ -21,16 +21,8 @@
 
   <%= csrf_meta_tags %>
   
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" type="text/javascript"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js" type="text/javascript"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-resource.min.js" type="text/javascript"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js" type="text/javascript"></script>
-    
-  <%= javascript_include_tag "moment-with-locales.min.js", type: "text/javascript" %>
-  <%= javascript_include_tag "application", type: "text/javascript" %>
-  
 </head>
-<body ng-app="Biohacking">
+<body>
 
   <% if user_signed_in? %>
 
@@ -127,6 +119,14 @@
   </div>
   </script>
 
-
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-resource.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js" type="text/javascript"></script>
+    
+  <%= javascript_include_tag "moment-with-locales.min.js", type: "text/javascript" %>
+  <%= javascript_include_tag "application", type: "text/javascript" %>
+  
 </body>
 </html>
