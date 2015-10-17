@@ -31,6 +31,11 @@ p.ng-scope {
   vertical-align: middle;
 }
 
+.menu {
+    vertical-align: middle;
+    margin: auto;
+}
+
 .menu a {
     color: #D0B690;
     text-decoration: none;
@@ -56,6 +61,8 @@ p.ng-scope {
 
 .kind-info {
     flex: 1 30%;
+    vertical-align: middle;
+    margin: auto;
 }
 
 .tags {
@@ -91,10 +98,17 @@ p.ng-scope {
   padding: 2px;
   
   background-color: #F2F2F2;
+  
+  
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  
 }
 
 .navbar {
   display: flex;
+  height: 60px;
 }
 
 .logo img {
@@ -129,8 +143,9 @@ p.ng-scope {
   font-size: 1.5em;
 }
 
-.bioform {
-  
+.container.main {
+    top: 64px;
+    position: relative;
 }
 
 input {
@@ -205,9 +220,17 @@ input {
   background: #A53B3D;
   border: 1px solid #ccc;
   color: #fff;
-  
-  
+
 }
+
+@media only screen 
+  and (max-device-width: 568px) {
+    .row {
+        padding: 10px;
+        margin: 0;
+    }
+  }
+
 
 .btn-primary, .btn-primary.active, .btn-primary:active {
     background: rgb(108, 3, 6)!important;

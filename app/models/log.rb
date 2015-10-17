@@ -12,6 +12,7 @@ class Log < ActiveRecord::Base
   DEFECATE=9
   SEX=10
   BATH=11
+  PARTY=12
   
   def self.search user, params
     query = where(user_id: user.id)

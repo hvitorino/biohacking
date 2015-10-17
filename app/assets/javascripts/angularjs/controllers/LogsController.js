@@ -9,6 +9,7 @@ function LogController($scope, LogsServices, $interpolate, $location, $route) {
     3: "DRINK",
     2: "EAT",
     5: "HUNGRY",
+    12: "PARTY",
     10: "SEX",
     6: "SLEEP",
     8: "URINATE",  
@@ -58,9 +59,7 @@ function LogController($scope, LogsServices, $interpolate, $location, $route) {
   }.bind(this);
   
   this.done = function() {
-    //moment("16/10/2015 14:47", "DD/MM/YYYY HH:mm").format()
-    debugger;
-    
+    //moment("16/10/2015 14:47", "DD/MM/YYYY HH:mm").format()    
     this.model.$update(this.reload);
   };
   
