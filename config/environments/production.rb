@@ -9,8 +9,8 @@ Rails.application.configure do
             :address              => "smtp.gmail.com",
             :port                 => 587,
             :domain               => "biohacking.herokuapp.com",
-            :user_name            => "teste@milfont.org",
-            :password             => "147/258*369",
+            :user_name            => ENV['GMAIL_USER'],
+            :password             => ENV['GMAIL_PASS'],
             :authentication       => "plain",
             :enable_starttls_auto => true
   }
