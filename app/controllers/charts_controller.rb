@@ -13,21 +13,22 @@ class ChartsController < ApplicationController
          [250, 250, 500, 500]
       ]
     }
+
+
+
+  
 =end
 
-  @config = {
-    user_id: 1,
-    serieA: {
-      serie: "WEIGHT",
-      id: 1,
-      tags: "%100%"
-    },
-    serieB: {
-      serie: "DRINK",
-      id: 3,
-      tags: "%2l%"
-    }
+@config = {
+  serieA: {
+    serie: "WEIGHT",
+    id: 1
+  },
+  serieB: {
+    serie: "DRINK",
+    id: 3
   }
+}
 
     
     @config[:user_id] = current_user.id
