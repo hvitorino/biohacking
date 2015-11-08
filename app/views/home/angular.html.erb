@@ -53,6 +53,8 @@
               <%= link_to "Filter", "/filter" %>
 
               <%= link_to "Today", "/" %>
+              
+              <%= link_to "Charts", "/charts" %>
 
          </div>
 
@@ -67,6 +69,14 @@
   <% else %>
     <%= link_to "Ola, preciso me logar ", new_user_session_path %>
   <% end %>
+
+  <script type="text/ng-template" id="charts.html">
+  
+    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
+      chart-legend="true" chart-series="series" chart-click="onClick"></canvas>
+  
+  </script>
+  
 
   <script type="text/ng-template" id="logedit.html">    
     <form class="bioform">
@@ -112,7 +122,7 @@
 
     </div>
     
-    <p ng-hide="logs.length">You didn't log activity today.</p>
+    <p ng-hide="logs.length">You didnt log activity today.</p>
     
   </script>
   
@@ -127,6 +137,8 @@
       Filter 
 
   </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" type="text/javascript"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js" type="text/javascript"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" type="text/javascript"></script>

@@ -1,4 +1,4 @@
-;var Biohacking = angular.module('Biohacking', ['ngRoute', 'ngResource', 'ngSanitize']);
+;var Biohacking = angular.module('Biohacking', ['ngRoute', 'ngResource', 'ngSanitize', 'chart.js']);
 
 Biohacking.factory('httpRequestInterceptor', function () {
   return {
