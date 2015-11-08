@@ -10,8 +10,8 @@
            <a href="/" class="name">
              Biohacking
            </a>
-           <div class="logout" ng-controller="LogoutController as logoutController">
-             <%= link_to "Log Out", destroy_user_session_path, :'ng-click' => 'logoutController.reload()' %>
+           <div class="logout">
+             <a href="/users/sign_out"  target="_self">Log Out</a>
            </div>
            
            <div class="add">
