@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  
+
   devise_scope :users do
     get '/users/auth/facebook' => 'users/omniauth_callbacks#passthru'
     get '/users/auth/facebook/callback' => 'users/omniauth_callbacks#passthru'
@@ -15,11 +15,11 @@ Rails.application.routes.draw do
   constraints(format: "html") do
     get '*path', to: 'home#angular'
   end
-  
+
   get 'extjs', to: "home#extjs"
-  
+
   get 'angular', to: "home#angular"
-  
-  root 'home#angular'
-  
+
+  root 'home#index'
+
 end

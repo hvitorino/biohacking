@@ -2,14 +2,14 @@
 <html>
 <head>
   <title>Biohacking</title>
-  
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
-  
-  <%= stylesheet_link_tag 'application', media: 'all' %>  
 
-<!--  
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+
+<!--
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 -->
@@ -17,8 +17,72 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <section id="index" class="center">
+    <section id="logo">
+      <div class="logo-content">
+        <%= image_tag 'biologo.png', width: '50' %>
+      </div>
+      <h1>Biohacking</h1>
+      <h2 class="description">Track. Analize. Learn</h2>
+    </section>
+    <section id="signin" class="form">
+      <main>
+        <form action="" method="" role="form">
+          <h2>Sign In</h2>
+          <div class="group">
+            <label for="">
+              Email
+              <input type="email" name="" class="input-text" required />
+            </label>
+          </div>
+          <div class="group">
+            <label for="">
+              Password
+              <input type="password" name="" class="input-text" required />
+            </label>
+          </div>
+          <div class="group option-group">
+            <label for="">
+              Remember me
+              <input type="checkbox" name="" />
+            </label>
+          </div>
+          <div class="group reset-group">
+            <a href="#">Reset Password</a>
+          </div>
+          <input type="submit" value="Log in" class="input-submit" />
+        </form>
+      </main>
+    </section>
+    <section id="signup" class="form">
+      <main>
+        <form action="" method="" role="form">
+          <h2>Sign Up</h2>
+          <div class="group">
+            <label for="">
+              Email
+              <input type="email" class="input-text" required />
+            </label>
+          </div>
+          <div class="group">
+            <label for="">
+              Password
+              <input type="password" class="input-text" required />
+            </label>
+          </div>
+          <div class="group">
+            <label for="">
+              Password confirmation
+              <input type="password" class="input-text" required />
+            </label>
+          </div>
+          <input type="submit" value="Sign up" class="input-submit" />
+        </form>
+      </main>
+    </section>
+  </section>
 
-  <% if user_signed_in? %>
+  <!-- <% if user_signed_in? %>
 
     <div class="navbar navbar-fixed-top navbar-fixed-width">
 
@@ -111,7 +175,7 @@
 
   <% else %>
     <%= link_to "Ola, preciso me logar ", new_user_session_path %>
-  <% end %>
+  <% end %> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
 
