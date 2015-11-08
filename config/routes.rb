@@ -14,13 +14,9 @@ Rails.application.routes.draw do
   
   resources :charts
 
-  constraints(format: "html") do
-    get '*path', to: 'home#angular'
-  end
-
-  get 'extjs', to: "home#extjs"
-
-  get 'angular', to: "home#angular"
+  # constraints(format: "html") do
+  #   get '*path', to: 'home#angular'
+  # end
 
   root 'home#index'
 
