@@ -29,13 +29,13 @@
     <div class="navbar navbar-fixed-top navbar-fixed-width">
 
       <div class="profile navbar">
-         <div class="logo">
+         <a href="/" class="logo">
            <%= image_tag "biologo.png" %>
-         </div>
+         </a>
          <div class="info">
-           <div class="name">
+           <a href="/" class="name">
              Biohacking
-           </div>
+           </a>
            <div class="logout" ng-controller="LogoutController as logoutController">
              <%= link_to "Log Out", destroy_user_session_path, :'ng-click' => 'logoutController.reload()' %>
            </div>
