@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   end
 
   resources :logs
+  
+  resources :charts
 
   constraints(format: "html") do
     get '*path', to: 'home#angular'
