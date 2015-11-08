@@ -1,10 +1,14 @@
 body, html {
-    background-color: #F4F4F4;
     padding: 0;
     margin: 0;
     height: 100%;
     font-family: 'PT Sans', sans-serif;
-    /*background: radial-gradient(circle at 0.78% 2.28%, #bd0d0d, transparent 100%),radial-gradient(circle at 98.2% 97%, #f23333, transparent 100%),radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);*/
+    background: url(wallpaper.png) no-repeat center center;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+
 }
 
 p.ng-scope {
@@ -381,7 +385,7 @@ span.input-group-addon span {
   padding: 10px;
   width: 50px;
   height: 50px;
-  background: #A53B3D;
+  background: #D0B690;
   border-radius: 50%;
 }
 
@@ -397,15 +401,18 @@ span.input-group-addon span {
 #logo .description {
   display: block;
   text-align: center;
-  color: #1D5272;
+  font-weight: normal;
+  color: #A53B3D;
 }
 
 .form {
   position: relative;
   padding: 15px;
   min-height: 400px;
-  background: #FFF;
-  border: 1px solid #CCC;
+  background: rgba(255,255,255,0.9);
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
