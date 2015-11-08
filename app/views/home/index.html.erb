@@ -16,7 +16,7 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="landpage-wallpaper">
   <section id="index" class="center">
     <section id="logo">
       <div class="logo-content">
@@ -27,24 +27,27 @@
     </section>
     <section id="signin" class="form">
       <main>
-        <form action="" method="" role="form">
+        <form action="/users/sign_in" method="post" accept-charset="UTF-8" class="new_user" id="new_user" role="form">
+          <input name="utf8" type="hidden" value="✓" />
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
           <h2>Sign In</h2>
           <div class="group">
-            <label for="">
+            <label for="user_email">
               Email
-              <input type="email" name="" class="input-text" required />
+              <input type="email" name="user[email]" class="input-text" id="user_email" autofocus="autofocus" required />
             </label>
           </div>
           <div class="group">
-            <label for="">
+            <label for="user_password">
               Password
-              <input type="password" name="" class="input-text" required />
+              <input type="password" name="user[password]" class="input-text" id="user_password" autocomplete="off" required />
             </label>
           </div>
           <div class="group option-group">
-            <label for="">
+            <label for="user_remember_me">
+              <input name="user[remember_me]" type="hidden" value="0" />
               Remember me
-              <input type="checkbox" name="" />
+              <input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me" />
             </label>
           </div>
           <div class="group reset-group">
@@ -56,24 +59,26 @@
     </section>
     <section id="signup" class="form">
       <main>
-        <form action="" method="" role="form">
+        <form action="/users" method="post" class="new_user" id="new_user" accept-charset="UTF-8" role="form">
+          <input name="utf8" type="hidden" value="✓" />
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
           <h2>Sign Up</h2>
           <div class="group">
-            <label for="">
+            <label for="user_email">
               Email
-              <input type="email" class="input-text" required />
+              <input type="email" name="user[email]" class="input-text" id="user-password" required />
             </label>
           </div>
           <div class="group">
-            <label for="">
+            <label for="user[password]">
               Password
-              <input type="password" class="input-text" required />
+              <input type="password" name="user[password]" class="input-text" id="user-password" required />
             </label>
           </div>
           <div class="group">
-            <label for="">
+            <label for="user_password_confirmation">
               Password confirmation
-              <input type="password" class="input-text" required />
+              <input type="password" name="user[password_confirmation]" class="input-text" required />
             </label>
           </div>
           <input type="submit" value="Sign up" class="input-submit" />

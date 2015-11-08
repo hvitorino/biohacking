@@ -3,12 +3,14 @@ body, html {
     margin: 0;
     height: 100%;
     font-family: 'PT Sans', sans-serif;
-    background: url(wallpaper.png) no-repeat center center;
+}
 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
+.landpage-wallpaper {
+  background: url(wallpaper.png) no-repeat center center;
 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
 }
 
 p.ng-scope {
