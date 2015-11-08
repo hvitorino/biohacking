@@ -2,17 +2,17 @@ development: &development
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: biohacking_development
+  database: ddjc3kgglpblt6 
   pool: 5
   timeout: 5000
-  username: postgres
-  password: postgres
-  host: localhost
+  username: ownnldpxrumhze 
+  password: aKi2zpzIPb7pIHAMoot5N6M-84 
+  host: ec2-107-21-223-72.compute-1.amazonaws.com
 
 test: &test
   <<: *development
-  database: biohacking_test
+  database: ddjc3kgglpblt6
 
 production: &production
   <<: *development
-  database: biohacking_production
+  database: ddjc3kgglpblt6 
