@@ -1,24 +1,12 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 class Kinds extends React.Component {
 
-  state = {
-    kinds: [],
-  }
-
   componentDidMount() {
-    const kinds = window.firebase.database().ref('/kinds');
-    kinds.once('value').then(list => {
-      this.setState({
-        ...this.state,
-        kinds: list.val(),
-      }, () => {
-        const { onSelect } = this.props;
-        const kind = this.state.kinds[0];
-        if (onSelect) {
-          onSelect(kind);
-        }
-      });
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'KINDS_REQUEST'
     });
   }
 
@@ -37,8 +25,16 @@ class Kinds extends React.Component {
     </option>
   )
 
+  componentReceiveProps(nextProps) {
+    const { onSelect, kinds  } = nextProps;
+    if (kinds.length) {
+      const kind = kinds[0];
+      onSelect(kind);
+    }
+  }
+
   render () {
-    const options = this.state.kinds.map(this.mapOptions);
+    const options = this.props.kinds.map(this.mapOptions);
     return (
       <select onChange={this.onChange}>
         {options}
@@ -47,4 +43,4 @@ class Kinds extends React.Component {
   }
 }
 
-export default Kinds;
+export default connect(({ kinds }) => ({ kinds }))(Kinds);

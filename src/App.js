@@ -7,9 +7,10 @@ import firebase from 'firebase';
 import './App.css';
 
 import Base from './Base.jsx';
-//import ActivityForm from './components/Form.jsx';
+import ActivityForm from './components/Form.jsx';
 
 import Activities from 'components/Activities.jsx';
+import Login from 'components/user/Login.jsx';
 
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
@@ -76,9 +77,11 @@ class App extends Component {
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={Base}>
-            <IndexRedirect to="/activities" />
+            <IndexRedirect to="/login" />
             <Route path="/activities" component={Activities} />
+            <Route path="/new" component={ActivityForm} />
           </Route>
+          <Route path="/login" component={Login} />
         </Router>
       </Provider>
     );

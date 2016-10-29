@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Kinds from './Kinds.jsx';
 import uuid from 'uuid';
 
@@ -10,6 +11,20 @@ class Form extends React.Component {
     kind: '',
     color: '',
     userId: '',
+  }
+
+  // componentDidMount() {
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'USER_GET'
+  //   });
+  // }
+
+  componentReceiveProps({ user }) {
+    this.setState({
+      ...this.state,
+      userId: user.uid,
+    })
   }
 
   onChange = (event) => {
@@ -29,6 +44,7 @@ class Form extends React.Component {
   }
 
   onSubmit = () => {
+    const { dispatch } = this.props;
     dispatch({
       type: 'ACTIVITY_UPDATE',
       payload: this.state,
@@ -47,4 +63,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default connect(({ user }) => ({ user }))(Form);
