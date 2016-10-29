@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { debounce } from 'lodash';
 
 class ActivityEdit extends React.Component {
 
@@ -6,13 +7,29 @@ class ActivityEdit extends React.Component {
     description: ''
   }
 
+  onSave = debounce(() => {
+    const { onSave } = this.props;
+    if (onSave) {
+      onSave(this.state);
+    }
+  }, 3000);
+
   onChange = ({ target: { value: description } }) => {
-    this.setState({ description });
+    this.setState({ description }, this.onSave);
+  }
+
+  onEnter = (event) => {
+    if (event.key === 'Enter') {
+      const { onSave } = this.props;
+      if (onSave) {
+        onSave(this.state);
+      }
+    }
   }
 
   componentWillMount() {
-    const { activity: { description } } = this.props;
-    this.setState({ description });
+    const { activity } = this.props;
+    this.setState({ ...activity });
   }
 
   render () {
@@ -21,6 +38,7 @@ class ActivityEdit extends React.Component {
     const style = {
       borderLeft: `10px solid ${color}`,
     };
+    const onKeyPress = this.onEnter.bind(this);
 
     return (
       <div className="Activity">
@@ -28,7 +46,7 @@ class ActivityEdit extends React.Component {
           {kind}
         </div>
         <div className="description">
-          <input onChange={this.onChange} value={description} />
+          <input onKeyPress={onKeyPress} onChange={this.onChange} value={description} />
         </div>
       </div>
     );

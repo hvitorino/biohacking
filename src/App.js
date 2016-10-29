@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import './App.css';
 import Activities from 'components/Activities.jsx';
+import Menu from './Menu.jsx';
 
 window.firebase = firebase;
 var config = {
@@ -46,11 +47,22 @@ class App extends Component {
     );
   }
 
+  onLogout = () => {
+    window.firebase.auth().signOut().then(function() {
+      this.setState({
+        email: ''
+      });
+    }, function(error) {
+      console.log("Error", error);
+    });
+  }
+
   render() {
     const { email } = this.state;
     return (
       <div className="App">
         <div>
+          <Menu email={email} onLogout={this.onLogout} />
           <Activities email={email} />
         </div>
       </div>

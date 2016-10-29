@@ -71,13 +71,7 @@ class Activities extends React.Component {
     const container = (mode === 'add') ?
       <Form onSave={this.onSave} /> : activities.map(this.mapActivities, this);
     return (
-      <div>
-        <div>
-          <div>{email}</div>
-          <button onClick={this.add}>Add</button>
-        </div>
-        <div>{container}</div>
-      </div>
+      <div>{container}</div>
     )
   }
 }
