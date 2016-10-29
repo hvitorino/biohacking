@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Form from './Form.jsx';
 import Activity from './Activity.jsx';
+import ActivityEdit from './ActivityEdit.jsx';
 
 class Activities extends React.Component {
 
@@ -49,13 +50,19 @@ class Activities extends React.Component {
   }
 
   mapActivities = (activity) => {
-    return (
+    const { mode, activity: edit } = this.state;
+    const key = activity.id;
+    return (mode === 'edit' && key === edit.id) ?
+      <ActivityEdit
+        activity={edit}
+        key={key}
+        onSave={this.onSave}
+      /> :
       <Activity
-        key={activity.id}
+        key={key}
         activity={activity}
         onClick={this.onEdit}
-      />
-    )
+      />;
   }
 
   render () {
