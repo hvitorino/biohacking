@@ -5,9 +5,11 @@ import uuid from 'uuid';
 class Form extends React.Component {
 
   state = {
+    id: uuid(),
     description: '',
     kind: '',
-    color: ''
+    color: '',
+    userId: '',
   }
 
   onChange = (event) => {
@@ -27,16 +29,9 @@ class Form extends React.Component {
   }
 
   onSubmit = () => {
-    const { onSave } = this.props;
-    if (onSave) {
-      onSave(this.state);
-    }
-  }
-
-  componentWillMount() {
-    this.setState({
-      ...this.state,
-      id: uuid(),
+    dispatch({
+      type: 'ACTIVITY_UPDATE',
+      payload: this.state,
     });
   }
 

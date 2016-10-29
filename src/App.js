@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import firebase from 'firebase';
 import './App.css';
 
 import Base from './Base.jsx';
-import ActivityForm from './components/Form.jsx';
+//import ActivityForm from './components/Form.jsx';
 
 import Activities from 'components/Activities.jsx';
+
+import BioMiddleware from 'api/middlewares/BioMiddleware.js';
+import ApiReducers from 'api/reducers';
 
 window.firebase = firebase;
 var config = {
@@ -20,47 +26,61 @@ window.firebase.initializeApp(config);
 
 class App extends Component {
 
-  state = {
-    email: null
-  }
-
-  authUser = ({ user }) => {
-    const { email, displayName, photoURL, uid } = user;
-    console.log("User", email, displayName, photoURL, uid );
-    this.setState({ email });
-  }
-
-  callGoogle = () => {
-    const auth = new firebase.auth();
-    const provider = new window.firebase.auth.GoogleAuthProvider();
-    provider.addScope('email');
-    auth.signInWithPopup(provider).then(this.authUser);
-  }
-
-  componentDidMount() {
-    const auth = new firebase.auth();
-    auth.onAuthStateChanged(
-      user => {
-        if (user) {
-          this.authUser({ user });
-        } else {
-          this.callGoogle();
-        }
-      },
-      this.callGoogle
-    );
-  }
+  // // authUser = ({ user }) => {
+  // //   const { email, displayName, photoURL, uid } = user;
+  // //   console.log("User", email, displayName, photoURL, uid );
+  // //   this.setState({ email });
+  // // }
+  // //
+  // // callGoogle = () => {
+  // //   const auth = new firebase.auth();
+  // //   const provider = new window.firebase.auth.GoogleAuthProvider();
+  // //   provider.addScope('email');
+  // //   auth.signInWithPopup(provider).then(this.authUser);
+  // // }
+  //
+  // componentDidMount() {
+  //   const auth = new firebase.auth();
+  //   auth.onAuthStateChanged(
+  //     user => {
+  //       if (user) {
+  //         this.authUser({ user });
+  //       } else {
+  //         this.callGoogle();
+  //       }
+  //     },
+  //     this.callGoogle
+  //   );
+  // }
 
   render() {
-    const { email } = this.state;
+
+    const reducers = combineReducers({
+      routing: routerReducer,
+      ...ApiReducers,
+    });
+
+    const middlewares = [
+      routerMiddleware(browserHistory),
+      BioMiddleware,
+    ];
+
+    const store = createStore(
+      reducers,
+      compose(applyMiddleware(...middlewares))
+    );
+
+    const history = syncHistoryWithStore(browserHistory, store);
+
     return (
-      <Router history={browserHistory}>
-        <Route path="/" component={Base}>
-          <IndexRedirect to="/activities" />
-          <Route path="/activities" component={Activities} />
-          <Route path="/new" component={ActivityForm} />
-        </Route>
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <Route path="/" component={Base}>
+            <IndexRedirect to="/activities" />
+            <Route path="/activities" component={Activities} />
+          </Route>
+        </Router>
+      </Provider>
     );
   }
 }

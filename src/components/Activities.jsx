@@ -1,61 +1,27 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Activity from './Activity.jsx';
 import ActivityEdit from './ActivityEdit.jsx';
 
 class Activities extends React.Component {
 
-  state = {
-    mode: '',
-    activities: []
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.fetch();
-  }
-
-  fetch = () => {
-    const database = window.firebase.database().ref('/activities');
-    database.once('value').then(result => {
-      const json = result.val();
-      const activities = Object.keys(json).map(key => json[key]);
-      this.setState({
-        mode: '',
-        activities
-      });
-    });
-  }
-
-  onSave = (activity) => {
-    const database = window.firebase.database().ref(`/activities/${activity.id}`);
-    database.update(activity).then(this.fetch);
-  }
-
-  onEdit = (activity) => {
-    this.setState({
-      ...this.state,
-      mode: 'edit',
-      activity,
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'ACTIVITIES_REQUEST'
     });
   }
 
   mapActivities = (activity) => {
-    const { mode, activity: edit } = this.state;
+    const { mode, activity: edit } = this.props;
     const key = activity.id;
     return (mode === 'edit' && key === edit.id) ?
-      <ActivityEdit
-        activity={edit}
-        key={key}
-        onSave={this.onSave}
-      /> :
-      <Activity
-        key={key}
-        activity={activity}
-        onClick={this.onEdit}
-      />;
+      <ActivityEdit activity={edit} key={key} /> :
+      <Activity key={key} activity={activity} />;
   }
 
   render () {
-    const { activities, mode } = this.state;
+    const { activities } = this.props;
     const container = activities.map(this.mapActivities, this);
     return (
       <div>{container}</div>
@@ -63,4 +29,10 @@ class Activities extends React.Component {
   }
 }
 
-export default Activities;
+const mapPropsToState = (state) => {
+  return {
+    activities: state.activities,
+  }
+}
+
+export default connect(mapPropsToState)(Activities);

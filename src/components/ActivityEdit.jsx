@@ -8,10 +8,11 @@ class ActivityEdit extends React.Component {
   }
 
   onSave = debounce(() => {
-    const { onSave } = this.props;
-    if (onSave) {
-      onSave(this.state);
-    }
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'ACTIVITY_UPDATE',
+      payload: this.state,
+    });
   }, 3000);
 
   onChange = ({ target: { value: description } }) => {
@@ -19,11 +20,12 @@ class ActivityEdit extends React.Component {
   }
 
   onEnter = (event) => {
+    const { dispatch } = this.props;
     if (event.key === 'Enter') {
-      const { onSave } = this.props;
-      if (onSave) {
-        onSave(this.state);
-      }
+      dispatch({
+        type: 'ACTIVITY_UPDATE',
+        payload: this.state,
+      });
     }
   }
 
