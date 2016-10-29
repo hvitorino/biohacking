@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Form from './Form.jsx';
 import Activity from './Activity.jsx';
 import ActivityEdit from './ActivityEdit.jsx';
 
@@ -11,9 +10,7 @@ class Activities extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.email) {
-      this.fetch();
-    }
+    this.fetch();
   }
 
   fetch = () => {
@@ -22,17 +19,9 @@ class Activities extends React.Component {
       const json = result.val();
       const activities = Object.keys(json).map(key => json[key]);
       this.setState({
-        ...this.state,
         mode: '',
         activities
       });
-    });
-  }
-
-  add = () => {
-    this.setState({
-      ...this.state,
-      mode: 'add',
     });
   }
 
@@ -66,10 +55,8 @@ class Activities extends React.Component {
   }
 
   render () {
-    const { email } = this.props;
     const { activities, mode } = this.state;
-    const container = (mode === 'add') ?
-      <Form onSave={this.onSave} /> : activities.map(this.mapActivities, this);
+    const container = activities.map(this.mapActivities, this);
     return (
       <div>{container}</div>
     )

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 import firebase from 'firebase';
 import './App.css';
+
+import Base from './Base.jsx';
+import ActivityForm from './components/Form.jsx';
+
 import Activities from 'components/Activities.jsx';
-import Menu from './Menu.jsx';
 
 window.firebase = firebase;
 var config = {
@@ -47,25 +51,16 @@ class App extends Component {
     );
   }
 
-  onLogout = () => {
-    window.firebase.auth().signOut().then(function() {
-      this.setState({
-        email: ''
-      });
-    }, function(error) {
-      console.log("Error", error);
-    });
-  }
-
   render() {
     const { email } = this.state;
     return (
-      <div className="App">
-        <div>
-          <Menu email={email} onLogout={this.onLogout} />
-          <Activities email={email} />
-        </div>
-      </div>
+      <Router history={browserHistory}>
+        <Route path="/" component={Base}>
+          <IndexRedirect to="/activities" />
+          <Route path="/activities" component={Activities} />
+          <Route path="/new" component={ActivityForm} />
+        </Route>
+      </Router>
     );
   }
 }
