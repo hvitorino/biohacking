@@ -6,32 +6,41 @@ class Kinds extends React.Component {
     kinds: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const kinds = window.firebase.database().ref('/kinds');
     kinds.once('value').then(list => {
-      console.log(list.val())
       this.setState({
         ...this.state,
         kinds: list.val(),
+      }, () => {
+        const { onSelect } = this.props;
+        const kind = this.state.kinds[0];
+        if (onSelect) {
+          onSelect(kind);
+        }
       });
-    })
+    });
   }
 
   onChange = (event) => {
+    const { onSelect } = this.props;
     const { id } = event.target.selectedOptions[0].dataset;
     const kind = this.state.kinds.find(kind => kind.id == id);
-    this.props.onSelect(kind);
+    if (onSelect) {
+      onSelect(kind);
+    }
   }
 
-  mapOptions = (kind) => (<option key={kind.id} data-id={kind.id}>
-    {kind.description}
-  </option>)
+  mapOptions = kind => (
+    <option key={`kind-${kind.id}`} data-id={kind.id}>
+      {kind.description}
+    </option>
+  )
 
   render () {
-    const options = this.state.kinds.map(this.mapOptions, this);
-    const onChange = this.onChange.bind(this);
+    const options = this.state.kinds.map(this.mapOptions);
     return (
-      <select onChange={onChange}>
+      <select onChange={this.onChange}>
         {options}
       </select>
     );

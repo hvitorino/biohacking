@@ -1,44 +1,77 @@
 import React, { PropTypes } from 'react';
-import ActivityEdit from 'components/ActivityEdit.jsx';
+import Form from './Form.jsx';
+import Activity from './Activity.jsx';
 
 class Activities extends React.Component {
 
-  onEdit = (activity) => {
-    this.props.dispatch('onEdit', activity);
+  state = {
+    mode: '',
+    activities: []
   }
 
-  onRemove = (activity) => {
-    this.props.dispatch('onRemove', activity);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.email) {
+      this.fetch();
+    }
+  }
+
+  fetch = () => {
+    const database = window.firebase.database().ref('/activities');
+    database.once('value').then(result => {
+      const json = result.val();
+      const activities = Object.keys(json).map(key => json[key]);
+      this.setState({
+        ...this.state,
+        mode: '',
+        activities
+      });
+    });
+  }
+
+  add = () => {
+    this.setState({
+      ...this.state,
+      mode: 'add',
+    });
+  }
+
+  onSave = (activity) => {
+    const database = window.firebase.database().ref(`/activities/${activity.id}`);
+    database.update(activity).then(this.fetch);
+  }
+
+  onEdit = (activity) => {
+    this.setState({
+      ...this.state,
+      mode: 'edit',
+      activity,
+    });
   }
 
   mapActivities = (activity) => {
-
-    const Activity = (activity) => (
-      <div className={`${activity.mode}`} key={`activity-${activity.id}`}>
-        {activity.description}
-        <button onClick={this.onEdit.bind(this, activity)}>Editar</button>
-        <button onClick={this.onRemove.bind(this, activity)}>Remover</button>
-      </div>
-    );
-
-    if (activity.mode === 'edit') {
-      return <ActivityEdit
-        dispatch={this.props.dispatch}
-        key='edit-mode'
+    return (
+      <Activity
+        key={activity.id}
         activity={activity}
-      />;
-    }
-    return Activity(activity);
+        onClick={this.onEdit}
+      />
+    )
   }
 
   render () {
-    const list = this.props.activities.map(this.mapActivities);
-
+    const { email } = this.props;
+    const { activities, mode } = this.state;
+    const container = (mode === 'add') ?
+      <Form onSave={this.onSave} /> : activities.map(this.mapActivities, this);
     return (
       <div>
-        {list}
+        <div>
+          <div>{email}</div>
+          <button onClick={this.add}>Add</button>
+        </div>
+        <div>{container}</div>
       </div>
-    );
+    )
   }
 }
 

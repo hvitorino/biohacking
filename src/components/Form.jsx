@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Kinds from 'components/Kinds.jsx';
+import Kinds from './Kinds.jsx';
 import uuid from 'uuid';
 
 class Form extends React.Component {
@@ -7,52 +7,48 @@ class Form extends React.Component {
   state = {
     description: '',
     kind: '',
-    id: null,
-  }
-
-  onSave = (event) => {
-    const activity = this.state;
-    if (!activity.id) {
-      activity.id = uuid();
-    }
-    this.props.onSave(this.state);
+    color: ''
   }
 
   onChange = (event) => {
-    const { value } = event.target;
+    const description = event.target.value;
     this.setState({
       ...this.state,
-      description: value,
-    })
+      description,
+    });
   }
 
-  onSelect = ({ description }) => {
+  onSelect = ({ description: kind, color }) => {
     this.setState({
       ...this.state,
-      kind: description,
+      kind,
+      color,
+    });
+  }
+
+  onSubmit = () => {
+    const { onSave } = this.props;
+    if (onSave) {
+      onSave(this.state);
+    }
+  }
+
+  componentWillMount() {
+    this.setState({
+      ...this.state,
+      id: uuid(),
     });
   }
 
   render () {
-    const { style } = this.props;
     const { description } = this.state;
     return (
-      <div style={style}>
+      <div>
         <Kinds onSelect={this.onSelect} />
-        <label htmlFor="description">
-          Description
-        </label>
-        <input
-          value={description}
-          onChange={this.onChange}
-          id="description"
-          type="text"
-        />
-        <button onClick={this.onSave}>
-          Cadastrar
-        </button>
+        <input value={description} onChange={this.onChange} />
+        <button onClick={this.onSubmit}>Save</button>
       </div>
-    )
+    );
   }
 }
 
