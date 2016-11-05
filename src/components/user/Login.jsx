@@ -11,7 +11,6 @@ class Login extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (nextProps.user.uid) {
       const { dispatch } = this.props;
       dispatch({

@@ -13,11 +13,11 @@ class Activities extends React.Component {
   }
 
   mapActivities = (activity) => {
-    const { dispatch, mode, activity: edit } = this.props;
+    const { mode } = this.props;
     const key = activity.id;
-    return (mode === 'edit' && key === edit.id) ?
-      <ActivityEdit activity={edit} key={key} /> :
-      <Activity onClick={dispatch} key={key} activity={activity} />;
+    return (mode.state === 'edit' && key === mode.activity.id) ?
+      <ActivityEdit key={key} activity={activity} /> :
+      <Activity key={key} activity={activity} />;
   }
 
   render () {
@@ -32,6 +32,7 @@ class Activities extends React.Component {
 const mapPropsToState = (state) => {
   return {
     activities: state.activities,
+    mode: state.mode,
   }
 }
 

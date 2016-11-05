@@ -1,17 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Activity = ({ activity, onClick }) => {
+const Activity = ({ activity, dispatch }) => {
 
   const style = {
     borderLeft: `10px solid ${activity.color}`,
   };
 
   const editWrapper = () => {
-
-    onClick({
-      type: ''
+    dispatch({
+      type: 'ACTIVITIES_EDIT',
+      payload: activity,
     })
-
   };
 
   return (
@@ -27,4 +27,4 @@ const Activity = ({ activity, onClick }) => {
 }
 
 
-export default Activity;
+export default connect(null)(Activity);

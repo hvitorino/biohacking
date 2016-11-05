@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
 class ActivityEdit extends React.Component {
@@ -55,4 +56,4 @@ class ActivityEdit extends React.Component {
   }
 }
 
-export default ActivityEdit;
+export default connect(null)(ActivityEdit);

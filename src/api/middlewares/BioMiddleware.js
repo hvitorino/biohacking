@@ -63,6 +63,24 @@ function middleware(store) {
         })
       }
 
+      if (action.type === 'ACTIVITY_UPDATE') {
+        const { payload } = action;
+        const ref = window.firebase.database().ref(`activities/${payload.id}`);
+        ref.update(payload).then(result => {
+
+          const refList = window.firebase.database().ref('activities');
+          refList.once('value').then(result => {
+            const json = result.val();
+            const payload = Object.keys(json).map(key => json[key]);
+            store.dispatch({
+              type: 'ACTIVITY_UPDATE_SUCCESS',
+              payload,
+            });
+          })
+
+        })
+      }
+
       if (action.type === 'KINDS_REQUEST') {
         const kinds = window.firebase.database().ref('/kinds');
         kinds.once('value').then(list => {
