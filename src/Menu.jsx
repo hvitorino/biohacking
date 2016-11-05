@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 class Menu extends React.Component {
-
-  onNew = () => this.context.router.push('/new')
 
   onLogout = () => {
     const { dispatch } = this.props;
@@ -12,15 +11,18 @@ class Menu extends React.Component {
 
   render () {
     const { user: { email } } = this.props;
-    const onNew = this.onNew.bind(this);
     return (
-      <div>
-        <div>{email}</div>
-        <button onClick={onNew}>Add</button>
-        <div>
-          <a className="mdl-navigation__link" onClick={this.onLogout}>Logout</a>
+      <header className="mdl-layout__header mdl-layout__header--transparent">
+        <div className="mdl-layout__header-row">
+          <span className="mdl-layout-title">Biohacking</span>
+          <div className="mdl-layout-spacer"></div>
+          <nav className="mdl-navigation">
+            <Link className="mdl-navigation__link" to="/activities">Today</Link>
+            <Link className="mdl-navigation__link" to="/new">Add</Link>
+            <a className="mdl-navigation__link" onClick={this.onLogout}>Logout</a>
+          </nav>
         </div>
-      </div>
+      </header>
     )
   }
 }

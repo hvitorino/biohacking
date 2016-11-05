@@ -6,11 +6,11 @@ class Base extends React.Component {
   render () {
     const { children } = this.props;
     return (
-      <div className="App">
-        <div>
-          <Menu />
+      <div className="mdl-layout mdl-layout--fixed-header">
+        <Menu />
+        <main className="mdl-layout__content">
           {children}
-        </div>
+        </main>
       </div>
     )
   }

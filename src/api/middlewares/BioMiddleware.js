@@ -81,6 +81,10 @@ function middleware(store) {
         })
       }
 
+      if (action.type === 'ACTIVITY_UPDATE_SUCCESS') {
+        store.dispatch(push('/activities'));
+      }
+
       if (action.type === 'KINDS_REQUEST') {
         const kinds = window.firebase.database().ref('/kinds');
         kinds.once('value').then(list => {
