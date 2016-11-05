@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
+import TextField from 'components/fields/TextField.jsx';
 
 class ActivityEdit extends React.Component {
 
@@ -16,7 +17,7 @@ class ActivityEdit extends React.Component {
     });
   }, 3000);
 
-  onChange = ({ target: { value: description } }) => {
+  onChange = (description) => {
     this.setState({ description }, this.onSave);
   }
 
@@ -49,7 +50,11 @@ class ActivityEdit extends React.Component {
           {kind}
         </div>
         <div className="description">
-          <input onKeyPress={onKeyPress} onChange={this.onChange} value={description} />
+          <TextField
+            onKeyPress={onKeyPress}
+            onChange={this.onChange}
+            value={description}
+          />
         </div>
       </div>
     );

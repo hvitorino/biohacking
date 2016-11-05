@@ -9,7 +9,7 @@ import './App.css';
 import Base from './Base.jsx';
 import ActivityForm from './components/Form.jsx';
 
-import Activities from 'components/Activities.jsx';
+import Activities from 'components/activities/Activities.jsx';
 import Login from 'components/user/Login.jsx';
 
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';

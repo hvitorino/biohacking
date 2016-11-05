@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Activity from './Activity.jsx';
-import ActivityEdit from './ActivityEdit.jsx';
+import Activity from 'components/activities/Activity.jsx';
+import ActivityEdit from 'components/activities/ActivityEdit.jsx';
 
 class Activities extends React.Component {
 
