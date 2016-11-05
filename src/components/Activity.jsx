@@ -6,7 +6,13 @@ const Activity = ({ activity, onClick }) => {
     borderLeft: `10px solid ${activity.color}`,
   };
 
-  const editWrapper = () => onClick(activity);
+  const editWrapper = () => {
+
+    onClick({
+      type: ''
+    })
+
+  };
 
   return (
     <div onClick={editWrapper} className="Activity">

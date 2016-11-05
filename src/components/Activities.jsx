@@ -13,11 +13,11 @@ class Activities extends React.Component {
   }
 
   mapActivities = (activity) => {
-    const { mode, activity: edit } = this.props;
+    const { dispatch, mode, activity: edit } = this.props;
     const key = activity.id;
     return (mode === 'edit' && key === edit.id) ?
       <ActivityEdit activity={edit} key={key} /> :
-      <Activity key={key} activity={activity} />;
+      <Activity onClick={dispatch} key={key} activity={activity} />;
   }
 
   render () {

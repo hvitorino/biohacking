@@ -13,7 +13,7 @@ class Kinds extends React.Component {
   onChange = (event) => {
     const { onSelect } = this.props;
     const { id } = event.target.selectedOptions[0].dataset;
-    const kind = this.state.kinds.find(kind => kind.id == id);
+    const kind = this.props.kinds.find(kind => kind.id == id);
     if (onSelect) {
       onSelect(kind);
     }
@@ -25,7 +25,7 @@ class Kinds extends React.Component {
     </option>
   )
 
-  componentReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { onSelect, kinds  } = nextProps;
     if (kinds.length) {
       const kind = kinds[0];

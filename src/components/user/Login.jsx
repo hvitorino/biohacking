@@ -10,15 +10,19 @@ class Login extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    debugger;
+    if (nextProps.user.uid) {
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'USER_LOGGED'
+      });
+    }
+  }
+
   render () {
-
-    const { user } = this.props;
-    const container = (user.uid) ?
-      <a href="/activities">Já está logado {user.email}, clique no link</a> :
-      <div>Faça Login</div>
-
     return (
-      <div>{container}</div>
+      <div>Faça Login</div>
     );
   }
 }

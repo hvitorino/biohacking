@@ -1,25 +1,17 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 class Menu extends React.Component {
 
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  }
-
-  onLogout = () => {
-    window.firebase.auth().signOut().then(function() {
-      this.setState({
-        email: ''
-      });
-    }, function(error) {
-      console.log("Error", error);
-    });
-  }
-
   onNew = () => this.context.router.push('/new')
 
+  onLogout = () => {
+    const { dispatch } = this.props;
+    dispatch({ type: 'USER_LOGOUT' });
+  }
+
   render () {
-    const { email } = this.props;
+    const { user: { email } } = this.props;
     const onNew = this.onNew.bind(this);
     return (
       <div>
@@ -33,4 +25,4 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+export default connect(({ user }) => ({ user }))(Menu);

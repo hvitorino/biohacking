@@ -39,20 +39,6 @@ class App extends Component {
   // //   provider.addScope('email');
   // //   auth.signInWithPopup(provider).then(this.authUser);
   // // }
-  //
-  // componentDidMount() {
-  //   const auth = new firebase.auth();
-  //   auth.onAuthStateChanged(
-  //     user => {
-  //       if (user) {
-  //         this.authUser({ user });
-  //       } else {
-  //         this.callGoogle();
-  //       }
-  //     },
-  //     this.callGoogle
-  //   );
-  // }
 
   render() {
 
@@ -73,13 +59,21 @@ class App extends Component {
 
     const history = syncHistoryWithStore(browserHistory, store);
 
+    const validateUser = (nextState, replace, callback) => {
+      const { user } = store.getState();
+      if (user && !user.uid) {
+        replace('/login');
+      }
+      callback();
+    };
+
     return (
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={Base}>
-            <IndexRedirect to="/login" />
-            <Route path="/activities" component={Activities} />
-            <Route path="/new" component={ActivityForm} />
+            <IndexRedirect to="/activities" />
+            <Route path="/activities" component={Activities} onEnter={validateUser} />
+            <Route path="/new" component={ActivityForm} onEnter={validateUser} />
           </Route>
           <Route path="/login" component={Login} />
         </Router>

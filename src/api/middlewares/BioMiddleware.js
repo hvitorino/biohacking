@@ -1,3 +1,17 @@
+import { push } from 'react-router-redux';
+
+const callGoogle = (store) => {
+  const auth = new window.firebase.auth();
+  const provider = new window.firebase.auth.GoogleAuthProvider();
+  provider.addScope('email');
+  auth.signInWithPopup(provider).then(({ user: payload }) => {
+    store.dispatch({
+      type: 'USER_LOADED',
+      payload,
+    });
+  });
+}
+
 function middleware(store) {
 
   return function(dispatch) {
@@ -5,6 +19,18 @@ function middleware(store) {
     return function(action) {
 
       console.log(action);
+
+      if (action.type === 'USER_LOGOUT') {
+        window.firebase.auth().signOut().then(() => {
+          store.dispatch(push('/activities'));
+        }, function(error) {
+          console.log("Error", error);
+        });
+      }
+
+      if (action.type === 'USER_LOGGED') {
+        store.dispatch(push('/activities'));
+      }
 
       if (action.type === 'USER_LOGIN') {
           const auth = new window.firebase.auth();
@@ -15,9 +41,13 @@ function middleware(store) {
                   type: 'USER_LOADED',
                   payload,
                 });
+              } else {
+                callGoogle(store);
               }
             },
-            () => {}
+            (error) => {
+              callGoogle(store);
+            }
           );
       }
 

@@ -13,17 +13,11 @@ class Form extends React.Component {
     userId: '',
   }
 
-  // componentDidMount() {
-  //   const { dispatch } = this.props;
-  //   dispatch({
-  //     type: 'USER_GET'
-  //   });
-  // }
-
-  componentReceiveProps({ user }) {
+  componentDidMount() {
+    const { user: { uid: userId } } = this.props;
     this.setState({
       ...this.state,
-      userId: user.uid,
+      userId,
     })
   }
 
