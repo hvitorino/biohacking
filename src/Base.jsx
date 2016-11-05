@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Menu from './Menu.jsx';
+import Menu from 'Menu.jsx';
 
 class Base extends React.Component {
 

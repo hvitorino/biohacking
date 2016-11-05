@@ -6,8 +6,8 @@ import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-rou
 import firebase from 'firebase';
 import './App.css';
 
-import Base from './Base.jsx';
-import ActivityForm from './components/Form.jsx';
+import Base from 'Base.jsx';
+import ActivityForm from 'components/Form.jsx';
 
 import Activities from 'components/activities/Activities.jsx';
 import Login from 'components/user/Login.jsx';
@@ -26,19 +26,6 @@ var config = {
 window.firebase.initializeApp(config);
 
 class App extends Component {
-
-  // // authUser = ({ user }) => {
-  // //   const { email, displayName, photoURL, uid } = user;
-  // //   console.log("User", email, displayName, photoURL, uid );
-  // //   this.setState({ email });
-  // // }
-  // //
-  // // callGoogle = () => {
-  // //   const auth = new firebase.auth();
-  // //   const provider = new window.firebase.auth.GoogleAuthProvider();
-  // //   provider.addScope('email');
-  // //   auth.signInWithPopup(provider).then(this.authUser);
-  // // }
 
   render() {
 
