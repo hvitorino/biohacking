@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
+import moment from 'moment';
+import { activityMapToDispatch } from 'api/actions';
 import TextField from 'components/fields/TextField.jsx';
 
 class ActivityEdit extends React.Component {
@@ -9,24 +11,35 @@ class ActivityEdit extends React.Component {
     description: ''
   }
 
+  static childContextTypes = {
+    updateForm: PropTypes.func,
+  }
+
+  getChildContext() {
+    return {
+      updateForm: this.updateForm,
+    };
+  }
+
+  updateForm = (name, description) => {
+    this.setState({
+      ...this.state,
+      description,
+    }, this.onSave);
+  }
+
   onSave = debounce(() => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'ACTIVITY_UPDATE',
-      payload: this.state,
+    const { doUpdate } = this.props;
+    doUpdate({
+      ...this.state,
     });
   }, 3000);
 
-  onChange = (description) => {
-    this.setState({ description }, this.onSave);
-  }
-
   onEnter = (event) => {
-    const { dispatch } = this.props;
+    const { doUpdate } = this.props;
     if (event.key === 'Enter') {
-      dispatch({
-        type: 'ACTIVITY_UPDATE',
-        payload: this.state,
+      doUpdate({
+        ...this.state,
       });
     }
   }
@@ -40,7 +53,7 @@ class ActivityEdit extends React.Component {
     const { activity: { kind, color } } = this.props;
     const { description } = this.state;
     const style = {
-      borderLeft: `10px solid ${color}`,
+      borderLeft: `1.5rem solid ${color}`,
     };
     const onKeyPress = this.onEnter.bind(this);
 
@@ -61,4 +74,4 @@ class ActivityEdit extends React.Component {
   }
 }
 
-export default connect(null)(ActivityEdit);
+export default connect(null, activityMapToDispatch)(ActivityEdit);

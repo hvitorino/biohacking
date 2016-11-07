@@ -1,0 +1,58 @@
+.Activity {
+  display: flex;
+  flex-direction: row;
+  margin: 0.2rem;
+  background-color: #FAFAFA;
+}
+
+.Activity .Kind {
+  flex-basis: 30%;
+  min-width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 2rem;
+  font-weight: 900;
+  color: rgb(88, 139, 139);
+  font-family: Roboto;
+  padding: 1rem;
+}
+
+.Activity .Kind .datetime,
+.Activity .Kind .date {
+  font-size: 2.5rem;
+  line-height: 3rem;
+  font-weight: 400;
+  color: #616161;
+}
+
+.Activity .Kind .date {
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+.Activity .mdl-textfield {
+  width: 100%;
+}
+
+.Activity .description {
+  flex-basis: 70%;
+  vertical-align: middle;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.Activity .description .tag {
+  color: rgb(117, 117, 117);
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: #EEEEEE;
+  padding: 0.5rem;
+  margin: 0.2rem;
+  height: 1rem;
+  vertical-align: middle;
+  line-height: 1rem;
+}

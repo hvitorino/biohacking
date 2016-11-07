@@ -1,7 +1,5 @@
-import actions from 'api/actions';
-
 export default (state = {}, { type, payload }) => {
-  if (type === actions.user.loaded) {
+  if (type.match(/ERROR/g)) {
     return payload;
   }
   return state;

@@ -1,3 +1,5 @@
+import actions from 'api/actions';
+
 const initialState = ({ state, activity }) => ({
   activity,
   state,
@@ -10,7 +12,7 @@ export default (state = initialState({state: 'listing'}), { type, payload: activ
       activity,
     });
   }
-  if (type === 'ACTIVITY_UPDATE_SUCCESS') {
+  if (type === actions.activities.request) {
     return initialState({
       state: 'listing',
     });

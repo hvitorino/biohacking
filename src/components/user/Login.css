@@ -1,0 +1,13 @@
+.card-login-register.mdl-card.mdl-shadow--2dp {
+    display: flex;
+    margin: auto;
+    top: 20px;
+}
+
+.form-errors span {
+  color: #d50000;
+  position: absolute;
+  font-size: 12px;
+  margin-top: 3px;
+  display: block;
+}

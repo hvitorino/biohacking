@@ -10,6 +10,7 @@ import Base from 'Base.jsx';
 import ActivityForm from 'components/Form.jsx';
 
 import Activities from 'components/activities/Activities.jsx';
+import Search from 'components/activities/Search.jsx';
 import Login from 'components/user/Login.jsx';
 
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
@@ -59,6 +60,7 @@ class App extends Component {
         <Router history={history}>
           <Route path="/" component={Base}>
             <IndexRedirect to="/activities" />
+            <Route path="/search" component={Search} onEnter={validateUser} />
             <Route path="/activities" component={Activities} onEnter={validateUser} />
             <Route path="/new" component={ActivityForm} onEnter={validateUser} />
           </Route>

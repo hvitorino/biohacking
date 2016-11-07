@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { activityMapToDispatch } from 'api/actions';
 import Activity from 'components/activities/Activity.jsx';
 import ActivityEdit from 'components/activities/ActivityEdit.jsx';
+import './Activities.css';
 
 class Activities extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'ACTIVITIES_REQUEST'
-    });
+    this.props.doRequest();
   }
 
   mapActivities = (activity) => {
@@ -36,4 +35,4 @@ const mapPropsToState = (state) => {
   }
 }
 
-export default connect(mapPropsToState)(Activities);
+export default connect(mapPropsToState, activityMapToDispatch)(Activities);

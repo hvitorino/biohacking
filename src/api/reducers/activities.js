@@ -1,5 +1,7 @@
+import actions from 'api/actions';
+
 export default (state = [], { type, payload }) => {
-  if (type === 'ACTIVITIES_REQUEST_SUCCESS' || type === 'ACTIVITY_UPDATE_SUCCESS') {
+  if (type === actions.activities.requestSucess) {
     return payload;
   }
   return state;

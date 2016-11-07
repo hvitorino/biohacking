@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Kinds from './Kinds.jsx';
+import moment from 'moment';
 import uuid from 'uuid';
+import { activityMapToDispatch } from 'api/actions';
+import Kinds from './Kinds.jsx';
 
 class Form extends React.Component {
 
@@ -15,8 +17,11 @@ class Form extends React.Component {
 
   componentDidMount() {
     const { user: { uid: userId } } = this.props;
+    const date = moment().toDate().getTime();
     this.setState({
       ...this.state,
+      createdAt: date,
+      updatedAt: date,
       userId,
     })
   }
@@ -38,11 +43,8 @@ class Form extends React.Component {
   }
 
   onSubmit = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'ACTIVITY_UPDATE',
-      payload: this.state,
-    });
+    const { doUpdate } = this.props;
+    doUpdate(this.state);
   }
 
   render () {
@@ -57,4 +59,4 @@ class Form extends React.Component {
   }
 }
 
-export default connect(({ user }) => ({ user }))(Form);
+export default connect(({ user }) => ({ user }), activityMapToDispatch)(Form);

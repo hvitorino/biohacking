@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { doLogoutAction } from 'api/actions';
 
 class Menu extends React.Component {
 
   onLogout = () => {
-    const { dispatch } = this.props;
-    dispatch({ type: 'USER_LOGOUT' });
+    const { doLogout } = this.props;
+    doLogout();
   }
 
   render () {
@@ -17,9 +18,18 @@ class Menu extends React.Component {
           <span className="mdl-layout-title">Biohacking</span>
           <div className="mdl-layout-spacer"></div>
           <nav className="mdl-navigation">
-            <Link className="mdl-navigation__link" to="/activities">Today</Link>
-            <Link className="mdl-navigation__link" to="/new">Add</Link>
-            <a className="mdl-navigation__link" onClick={this.onLogout}>Logout</a>
+            <Link className="mdl-navigation__link" to="/search">
+              <i className="material-icons">search</i>
+            </Link>
+            <Link className="mdl-navigation__link" to="/activities">
+              <i className="material-icons">today</i>
+            </Link>
+            <Link className="mdl-navigation__link" to="/new">
+              <i className="material-icons">add_circle</i>
+            </Link>
+            <a className="mdl-navigation__link" onClick={this.onLogout}>
+              <i className="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
           </nav>
         </div>
       </header>
@@ -27,4 +37,4 @@ class Menu extends React.Component {
   }
 }
 
-export default connect(({ user }) => ({ user }))(Menu);
+export default connect(({ user }) => ({ user }), doLogoutAction)(Menu);

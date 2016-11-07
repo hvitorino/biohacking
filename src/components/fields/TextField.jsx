@@ -11,6 +11,10 @@ class TextField extends React.Component {
     errors: [],
   }
 
+  static contextTypes = {
+    updateForm: PropTypes.func,
+  }
+
   onFocus = () => {
     this.setState({
       ...this.state,
@@ -32,7 +36,8 @@ class TextField extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { value, errors } = nextProps;
+    const { value } = this.state;
+    const { errors } = nextProps;
     const focused = !!value;
     const invalid = !!errors;
     this.setState({
@@ -49,7 +54,7 @@ class TextField extends React.Component {
   }
 
   handleBlur = () => {
-    const { value } = this.state
+    const { value } = this.state;
     const focused = !!value;
     this.setState({
       ...this.state,
@@ -59,20 +64,24 @@ class TextField extends React.Component {
 
   onChange = (event) => {
     const { value } = event.target;
+    const { name } = this.props;
+    const { updateForm } = this.context;
     this.setState({
       ...this.state,
       value,
     }, () => {
-      const { onChange } = this.props;
-      if (onChange) {
-        onChange(value);
+      if (updateForm) {
+        updateForm(name, value);
       }
     });
   }
 
   render () {
-    const { onChange, value, focused, invalid, id } = this.state;
-    const { labelName, name, onClick, onKeyPress } = this.props;
+
+    const { onChange, focused, invalid, id, value } = this.state;
+    const { type, labelName, name, onClick, onKeyPress } = this.props;
+
+    const fieldType = (type) ? type : "text";
     const isFocused = (focused) ? 'is-focused' : '';
     const isInvalid = (invalid) ? 'is-invalid' : '';
     const errors = this.mapErrors();
@@ -82,7 +91,7 @@ class TextField extends React.Component {
         className={`mdl-textfield mdl-js-textfield mdl-textfield--floating-label ${isInvalid} ${isFocused}`}>
         <input
           className="mdl-textfield__input"
-          type="text"
+          type={fieldType}
           id={id}
           name={name}
           value={value}
