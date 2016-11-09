@@ -24,7 +24,8 @@ app.get('/api/list', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  res.render('./public/index.html');
+  res.redirect('/index.html');
+  //res.render('./public/index.html');
 });
 
 app.listen(app.get('port'), () => {
