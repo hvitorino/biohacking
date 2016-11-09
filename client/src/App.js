@@ -3,11 +3,13 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
 import './App.css';
 
 import Base from 'Base.jsx';
-import ActivityForm from 'components/Form.jsx';
+
+import Grid from 'components/kinds/Grid.jsx';
 
 import Activities from 'components/activities/Activities.jsx';
 import Search from 'components/activities/Search.jsx';
@@ -15,6 +17,7 @@ import Login from 'components/user/Login.jsx';
 
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
+import Sagas from 'api/sagas';
 
 window.firebase = firebase;
 var config = {
@@ -30,6 +33,12 @@ class App extends Component {
 
   render() {
 
+    const sagaMiddleware = createSagaMiddleware({
+      onError: (error) => {
+        console.log('EXCEPTION: ', error);
+      }
+    });
+
     const reducers = combineReducers({
       routing: routerReducer,
       ...ApiReducers,
@@ -37,6 +46,7 @@ class App extends Component {
 
     const middlewares = [
       routerMiddleware(browserHistory),
+      sagaMiddleware,
       BioMiddleware,
     ];
 
@@ -55,6 +65,8 @@ class App extends Component {
       callback();
     };
 
+    sagaMiddleware.run(Sagas);
+
     return (
       <Provider store={store}>
         <Router history={history}>
@@ -62,7 +74,7 @@ class App extends Component {
             <IndexRedirect to="/activities" />
             <Route path="/search" component={Search} onEnter={validateUser} />
             <Route path="/activities" component={Activities} onEnter={validateUser} />
-            <Route path="/new" component={ActivityForm} onEnter={validateUser} />
+            <Route path="/new" component={Grid} onEnter={validateUser} />
           </Route>
           <Route path="/login" component={Login} />
         </Router>

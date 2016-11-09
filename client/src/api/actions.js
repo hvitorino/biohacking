@@ -16,6 +16,11 @@ export const activities = {
   updateSuccess: `${NAMESPACE}_ACTIVITIES_UPDATE_SUCCESS`,
 }
 
+export const kinds = {
+  request: `${NAMESPACE}_KINDS_REQUEST`,
+  requestSucess: `${NAMESPACE}_KINDS_REQUEST_SUCCESS`,
+}
+
 export const error = {
   login: `${NAMESPACE}_ERROR_LOGIN`,
 }
@@ -24,7 +29,37 @@ const actions = {
   error,
   user,
   activities,
+  kinds,
 }
+
+export const nextAction = (type) => ({
+  success: (payload) => ({
+    type: `${type}_SUCCESS`,
+    payload
+  })
+});
+
+export const defaultCrudAction = (
+  dispatch, actionType, entity, method = 'GET', url
+) => {
+  return (payload) => {
+    dispatch({
+      entity,
+      method,
+      url,
+      type: actionType,
+      payload,
+    });
+  }
+}
+
+export const kindsAction = (dispatch) => {
+  return {
+    doRequest: defaultCrudAction(dispatch, kinds.request, 'kinds'),
+    create: defaultCrudAction(dispatch, activities.update, 'activities', 'POST'),
+  }
+}
+
 
 export const defaultAction = (dispatch, actionType) => {
   return (payload) => {

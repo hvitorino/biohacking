@@ -1,5 +1,7 @@
+import actions from 'api/actions';
+
 export default (state = [], { type, payload }) => {
-  if (type === 'KINDS_REQUEST_SUCCESS') {
+  if (type === actions.kinds.requestSucess) {
     return payload;
   }
   return state;
