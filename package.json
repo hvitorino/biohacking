@@ -1,10 +1,10 @@
 {
-  "name": "klinik",
+  "name": "biohacking",
   "version": "1.0.0",
   "engines": {
     "node": "7.0.0"
   },
-  "description": "Klinik em alemão",
+  "description": "Biohacking",
   "main": "server.js",
   "scripts": {
     "postinstall": "cd client && npm i && npm i react-scripts && npm run build",
@@ -23,6 +23,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "foreman": "^2.0.0",
+    "moment": "^2.15.2",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
