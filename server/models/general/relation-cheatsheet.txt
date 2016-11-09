@@ -1,0 +1,126 @@
+
+
+Anamnesis
+---------
+belongs to        interview                                as RelatedInterview 
+belongs to        patient                                  as RelatedPatient 
+belongs to        quiz                                     as RelatedQuiz 
+
+
+Answerissue
+-----------
+belongs to        interview                                as RelatedInterview 
+belongs to        quizissues                               as RelatedQuizissue 
+
+
+Employeeoccupation
+------------------
+belongs to        localemployee                            as RelatedLocalemployee 
+
+
+Interview
+---------
+has many          anamnesis                                as FkanamnesisInts 
+has many          answerissues                             as FkanswerissuesInts 
+has many          reevaluation                             as FkreevaluationInts 
+has many          treatment                                as FktreatmentInts 
+belongs to        localemployee                            as RelatedLocalemployee 
+belongs to        patient                                  as RelatedPatient 
+belongs to many   patient                                  as AnamnesisPatients 
+belongs to many   quiz                                     as AnamnesisQuizzes 
+belongs to many   quizissues                               as AnswerissueQuizissues 
+belongs to many   patient                                  as ReevaluationPatients 
+belongs to many   patient                                  as TreatmentPatients 
+
+
+Localdayoff
+-----------
+
+
+Localemployee
+-------------
+has many          employeeoccupation                       as FkemployeeoccupationEmps 
+has many          interview                                as FkinterviewEmps 
+has many          quizemployee                             as FkquizemployeeEmps 
+belongs to many   patient                                  as InterviewPatients 
+belongs to many   quiz                                     as QuizemployeeQuizzes 
+
+
+Localspecialty
+--------------
+has many          quizspecialty                            as FkquizspecialtySpes 
+has many          subspecialty                             as FksubspecialtySpes 
+belongs to many   quiz                                     as QuizspecialtyQuizzes 
+belongs to many   subspecialty                             as QuizspecialtySubspecialties 
+
+
+Patient
+-------
+has many          anamnesis                                as FkanamnesisPats 
+has many          interview                                as FkinterviewPats 
+has many          patientlog                               as FkpatientlogPats 
+has many          reevaluation                             as FkreevaluationPats 
+has many          treatment                                as FktreatmentPats 
+belongs to many   interview                                as AnamnesisInterviews 
+belongs to many   quiz                                     as AnamnesisQuizzes 
+belongs to many   localemployee                            as InterviewLocalemployees 
+belongs to many   interview                                as ReevaluationInterviews 
+belongs to many   interview                                as TreatmentInterviews 
+
+
+Patientlog
+----------
+belongs to        patient                                  as RelatedPatient 
+
+
+Quiz
+----
+has many          anamnesis                                as FkanamnesisQuis 
+has many          quizemployee                             as FkquizemployeeQuis 
+has many          quizissues                               as FkquizissuesQuis 
+has many          quizspecialty                            as FkquizspecialtyQuis 
+belongs to many   interview                                as AnamnesisInterviews 
+belongs to many   patient                                  as AnamnesisPatients 
+belongs to many   localemployee                            as QuizemployeeLocalemployees 
+belongs to many   localspecialty                           as QuizspecialtyLocalspecialties 
+belongs to many   subspecialty                             as QuizspecialtySubspecialties 
+
+
+Quizemployee
+------------
+belongs to        localemployee                            as RelatedLocalemployee 
+belongs to        quiz                                     as RelatedQuiz 
+
+
+Quizissue
+---------
+has many          answerissues                             as FkanswerissuesQuis 
+belongs to        quiz                                     as RelatedQuiz 
+belongs to many   interview                                as AnswerissueInterviews 
+
+
+Quizspecialty
+-------------
+belongs to        quiz                                     as RelatedQuiz 
+belongs to        localspecialty                           as RelatedLocalspecialty 
+belongs to        subspecialty                             as RelatedSubspecialty 
+
+
+Reevaluation
+------------
+belongs to        interview                                as RelatedInterview 
+belongs to        patient                                  as RelatedPatient 
+
+
+Subspecialty
+------------
+has many          quizspecialty                            as FkquizspecialtySubs 
+belongs to        localspecialty                           as RelatedLocalspecialty 
+belongs to many   quiz                                     as QuizspecialtyQuizzes 
+belongs to many   localspecialty                           as QuizspecialtyLocalspecialties 
+
+
+Treatment
+---------
+belongs to        interview                                as RelatedInterview 
+belongs to        patient                                  as RelatedPatient 

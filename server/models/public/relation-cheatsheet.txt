@@ -1,0 +1,10 @@
+
+
+Appuser
+-------
+belongs to        entity                                   as RelatedEntity 
+
+
+Entity
+------
+has many          appuser                                  as FkappuserEnts 
