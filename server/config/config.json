@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "123456",
+    "password": "postgres",
     "database": "biohacking_development",
     "host": "localhost",
     "dialect": "postgres",
