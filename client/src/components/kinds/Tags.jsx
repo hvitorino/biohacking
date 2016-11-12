@@ -17,7 +17,7 @@ class Tags extends React.Component {
     const { tags,selectedTags, content } = this.props;
     const { updateForm } = this.context;
     const container = tags.map(tag => {
-      const tagClass = selectedTags[tag] ? " selected" : "";
+      const tagClass = selectedTags[tag] ? "tag-selected" : "";
 
       return <div key={uuid()} className={`tag ${tagClass}`} onClick={this.onTagClick}>{tag}</div>
     });
