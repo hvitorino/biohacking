@@ -121,7 +121,7 @@ function middleware(store) {
             });
           })
       }
-
+/*
       if (action.type === actions.activities.update) {
         const { payload } = action;
         const { userId } = payload;
@@ -134,7 +134,7 @@ function middleware(store) {
             });
           })
       }
-
+*/
       if (action.type === 'KINDS_REQUEST') {
         const kinds = window.firebase.database().ref('/kinds');
         kinds.once('value').then(list => {
