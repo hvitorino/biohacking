@@ -14,6 +14,7 @@ import Grid from 'components/kinds/Grid.jsx';
 import Activities from 'components/activities/Activities.jsx';
 import Search from 'components/activities/Search.jsx';
 import Login from 'components/user/Login.jsx';
+import ResetPassword from 'components/user/ResetPassword.jsx';
 
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
@@ -77,6 +78,7 @@ class App extends Component {
             <Route path="/new" component={Grid} onEnter={validateUser} />
           </Route>
           <Route path="/login" component={Login} />
+          <Route path="/reset/password" component={ResetPassword} />
         </Router>
       </Provider>
     );
