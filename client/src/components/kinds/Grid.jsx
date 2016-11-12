@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { kindsAction } from 'api/actions';
 import Kind from 'components/kinds/Kind.jsx';
-import Form from 'components/user/Form.jsx';
 import './Grid.css';
 
 class Grid extends React.Component {
@@ -41,9 +40,7 @@ class Grid extends React.Component {
     const { kinds } = this.props;
     const container = kinds.map(this.mapKinds, this);
     return (
-      <Form>
-        <div className="Grid">{container}</div>
-      </Form>
+      <div className="Grid">{container}</div>
     )
   }
 }
