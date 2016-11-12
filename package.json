@@ -13,7 +13,7 @@
     "db:reset": "npm run db:drop && npm run db:create && sequelize db:migrate && sequelize db:seed:all",
     "start": "nf start -p $PORT",
     "dev": "nf start -p 3000 --procfile Procfile.dev",
-    "server": "node server"
+    "server": "nodemon server"
   },
   "author": "Insystem",
   "license": "ISC",
@@ -35,6 +35,7 @@
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
-    "cross-env": "^3.1.3"
+    "cross-env": "^3.1.3",
+    "nodemon": "^1.11.0"
   }
 }
