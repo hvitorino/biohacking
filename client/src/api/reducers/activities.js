@@ -5,10 +5,5 @@ export default (state = [], { type, payload }) => {
     return payload;
   }
 
-  if (type === actions.activities.updateSuccess) {
-    console.log('Reducer update success!');
-    return payload;
-  }
-
   return state;
 }
