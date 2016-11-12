@@ -10,10 +10,15 @@ class Activities {
   }
 
   postActivity(req, res) {
-    req.body.UserId = req.user.id;
-    this.models.Activity.create(req.body).then((result)=>{ //is async will broke the request??
-      if(result) //how check this?
-        res.send('200');
+    const {id: UserId} = req.user;
+    const activity = req.body;
+
+    activity.UserId = UserId; //spread is not working
+
+    this.models.Activity.create(activity).then((result) => {
+      res.send('200');
+    }).catch((error)=>{
+      res.status(500).send({error})
     });
     res.send('200');
   }
