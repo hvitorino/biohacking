@@ -59,7 +59,7 @@ class App extends Component {
 
     const validateUser = (nextState, replace, callback) => {
       const { user } = store.getState();
-      if (user && !user.uid) {
+      if (user && !user.id) {
         replace('/login');
       }
       callback();

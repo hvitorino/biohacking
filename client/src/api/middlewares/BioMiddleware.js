@@ -46,49 +46,49 @@ function middleware(store) {
         }
       }
 
-      console.log(action);
+      //console.log(action);
 
-      if (action.type === actions.user.login) {
+      // if (action.type === actions.user.login) {
+      //
+      //   const auth = new window.firebase.auth();
+      //   try {
+      //
+      //     auth.onAuthStateChanged(
+      //       payload => {
+      //         if (payload) {
+      //           const put = defaultAction(store.dispatch, actions.user.loaded);
+      //           put(payload);
+      //         } else {
+      //           if (action.payload) {
+      //             const { email, password } = action.payload;
+      //             auth.signInWithEmailAndPassword(email, password)
+      //                 .catch(catchLoginError);
+      //           }
+      //         }
+      //       },
+      //       (error) => {
+      //         console.log("ERROR", error.code, error.message);
+      //         const { email, password } = action.payload;
+      //         auth.signInWithEmailAndPassword(email, password)
+      //             .catch(catchLoginError);
+      //       }
+      //     );
+      //   } catch (e) {
+      //     catchLoginError(e);
+      //   }
+      // }
 
-        const auth = new window.firebase.auth();
-        try {
-
-          auth.onAuthStateChanged(
-            payload => {
-              if (payload) {
-                const put = defaultAction(store.dispatch, actions.user.loaded);
-                put(payload);
-              } else {
-                if (action.payload) {
-                  const { email, password } = action.payload;
-                  auth.signInWithEmailAndPassword(email, password)
-                      .catch(catchLoginError);
-                }
-              }
-            },
-            (error) => {
-              console.log("ERROR", error.code, error.message);
-              const { email, password } = action.payload;
-              auth.signInWithEmailAndPassword(email, password)
-                  .catch(catchLoginError);
-            }
-          );
-        } catch (e) {
-          catchLoginError(e);
-        }
-      }
-
-      if (action.type === actions.user.logout) {
-        window.firebase.auth().signOut().then(() => {
-          store.dispatch(push('/login'));
-        }, function(error) {
-          console.log("Error", error);
-        });
-      }
-
-      if (action.type === actions.user.logged) {
-        store.dispatch(push('/activities'));
-      }
+      // if (action.type === actions.user.logout) {
+      //   window.firebase.auth().signOut().then(() => {
+      //     store.dispatch(push('/login'));
+      //   }, function(error) {
+      //     console.log("Error", error);
+      //   });
+      // }
+      //
+      // if (action.type === actions.user.logged) {
+      //   store.dispatch(push('/activities'));
+      // }
 
       if (action.type === actions.activities.request) {
         const { user } = store.getState();

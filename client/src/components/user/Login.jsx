@@ -7,11 +7,6 @@ import './Login.css';
 
 class Login extends React.Component {
 
-  componentDidMount() {
-    const { doLogin } = this.props;
-    doLogin();
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.uid) {
       this.props.doRedirectAfterLogged();

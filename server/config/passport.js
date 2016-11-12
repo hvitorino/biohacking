@@ -5,11 +5,11 @@ const Strategy = require('passport-local').Strategy;
 module.exports = (app, models) => {
 
   passport.use(new Strategy(
-    { passReqToCallback: true },
-    (req, username, password, done) => {
+    { passReqToCallback: true,  usernameField: 'email' },
+    (req, email, password, done) => {
       models.User.findOne({
         where: {
-          username,
+          email,
         },
       }).then((user) => {
         if (!user) {
