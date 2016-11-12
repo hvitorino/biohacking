@@ -99,7 +99,7 @@ function middleware(store) {
           .startAt(startAt, 'updatedAt')
           .once('value').then(result => {
             const json = result.val();
-            const payload = Object.keys(json).map(key => json[key]);
+            const payload = json==null ? {} : Object.keys(json).map(key => json[key]);
             store.dispatch({
               type: actions.activities.requestSucess,
               payload,
