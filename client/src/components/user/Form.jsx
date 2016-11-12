@@ -31,18 +31,18 @@ class Form extends React.Component {
   }
 
   onSubmit = () => {
+    event.preventDefault();
+    event.stopPropagation();
     const { onSubmit } = this.props;
     if (onSubmit) {
       onSubmit(this.state);
     }
-    event.preventDefault();
-    event.stopPropagation();
   }
 
   render() {
     const { children } = this.props;
     return (
-      <form onSubmit={this.onSubmit}>{children}</form>
+      <form autoComplete="off" onSubmit={this.onSubmit}>{children}</form>
     );
   }
 }

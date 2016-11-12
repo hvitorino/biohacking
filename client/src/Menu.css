@@ -1,0 +1,11 @@
+header.mdl-layout__header.mdl-layout__header--transparent {
+    background-color: #646464;
+}
+
+span.mdl-layout-title {
+    color: #fff;
+}
+
+.mdl-navigation__link .material-icons {
+    color: #A6B0A8;
+}
