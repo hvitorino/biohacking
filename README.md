@@ -14,7 +14,7 @@ nvm use 7
 ```
 Instalar pacotes globais.
 ```
-npm i -g pg sequelize-cli
+npm i -g pg sequelize-cli create-react-app
 ```
 Clonar o projeto e instalar dependências.
 ```
