@@ -3,19 +3,55 @@ import uuid from 'uuid';
 import TextField from 'components/fields/TextField.jsx';
 
 class Tags extends React.Component {
-  static contextTypes = {
+  state = {
+    description: '',
+    selectedTags: {},
+  }
+
+  static childContextTypes = {
     updateForm: PropTypes.func,
   }
 
+  getChildContext() {
+    return {
+      updateForm: this.updateForm,
+    };
+  }
+
+  updateForm = (fieldName, description) => {
+      this.setState({
+          ...this.state,
+          description,
+      });
+  }
+
   onTagClick = (event) => {
-    const tag = event.target.innerText;
-    const { updateForm } = this.context;
-    updateForm('tags', tag);
+    const { selectedTags, description } = this.state;
+    const value = event.target.innerText;
+
+    if (!!selectedTags[value]) {
+      const desc = description.replace(`${selectedTags[value]}`, '');
+      delete selectedTags[value];
+      this.setState({
+          description: desc,
+          selectedTags,
+      });
+    } else {
+      const desc = description.concat(` ${value}`);
+      const newTags = {
+        ...selectedTags,
+        [value]: value,
+      };
+      this.setState({
+          description: desc,
+          selectedTags : newTags,
+      });
+    }
   }
 
   render () {
-    const { tags,selectedTags, content } = this.props;
-    const { updateForm } = this.context;
+    const { tags } = this.props;
+    const { selectedTags, description } = this.state;
     const container = tags.map(tag => {
       const tagClass = selectedTags[tag] ? "tag-selected" : "";
 
@@ -24,7 +60,7 @@ class Tags extends React.Component {
     return (
       <div className="Tags">
         {container}
-        <TextField name="description" value={content} />
+        <TextField name="description" value={description} />
       </div>
     )
   }

@@ -6,43 +6,16 @@ import './Grid.css';
 
 class Grid extends React.Component {
 
-  state = {
-    Kind: null,
-    description: ''
-  }
-
-  static childContextTypes = {
-    updateForm: PropTypes.func,
-  }
-
-  getChildContext() {
-    return {
-      updateForm: this.updateForm,
-    };
-  }
-
-  updateForm = (name, description) => {
-    this.setState({
-      ...this.state,
-      description,
-    });
-  }
-
   componentDidMount() {
     this.props.doRequest();
   }
 
   onSave = (KindId, description) => {
     const {create} = this.props; //create from kindsAction
-
-    console.log(Kind);
-    console.log(description);
-    this.state = {
+    create({
       KindId,
       description,
-    };
-
-    create(this.state);
+    });
   }
 
   mapKinds = (kind) => (
