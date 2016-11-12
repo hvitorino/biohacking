@@ -5,3 +5,7 @@
 .mdl-navigation a {
   cursor: pointer;
 }
+
+.mdl-layout__content {
+  min-height: 400px;
+}
