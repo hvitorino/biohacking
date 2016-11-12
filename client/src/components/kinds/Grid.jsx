@@ -32,13 +32,13 @@ class Grid extends React.Component {
     this.props.doRequest();
   }
 
-  onSave = (Kind, description) => {
+  onSave = (KindId, description) => {
     const {create} = this.props; //create from kindsAction
 
     console.log(Kind);
     console.log(description);
     this.state = {
-      Kind,
+      KindId,
       description,
     };
 

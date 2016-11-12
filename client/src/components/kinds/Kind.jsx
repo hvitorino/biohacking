@@ -51,7 +51,7 @@ class Kind extends React.Component {
   onSave = (event) => {
     const { onSave } = this.props;
     const { content } = this.state;
-    onSave(this.props, content);
+    onSave(this.props.id, content);
   }
 
   render () {

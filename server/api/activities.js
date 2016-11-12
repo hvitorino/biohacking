@@ -10,6 +10,7 @@ class Activities {
   }
 
   postActivity(req, res) {
+    req.body.UserId = req.user.id;
     this.models.Activity.create(req.body).then((result)=>{ //is async will broke the request??
       if(result) //how check this?
         res.send('200');
