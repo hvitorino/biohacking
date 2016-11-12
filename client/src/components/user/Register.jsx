@@ -4,11 +4,11 @@ import { Link } from 'react-router';
 import { doLoginAction } from 'api/actions';
 import Users from 'components/user/Users.jsx';
 
-class Login extends Users {
+class Register extends Users {
 
   doSubmit = (formState) => {
-    const { doLogin } = this.props;
-    doLogin(this.refs.form.getValues());
+    const { doRegister } = this.props;
+    doRegister(this.refs.form.getValues());
   }
 
   createContainer() {
@@ -22,15 +22,15 @@ class Login extends Users {
         </li>
         <li className="mdl-list__item">
           <button onClick={this.doSubmit} type="button" className="mdl-button mdl-js-button mdl-button--raised">
-            Login
+            Register
           </button>
           <Link className="reset-password" to="/reset/password">
             <i className="fa fa-key" aria-hidden="true" />
             Reset
           </Link>
-          <Link className="register" to="/register">
-            <i className="fa fa-user-plus" aria-hidden="true" />
-            Register
+          <Link className="login" to="/login">
+            <i className="fa fa-sign-in" aria-hidden="true" />
+            Login
           </Link>
         </li>
       </ul>
@@ -39,4 +39,4 @@ class Login extends Users {
 
 }
 
-export default connect(({ user, errors }) => ({ user, errors }), doLoginAction)(Login);
+export default connect(({ user, errors }) => ({ user, errors }), doLoginAction)(Register);

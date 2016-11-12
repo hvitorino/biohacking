@@ -6,6 +6,8 @@ export const user = {
   logged: `${NAMESPACE}_USER_LOGGED`,
   loaded: `${NAMESPACE}_USER_LOADED`,
   logout: `${NAMESPACE}_USER_LOGOUT`,
+  register: `${NAMESPACE}_USER_REGISTER`,
+  registerFailure: `${NAMESPACE}_USER_ERROR`,
 }
 
 export const activities = {
@@ -74,7 +76,7 @@ export const defaultAction = (dispatch, actionType) => {
 export const doLoginAction = (dispatch) => {
   return {
     doLogin: defaultAction(dispatch, actions.user.login),
-    doRedirectAfterLogged: defaultAction(dispatch, actions.user.logged),
+    doRegister: defaultAction(dispatch, actions.user.register)
   }
 }
 

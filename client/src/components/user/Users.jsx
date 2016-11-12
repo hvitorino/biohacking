@@ -27,8 +27,11 @@ class Users extends React.Component {
 
   formatErrors = () => {
     const { errors } = this.props;
-    return Object.keys(errors).map(key =>
-      (<span key={key}>{errors[key]}</span>));
+    return Object.keys(errors).map(key => {
+      const error = errors[key];
+      const message = (typeof error !== 'string') ? error.message : error;
+      return (<span key={key}>{message}</span>)
+    });
   }
 
   render () {

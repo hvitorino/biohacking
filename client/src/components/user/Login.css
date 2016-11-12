@@ -12,6 +12,6 @@
   display: block;
 }
 
-.reset-password {
+.reset-password, .register, .login {
   margin-left: 1rem;
 }
