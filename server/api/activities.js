@@ -1,11 +1,8 @@
 class Activities {
 
   getActivities(req, res) {
-    this.models.Activities.findAll().then(activities => {
-      activities.forEach(activity => {
-        activity.setDataValue('Something really cool here ...');
-      });
-      res.send(kinds);
+    this.models.Activity.findAll().then(activities => {
+      res.send(activities);
     });
   }
 
