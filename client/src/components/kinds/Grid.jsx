@@ -32,13 +32,14 @@ class Grid extends React.Component {
     this.props.doRequest();
   }
 
-  onSave = () => {
+  onSave = (Kind, description) => {
     const {create} = this.props; //create from kindsAction
 
-    //TODO mock here! Renan and Wagner REMOVE!!!
+    console.log(Kind);
+    console.log(description);
     this.state = {
-      Kind: 'mockType',
-      description: 'Mock desc'
+      Kind,
+      description,
     };
 
     create(this.state);

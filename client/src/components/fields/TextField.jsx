@@ -36,8 +36,7 @@ class TextField extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { value } = this.state;
-    const { errors } = nextProps;
+    const { errors, value } = nextProps;
     const focused = !!value;
     const invalid = !!errors;
     this.setState({

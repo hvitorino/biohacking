@@ -3,15 +3,28 @@ import uuid from 'uuid';
 import TextField from 'components/fields/TextField.jsx';
 
 class Tags extends React.Component {
+  static contextTypes = {
+    updateForm: PropTypes.func,
+  }
+
+  onTagClick = (event) => {
+    const tag = event.target.innerText;
+    const { updateForm } = this.context;
+    updateForm('tags', tag);
+  }
+
   render () {
-    const { tags } = this.props;
-    const container = tags.map(tag => (
-      <div key={uuid()} className="tag">{tag}</div>
-    ));
+    const { tags,selectedTags, content } = this.props;
+    const { updateForm } = this.context;
+    const container = tags.map(tag => {
+      const tagClass = selectedTags[tag] ? " selected" : "";
+
+      return <div key={uuid()} className={`tag ${tagClass}`} onClick={this.onTagClick}>{tag}</div>
+    });
     return (
       <div className="Tags">
         {container}
-        <TextField name="description" />
+        <TextField name="description" value={content} />
       </div>
     )
   }
