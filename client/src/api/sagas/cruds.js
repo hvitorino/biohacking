@@ -49,7 +49,8 @@ export function* prepareSaga(action) {
 export function* watchEntities() {
   yield* takeEvery([
     actions.kinds.request,
-    actions.activities.update
+    actions.activities.update,
+    actions.activities.request
   ], prepareSaga);
 }
 

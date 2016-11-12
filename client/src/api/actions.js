@@ -88,7 +88,7 @@ export const doLogoutAction = (dispatch) => {
 
 export const activityMapToDispatch = (dispatch) => {
   return {
-    doRequest: defaultAction(dispatch, actions.activities.request),
+    doRequest: defaultCrudAction(dispatch, actions.activities.request, 'activities'),
     doSearch:  defaultAction(dispatch, actions.activities.search),
     doUpdate: defaultAction(dispatch, actions.activities.update),
   }

@@ -90,22 +90,6 @@ function middleware(store) {
       //   store.dispatch(push('/activities'));
       // }
 
-      if (action.type === actions.activities.request) {
-        const { user } = store.getState();
-        const startAt = moment().startOf('day').toDate().getTime();
-        const ref = window.firebase.database().ref(`users/${user.uid}/activities`);
-        ref
-          .orderByChild("updatedAt")
-          .startAt(startAt, 'updatedAt')
-          .once('value').then(result => {
-            const json = result.val();
-            const payload = json==null ? {} : Object.keys(json).map(key => json[key]);
-            store.dispatch({
-              type: actions.activities.requestSucess,
-              payload,
-            });
-          })
-      }
 
       if (action.type === actions.activities.search) {
         const { user } = store.getState();
