@@ -8,6 +8,8 @@ export const user = {
   logout: `${NAMESPACE}_USER_LOGOUT`,
   register: `${NAMESPACE}_USER_REGISTER`,
   registerFailure: `${NAMESPACE}_USER_ERROR`,
+  reset: `${NAMESPACE}_USER_RESET_PASSWORD`,
+  resetFailure: `${NAMESPACE}_USER_RESET_PASSWORD_ERROR`,
 }
 
 export const activities = {
@@ -76,7 +78,8 @@ export const defaultAction = (dispatch, actionType) => {
 export const doLoginAction = (dispatch) => {
   return {
     doLogin: defaultAction(dispatch, actions.user.login),
-    doRegister: defaultAction(dispatch, actions.user.register)
+    doRegister: defaultAction(dispatch, actions.user.register),
+    doReset: defaultAction(dispatch, actions.user.reset),
   }
 }
 
