@@ -7,7 +7,6 @@
   "description": "Biohacking",
   "main": "server.js",
   "scripts": {
-    "postinstall": "cd client && npm i && npm i react-scripts && npm run build",
     "db:create": "node_modules/.bin/create_database",
     "db:drop": "node_modules/.bin/drop_database",
     "db:reset": "npm run db:drop && npm run db:create && sequelize db:migrate && sequelize db:seed:all",
