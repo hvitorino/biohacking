@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const uuid = require('uuid');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -24,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     verified: DataTypes.BOOLEAN
   }, {
     instanceMethods: {
+      generateResetPasswordKey: function(callback) {
+        const resetPasswordKey = uuid();
+        this.set('resetPasswordKey', resetPasswordKey);
+        this.update({ resetPasswordKey });
+        callback(this);
+      },
       generateHash: function(callback) {
         const updateHash = this.update.bind(this);
         crypto.randomBytes(32, (error, buffer) => {

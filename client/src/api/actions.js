@@ -1,4 +1,4 @@
-const NAMESPACE = 'BIOHACKING';
+export const NAMESPACE = 'BIOHACKING';
 
 export const user = {
   login: `${NAMESPACE}_USER_LOGIN`,
@@ -10,6 +10,7 @@ export const user = {
   registerFailure: `${NAMESPACE}_USER_ERROR`,
   reset: `${NAMESPACE}_USER_RESET_PASSWORD`,
   resetFailure: `${NAMESPACE}_USER_RESET_PASSWORD_ERROR`,
+  hasBeenReset: `${NAMESPACE}_USER_HAS_BEEN_RESET_PASSWORD_MESSAGE`,
 }
 
 export const activities = {

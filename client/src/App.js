@@ -7,6 +7,7 @@ import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
+import ReactGA from 'react-ga';
 import './App.css';
 
 import Base from 'Base.jsx';
@@ -23,7 +24,7 @@ import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
 import Sagas from 'api/sagas';
 
-//import Airbrake from 'airbrake-js';
+import Airbrake from 'airbrake-js';
 
 var config = {
   apiKey: "AIzaSyAwFULDzJxhy67MYf5tMTMD3ygQh2pZGks",
@@ -33,16 +34,16 @@ var config = {
   messagingSenderId: "730944460815"
 };
 
+const airbrake = new Airbrake({
+  projectId: 133132,
+  projectKey: '4a68026f35d09256a77ae10fd065bab2',
+});
+
+window.airbrake = airbrake;
 window.firebase = firebase;
 window.firebase.initializeApp(config);
-
-// const AIRBRAKE_API_KEY='4a68026f35d09256a77ae10fd065bab2';
-// const AIRBRAKE_PROJECT_ID=133132;
-//
-// const airbrake = new Airbrake({
-//   projectId: AIRBRAKE_PROJECT_ID,
-//   projectKey: AIRBRAKE_API_KEY,
-// });
+window.ReactGA = ReactGA;
+window.ReactGA.initialize('UA-87321481-1');
 
 class App extends Component {
 
@@ -50,8 +51,7 @@ class App extends Component {
 
     const sagaMiddleware = createSagaMiddleware({
       onError: (error) => {
-        console.error('ERROR: ', error);
-        //airbrake.notify(error);
+        airbrake.notify(error);
       }
     });
 
@@ -81,6 +81,11 @@ class App extends Component {
       callback();
     };
 
+    function logPageView() {
+      window.ReactGA.set({ page: window.location.pathname });
+      window.ReactGA.pageview(window.location.pathname);
+    }
+
     sagaMiddleware.run(Sagas);
 
     return (
@@ -88,13 +93,13 @@ class App extends Component {
         <Router history={history}>
           <Route path="/" component={Base}>
             <IndexRedirect to="/activities" />
-            <Route path="/search" component={Search} onEnter={validateUser} />
-            <Route path="/activities" component={Activities} onEnter={validateUser} />
-            <Route path="/new" component={Grid} onEnter={validateUser} />
+            <Route path="/search" component={Search} onEnter={validateUser} onUpdate={logPageView} />
+            <Route path="/activities" component={Activities} onEnter={validateUser} onUpdate={logPageView} />
+            <Route path="/new" component={Grid} onEnter={validateUser} onUpdate={logPageView} />
           </Route>
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/reset/password" component={ResetPassword} />
+          <Route path="/login" component={Login} onUpdate={logPageView} />
+          <Route path="/register" component={Register} onUpdate={logPageView} />
+          <Route path="/reset/password" component={ResetPassword} onUpdate={logPageView} />
         </Router>
       </Provider>
     );

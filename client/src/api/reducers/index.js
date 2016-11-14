@@ -2,7 +2,8 @@ import activities from 'api/reducers/activities.js';
 import kinds from 'api/reducers/kinds.js';
 import user from 'api/reducers/user.js';
 import mode from 'api/reducers/mode.js';
-import errors from 'api/reducers/errors.js'
+import errors from 'api/reducers/errors.js';
+import messages from 'api/reducers/messages.js';
 
 export default {
   activities,
@@ -10,4 +11,5 @@ export default {
   user,
   mode,
   errors,
+  messages,
 }

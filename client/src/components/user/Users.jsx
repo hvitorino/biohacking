@@ -34,30 +34,36 @@ class Users extends React.Component {
     });
   }
 
+  formatMessages = () => {
+    const { messages } = this.props;
+    return Object.keys(messages).map(key => {
+      const warning = messages[key];
+      const message = (typeof warning !== 'string') ? warning.message : warning;
+      return (
+        <span className="mdl-color-text--primary" key={key}>{message}</span>
+      )
+    });
+  }
+
   render () {
-    const messages = this.formatErrors();
+    const errors = this.formatErrors();
+    const messages = this.formatMessages();
     const container = this.createContainer();
     return (
       <div className="mdl-layout mdl-layout--fixed-header">
         <main className="mdl-layout__content">
-
           <div className="card-login-register mdl-card mdl-shadow--2dp">
             <div className="mdl-card__supporting-text">
-              <div className="form-errors">{messages}</div>
+              <div className="form-errors">{errors}</div>
+              <div className="form-warnings">{messages}</div>
               <FormContainer ref="form" onSubmit={this.doSubmit}>
                 {container}
               </FormContainer>
             </div>
-            <div className="mdl-card__actions mdl-card--border">
-              <a href="/auth/google" className="google-signin">
-                <i className="fa fa-google-plus-square" aria-hidden="true" />
-              </a>
-            </div>
           </div>
-
         </main>
       </div>
-    )
+    );
   }
 }
 

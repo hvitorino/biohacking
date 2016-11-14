@@ -37,7 +37,7 @@ class Users {
         this.redirectErrors(res)({
           errors: [
             {
-              message: 'email_already_registerd',
+              message: 'email_already_registered',
               type: 'Validation error',
               path: 'email',
             }
@@ -56,19 +56,23 @@ class Users {
     }).then(user => {
       if (!user) {
         const error = {
-          errors: [],
+          errors: [{
+            message: 'email_not_found',
+            type: 'Validation error',
+            path: 'email',
+          }],
         };
         this.redirectErrors(res, 'reset')(error);
       } else {
-        user.generateHash(user => {
+        user.generateResetPasswordKey(user => {
           const mailer = new Mailer();
-          const url = `${GLOBAL.Config.url}/token/${user.hash}`;
+          const url = `https://zonaextrema.com.br/token/${user.resetPasswordKey}`;
           const template = `<a href="${url}">Clique pra trocar a senha</a>`;
           mailer.send({
-            from: 'feedback@produtoreativo.com.br',
+            from: 'zonaextrema@produtoreativo.com.br',
             to: user.email,
             subject: 'Biohacking from Produto Reativo: Reset Password',
-            content: 'Email para trocar a senha',
+            content: `Alguém com o email ${user.email} solicitou troca de senha, ${template}`,
           }).then((response) => {
             console.log(response.statusCode);
             console.log(response.body);
@@ -94,6 +98,56 @@ class Users {
 
   }
 
+  change(req, res) {
+    const User = this.models.User;
+    User.findOne({
+      where: {
+        email: req.body.hash,
+      },
+    }).then(user => {
+      if (!user) {
+        const error = {
+          errors: [{
+            message: 'email_not_found',
+            type: 'Validation error',
+            path: 'email',
+          }],
+        };
+        this.redirectErrors(res, 'reset')(error);
+      } else {
+        user.generateHash(user => {
+          const mailer = new Mailer();
+          const url = `https://zonaextrema.com.br/token/${user.hash}`;
+          const template = `<a href="${url}">Clique pra trocar a senha</a>`;
+          mailer.send({
+            from: 'zonaextrema@produtoreativo.com.br',
+            to: user.email,
+            subject: 'Biohacking from Produto Reativo: Reset Password',
+            content: `Alguém com o email ${req.body.email} solicitou troca de senha, ${template}`,
+          }).then((response) => {
+            console.log(response.statusCode);
+            console.log(response.body);
+            console.log(response.headers);
+            res.send({
+              message: 'email_sent'
+            })
+          }).catch((error) => {
+            console.log('Error', error);
+            this.redirectErrors(res)({
+              errors: [
+                {
+                  message: error.message,
+                  type: 'Validation error',
+                  path: 'mailer',
+                }
+              ]
+            });
+          });
+        });
+      }
+    }).catch(this.redirectErrors(res));
+  }
+
   logout(req, res) {
     req.logout();
     res.send({});
@@ -106,8 +160,8 @@ class Users {
     app.post('/api/register', this.create.bind(this));
     app.post('/api/login', passport.authenticate('local'), (req, res) => res.send(req.user));
     app.get('/api/logout', this.logout.bind(this));
-
-    app.post('/reset/password', this.reset.bind(this));
+    app.post('/api/reset/password', this.reset.bind(this));
+    app.post('/api/change/password', this.change.bind(this));
   }
 }
 

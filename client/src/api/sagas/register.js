@@ -40,7 +40,6 @@ export function* prepareSaga(action) {
     yield put(failure(error));
   } else {
     yield put({ type: actions.user.logged, payload });
-    yield put(failure({}));
     yield put(push('/'));
   }
 }

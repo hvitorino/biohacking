@@ -41,7 +41,6 @@ export function* prepareSaga(action) {
     yield put(failure(error));
   } else {
     yield put({ type: actions.activities.updateSuccess, payload });
-    yield put(failure({}));
     yield put(push('/activities'));
   }
 }

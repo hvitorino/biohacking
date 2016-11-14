@@ -39,4 +39,4 @@ class Register extends Users {
 
 }
 
-export default connect(({ user, errors }) => ({ user, errors }), doLoginAction)(Register);
+export default connect(({ user, errors, messages }) => ({ user, errors, messages }), doLoginAction)(Register);

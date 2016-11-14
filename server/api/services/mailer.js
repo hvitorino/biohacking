@@ -1,10 +1,9 @@
 const SendGrid = require('sendgrid');
 
-class Mailer extends SendGrid {
+class Mailer {
 
   constructor() {
-    super(process.env.SENDGRID_APIKEY);
-    this.send = this.send.bind(this);
+    this.sendGrid = new SendGrid(process.env.SENDGRID_APIKEY);
   }
 
   send({ from, to, subject, content }) {
@@ -14,13 +13,13 @@ class Mailer extends SendGrid {
     const body = new helper.Content('text/plain', content);
     const mail = new helper.Mail(fromEmail, subject, toEmail, body);
 
-    const request = this.emptyRequest({
+    const request = this.sendGrid.emptyRequest({
       method: 'POST',
       path: '/v3/mail/send',
       body: mail.toJSON(),
     });
 
-    return this.API(request);
+    return this.sendGrid.API(request);
   }
 
 }

@@ -36,4 +36,4 @@ class ResetPassword extends Users {
 
 }
 
-export default connect(({ errors }) => ({ errors }), doLoginAction)(ResetPassword);
+export default connect(({ errors, messages }) => ({ errors, messages }), doLoginAction)(ResetPassword);

@@ -39,4 +39,4 @@ class Login extends Users {
 
 }
 
-export default connect(({ user, errors }) => ({ user, errors }), doLoginAction)(Login);
+export default connect(({ user, errors, messages }) => ({ user, errors, messages }), doLoginAction)(Login);

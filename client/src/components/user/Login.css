@@ -4,7 +4,7 @@
     top: 20px;
 }
 
-.form-errors span {
+.form-errors span, .form-warnings span {
   color: #d50000;
   position: absolute;
   font-size: 12px;
