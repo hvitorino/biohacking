@@ -7,6 +7,7 @@
   "description": "Biohacking",
   "main": "server.js",
   "scripts": {
+    "postinstall": "node install_production.js",
     "db:create": "node_modules/.bin/create_database",
     "db:drop": "node_modules/.bin/drop_database",
     "db:reset": "npm run db:drop && npm run db:create && sequelize db:migrate && sequelize db:seed:all",
@@ -32,6 +33,7 @@
     "pg-hstore": "^2.3.2",
     "sendgrid": "^4.7.1",
     "sequelize": "^3.24.6",
+    "sequelize-cli": "^2.4.0",
     "sequelize-migration-pg-extras": "github:cmilfont/sequelize-migration-pg-extras",
     "serve-favicon": "^2.3.0",
     "uuid": "^2.0.3"
