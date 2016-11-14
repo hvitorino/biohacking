@@ -6,6 +6,9 @@ class TextField extends React.Component {
   state = {
     value: '',
     id: uuid(),
+    type: 'text',
+    labelName: '',
+    name: '',
     focused: false,
     invalid: false,
     errors: [],
@@ -23,7 +26,7 @@ class TextField extends React.Component {
   }
 
   componentWillMount() {
-    const { value, errors } = this.props;
+    const { value, errors, type, labelName, name } = this.props;
     const focused = !!value;
     const invalid = !!errors;
     const newValue = (value) ? String(value) : '';
@@ -31,16 +34,22 @@ class TextField extends React.Component {
       value: newValue,
       focused,
       invalid,
+      type,
+      labelName,
+      name,
       errors: errors || []
     });
   }
 
   componentWillReceiveProps(nextProps) {
+    const { value: oldValue } = this.state;
     const { errors, value } = nextProps;
-    const focused = !!value;
     const invalid = !!errors;
+    const newValue = (value) ? String(value) : oldValue;
+    const focused = !!newValue;
     this.setState({
-      value,
+      ...this.state,
+      value: newValue,
       focused,
       invalid,
       errors: errors || []
@@ -63,7 +72,7 @@ class TextField extends React.Component {
 
   onChange = (event) => {
     const { value } = event.target;
-    const { name } = this.props;
+    const { name } = this.state;
     const { updateForm } = this.context;
     this.setState({
       ...this.state,
@@ -76,9 +85,8 @@ class TextField extends React.Component {
   }
 
   render () {
-
-    const { onChange, focused, invalid, id, value } = this.state;
-    const { type, labelName, name, onClick, onKeyPress } = this.props;
+    const { type, labelName, name, focused, invalid, id, value } = this.state;
+    const { onClick, onKeyPress } = this.props;
 
     const fieldType = (type) ? type : "text";
     const isFocused = (focused) ? 'is-focused' : '';

@@ -1,12 +1,13 @@
-import SendGrid from 'sendgrid';
+const SendGrid = require('sendgrid');
 
 class Mailer extends SendGrid {
 
   constructor() {
     super(process.env.SENDGRID_APIKEY);
+    this.send = this.send.bind(this);
   }
 
-  send = ({ from, to, subject, content }) => {
+  send({ from, to, subject, content }) {
     const helper = SendGrid.mail;
     const fromEmail = new helper.Email(from);
     const toEmail = new helper.Email(to);
@@ -24,4 +25,4 @@ class Mailer extends SendGrid {
 
 }
 
-export default Mailer;
+module.exports = Mailer;

@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 import React, { Component } from 'react';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -21,7 +23,8 @@ import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
 import Sagas from 'api/sagas';
 
-window.firebase = firebase;
+//import Airbrake from 'airbrake-js';
+
 var config = {
   apiKey: "AIzaSyAwFULDzJxhy67MYf5tMTMD3ygQh2pZGks",
   authDomain: "biohacking-ca69d.firebaseapp.com",
@@ -29,7 +32,17 @@ var config = {
   storageBucket: "biohacking-ca69d.appspot.com",
   messagingSenderId: "730944460815"
 };
+
+window.firebase = firebase;
 window.firebase.initializeApp(config);
+
+// const AIRBRAKE_API_KEY='4a68026f35d09256a77ae10fd065bab2';
+// const AIRBRAKE_PROJECT_ID=133132;
+//
+// const airbrake = new Airbrake({
+//   projectId: AIRBRAKE_PROJECT_ID,
+//   projectKey: AIRBRAKE_API_KEY,
+// });
 
 class App extends Component {
 
@@ -37,7 +50,8 @@ class App extends Component {
 
     const sagaMiddleware = createSagaMiddleware({
       onError: (error) => {
-        console.log('EXCEPTION: ', error);
+        console.error('ERROR: ', error);
+        //airbrake.notify(error);
       }
     });
 

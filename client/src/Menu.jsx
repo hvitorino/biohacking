@@ -6,13 +6,16 @@ import './Menu.css';
 
 class Menu extends React.Component {
 
+  static propTypes = {
+    user: PropTypes.object,
+  }
+
   onLogout = () => {
     const { doLogout } = this.props;
     doLogout();
   }
 
   render () {
-    const { user: { email } } = this.props;
     return (
       <header className="mdl-layout__header mdl-layout__header--transparent">
         <div className="mdl-layout__header-row">

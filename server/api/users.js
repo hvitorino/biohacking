@@ -1,4 +1,4 @@
-import Mailer from '../services/mailer';
+const Mailer = require('./services/mailer');
 
 class Users {
 

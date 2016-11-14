@@ -3,6 +3,10 @@ import Menu from 'Menu.jsx';
 
 class Base extends React.Component {
 
+  static propTypes = {
+    children: PropTypes.element,
+  }
+
   render () {
     const { children } = this.props;
     return (
