@@ -19,6 +19,7 @@ import Search from 'components/activities/Search.jsx';
 import Login from 'components/user/Login.jsx';
 import Register from 'components/user/Register.jsx';
 import ResetPassword from 'components/user/ResetPassword.jsx';
+import ChangePassword from 'components/user/ChangePassword.jsx';
 
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
@@ -100,6 +101,7 @@ class App extends Component {
           <Route path="/login" component={Login} onUpdate={logPageView} />
           <Route path="/register" component={Register} onUpdate={logPageView} />
           <Route path="/reset/password" component={ResetPassword} onUpdate={logPageView} />
+          <Route path="/token/:token" component={ChangePassword} onUpdate={logPageView} />
         </Router>
       </Provider>
     );

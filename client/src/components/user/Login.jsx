@@ -6,11 +6,6 @@ import Users from 'components/user/Users.jsx';
 
 class Login extends Users {
 
-  doSubmit = (formState) => {
-    const { doLogin } = this.props;
-    doLogin(this.refs.form.getValues());
-  }
-
   createContainer() {
     return (
       <ul className="login-list mdl-list">

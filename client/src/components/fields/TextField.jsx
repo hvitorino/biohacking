@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import uuid from 'uuid';
+import './TextField.css';
 
 class TextField extends React.Component {
 
@@ -91,11 +92,12 @@ class TextField extends React.Component {
     const fieldType = (type) ? type : "text";
     const isFocused = (focused) ? 'is-focused' : '';
     const isInvalid = (invalid) ? 'is-invalid' : '';
+    const isHidden = (fieldType === 'hidden') ? 'isHidden' : '';
     const errors = this.mapErrors();
     return (
       <div
         key={id}
-        className={`mdl-textfield mdl-js-textfield mdl-textfield--floating-label ${isInvalid} ${isFocused}`}>
+        className={`mdl-textfield mdl-js-textfield mdl-textfield--floating-label ${isInvalid} ${isFocused} ${isHidden}`}>
         <input
           className="mdl-textfield__input"
           type={fieldType}

@@ -5,7 +5,11 @@ import './Login.css';
 
 class Users extends React.Component {
 
-  doSubmit() {}
+  doSubmit = () => {
+    debugger
+    const { doSubmit } = this.props;
+    doSubmit(this.refs.form.getValues());
+  }
 
   createContainer() {
     return (<div></div>);
@@ -22,7 +26,13 @@ class Users extends React.Component {
         filtered.forEach(({ message }) => errors.push(<div>{message}</div>));
       }
     }
-    return (<TextField type={type} labelName={fieldLabel} name={name} />);
+    return (
+      <TextField
+        type={type}
+        labelName={fieldLabel}
+        name={name}
+      />
+    );
   }
 
   formatErrors = () => {

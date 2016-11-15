@@ -26,6 +26,16 @@ class Form extends React.Component {
     });
   }
 
+  setValues = (values) => {
+    const { fields } = this.state;
+    this.setState({
+      fields: {
+        ...fields,
+        ...values,
+      }
+    });
+  }
+
   getValues = () => {
     return this.state.fields;
   }

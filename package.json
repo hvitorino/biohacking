@@ -13,8 +13,8 @@
     "db:reset": "npm run db:drop && npm run db:create && sequelize db:migrate && sequelize db:seed:all",
     "start": "nf start -p $PORT",
     "dev": "nf start -p 3000 --procfile Procfile.dev",
-    "server": "node server",
-    "server:dev": "nodemon server"
+    "server": "node --harmony-async-await server",
+    "server:dev": "nodemon --harmony-async-await server"
   },
   "author": "Insystem",
   "license": "ISC",

@@ -11,6 +11,8 @@ export const user = {
   reset: `${NAMESPACE}_USER_RESET_PASSWORD`,
   resetFailure: `${NAMESPACE}_USER_RESET_PASSWORD_ERROR`,
   hasBeenReset: `${NAMESPACE}_USER_HAS_BEEN_RESET_PASSWORD_MESSAGE`,
+  change: `${NAMESPACE}_USER_CHANGE_PASSWORD`,
+  changeFailure: `${NAMESPACE}_USER_CHANGE_PASSWORD_ERROR`,
 }
 
 export const activities = {
@@ -78,9 +80,25 @@ export const defaultAction = (dispatch, actionType) => {
 
 export const doLoginAction = (dispatch) => {
   return {
-    doLogin: defaultAction(dispatch, actions.user.login),
-    doRegister: defaultAction(dispatch, actions.user.register),
-    doReset: defaultAction(dispatch, actions.user.reset),
+    doSubmit: defaultAction(dispatch, actions.user.login),
+  }
+}
+
+export const doRegisterAction = (dispatch) => {
+  return {
+    doSubmit: defaultAction(dispatch, actions.user.register),
+  }
+}
+
+export const doResetAction = (dispatch) => {
+  return {
+    doSubmit: defaultAction(dispatch, actions.user.reset),
+  }
+}
+
+export const doChangeAction = (dispatch) => {
+  return {
+    doSubmit: defaultAction(dispatch, actions.user.change),
   }
 }
 

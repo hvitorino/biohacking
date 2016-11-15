@@ -102,7 +102,7 @@ class Users {
     const User = this.models.User;
     User.findOne({
       where: {
-        email: req.body.hash,
+        token: req.body.token,
       },
     }).then(user => {
       if (!user) {

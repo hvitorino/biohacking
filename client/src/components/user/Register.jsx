@@ -1,15 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { doLoginAction } from 'api/actions';
+import { doRegisterAction } from 'api/actions';
 import Users from 'components/user/Users.jsx';
 
 class Register extends Users {
-
-  doSubmit = (formState) => {
-    const { doRegister } = this.props;
-    doRegister(this.refs.form.getValues());
-  }
 
   createContainer() {
     return (
@@ -39,4 +34,4 @@ class Register extends Users {
 
 }
 
-export default connect(({ user, errors, messages }) => ({ user, errors, messages }), doLoginAction)(Register);
+export default connect(({ user, errors, messages }) => ({ user, errors, messages }), doRegisterAction)(Register);
