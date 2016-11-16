@@ -6,7 +6,6 @@ import './Login.css';
 class Users extends React.Component {
 
   doSubmit = () => {
-    debugger
     const { doSubmit } = this.props;
     doSubmit(this.refs.form.getValues());
   }

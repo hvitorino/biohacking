@@ -1,6 +1,8 @@
 const path = require( 'path' );
 const bodyParser = require( 'body-parser' );
-const logger = require( 'morgan' );
+const morgan = require( 'morgan' );
+const Logentries = require('le_node');
+const winston = require('winston');
 const cookieParser = require( 'cookie-parser' );
 const expressSession = require( 'express-session' );
 const connectFlash = require( 'connect-flash' );
@@ -9,10 +11,38 @@ const favicon = require( 'serve-favicon' );
 module.exports = (express, app) => {
   //const icoUrl = path.resolve(path.join('public', 'assets', 'images', 'smile.ico'));
   app.use(express.static(path.resolve(path.join('client', 'build'))));
-  // app.set('views', path.resolve(path.join('views')));
-  // app.set('view engine', 'jsx');
-  // app.engine('jsx', reactViews.createEngine());
-  app.use(logger('combined'));
+
+  const logger = new (winston.Logger)({
+    transports: [
+        // new winston.transports.File({
+        //     level: 'info',
+        //     filename: './logs/all-logs.log',
+        //     handleExceptions: true,
+        //     json: true,
+        //     maxsize: 5242880, //5MB
+        //     maxFiles: 5,
+        //     colorize: false
+        // }),
+        new Logentries({ token: 'b841457c-059d-46e3-b564-cc2e30314769' }),
+        new winston.transports.Console({
+            level: 'verbose',
+            handleExceptions: true,
+            json: true,
+            colorize: true
+        })
+    ],
+    exitOnError: false
+  });
+
+  logger.stream = {
+      write: function(message, encoding){
+          logger.info(message);
+      }
+  };
+
+  app.use(morgan("combined", { "stream": logger.stream }));
+  app.set('logger', logger);
+
   app.use(cookieParser());
   //app.use(favicon(icoUrl));
   app.use(bodyParser.urlencoded({ extended: true }));

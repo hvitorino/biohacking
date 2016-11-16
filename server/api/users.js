@@ -3,7 +3,11 @@ const Mailer = require('./services/mailer');
 class Users {
 
   redirectErrors(res) {
-    return (error) => res.status(412).send({ messages: error.errors });
+    const logger = this.app.get('logger');
+    return (error) => {
+      logger.log('info', 'USER Error:', error);
+      res.status(412).send({ messages: error.errors })
+    };
   }
 
   create(req, res, next) {
@@ -62,7 +66,7 @@ class Users {
             path: 'email',
           }],
         };
-        this.redirectErrors(res, 'reset')(error);
+        this.redirectErrors(res)(error);
       } else {
         user.generateResetPasswordKey(user => {
           const mailer = new Mailer();
@@ -100,49 +104,27 @@ class Users {
 
   change(req, res) {
     const User = this.models.User;
+    const { token: resetPasswordKey, password } = req.body;
     User.findOne({
-      where: {
-        token: req.body.token,
-      },
+      where: { resetPasswordKey }
     }).then(user => {
       if (!user) {
         const error = {
           errors: [{
-            message: 'email_not_found',
+            message: 'token_invalid',
             type: 'Validation error',
-            path: 'email',
-          }],
+            path: 'token'
+          }]
         };
-        this.redirectErrors(res, 'reset')(error);
+        this.redirectErrors(res)(error);
       } else {
-        user.generateHash(user => {
-          const mailer = new Mailer();
-          const url = `https://zonaextrema.com.br/token/${user.hash}`;
-          const template = `<a href="${url}">Clique pra trocar a senha</a>`;
-          mailer.send({
-            from: 'zonaextrema@produtoreativo.com.br',
-            to: user.email,
-            subject: 'Biohacking from Produto Reativo: Reset Password',
-            content: `Alguém com o email ${req.body.email} solicitou troca de senha, ${template}`,
-          }).then((response) => {
-            console.log(response.statusCode);
-            console.log(response.body);
-            console.log(response.headers);
-            res.send({
-              message: 'email_sent'
-            })
-          }).catch((error) => {
-            console.log('Error', error);
-            this.redirectErrors(res)({
-              errors: [
-                {
-                  message: error.message,
-                  type: 'Validation error',
-                  path: 'mailer',
-                }
-              ]
-            });
-          });
+        user.setPassword(password, () => {
+          user.save()
+                 .then(() => {
+                   res.send({});
+                 })
+                 .catch(this.redirectErrors(res));
+
         });
       }
     }).catch(this.redirectErrors(res));
