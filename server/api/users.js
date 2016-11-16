@@ -25,16 +25,19 @@ class Users {
           if (error) {
             this.redirectErrors(res)(error);
           } else {
-            newUser.setPassword(req.body.password, () => {
-              newUser.save()
-                     .then(() => {
-                       req.login(newUser, err => {
-                         if (err) { return next(err); }
-                         return res.send(newUser);
-                       });
-                     })
-                     .catch(this.redirectErrors(res));
-            });
+            newUser
+              .setPassword(req.body.password)
+              .then(() => {
+                newUser.save()
+                       .then(() => {
+                         req.login(newUser, err => {
+                           if (err) { return next(err); }
+                           return res.send(newUser);
+                         });
+                       })
+                       .catch(this.redirectErrors(res));
+              })
+              .catch(this.redirectErrors(res));
           }
         });
       } else {
@@ -111,21 +114,23 @@ class Users {
       if (!user) {
         const error = {
           errors: [{
-            message: 'token_invalid',
+            message: 'invalid_token',
             type: 'Validation error',
             path: 'token'
           }]
         };
         this.redirectErrors(res)(error);
       } else {
-        user.setPassword(password, () => {
-          user.save()
-                 .then(() => {
-                   res.send({});
-                 })
-                 .catch(this.redirectErrors(res));
+        user.setPassword(password)
+            .then(() => {
+              user.save()
+                     .then(() => {
+                       res.send({});
+                     })
+                     .catch(this.redirectErrors(res));
 
-        });
+            })
+            .catch(this.redirectErrors(res));;
       }
     }).catch(this.redirectErrors(res));
   }

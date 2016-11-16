@@ -17,7 +17,7 @@ module.exports = (app, models) => {
         }
         // https://adambard.com/blog/3-wrong-ways-to-store-a-password/
         // https://gist.github.com/skeggse/52672ddee97c8efec269
-        crypto.pbkdf2(password, user.get('salt'), 12000, 512, (err, hashRaw) => {
+        crypto.pbkdf2(password, user.get('salt'), 12000, 512, 'sha512', (err, hashRaw) => {
           if (err) {
             return done(null, false, { message: err.message });
           }

@@ -38,18 +38,34 @@ module.exports = (sequelize, DataTypes) => {
           updateHash({ hash }).then(callback);
         });
       },
-      setPassword: function (password, callback) {
+      setPassword: function (password) {
         const self = this;
-        crypto.randomBytes(32, function (error, buf) {
-          const salt = buf.toString('hex');
-          crypto.pbkdf2(password, salt, 12000, 512, function (err, hashRaw) {
-            self.set('hash', new Buffer(hashRaw, 'binary').toString('hex'));
-            self.set('salt', salt);
-            callback(null, self);
-          });
+        return new Promise((resolve, reject)  => {
+          if (password && typeof password === 'string') {
+            crypto.randomBytes(32, (error, buf) => {
+              if (error) {
+                reject(error);
+              }
+              const salt = buf.toString('hex');
+              crypto.pbkdf2(password, salt, 12000, 512, 'sha512', (err, hashRaw) => {
+                this.set('hash', new Buffer(hashRaw, 'binary').toString('hex'));
+                this.set('salt', salt);
+                resolve(this);
+              });
+            });
+          } else {
+            const error = {
+              errors: [{
+                message: 'invalid_password',
+                type: 'Validation error',
+                path: 'password'
+              }]
+            };
+            reject(error);
+          }
         });
-      },
-    },
+      }
+    }
   });
   return User;
 };
