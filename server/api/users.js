@@ -73,7 +73,7 @@ class Users {
       } else {
         user.generateResetPasswordKey(user => {
           const mailer = new Mailer();
-          const url = `https://zonaextrema.com.br/token/${user.resetPasswordKey}`;
+          const url = `http://www.zonaextrema.com.br/token/${user.resetPasswordKey}`;
           const template = `<a href="${url}">Clique pra trocar a senha</a>`;
           mailer.send({
             from: 'zonaextrema@produtoreativo.com.br',
