@@ -19,7 +19,8 @@ app.get('/api/list', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  res.redirect('/');
+  // /token/5776a237-22f8-495a-b5c7-c80d07f79f4e
+  res.sendfile(__dirname + '/client/build/index.html');
 });
 
 app.listen(app.get('port'), () => {
