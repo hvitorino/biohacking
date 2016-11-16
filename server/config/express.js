@@ -23,7 +23,7 @@ module.exports = (express, app) => {
         //     maxFiles: 5,
         //     colorize: false
         // }),
-        new Logentries({ token: 'b841457c-059d-46e3-b564-cc2e30314769' }),
+        new Logentries({ token: process.env.LOGENTRIES_TOKEN }),
         new winston.transports.Console({
             level: 'verbose',
             handleExceptions: true,
