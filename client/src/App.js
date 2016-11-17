@@ -24,6 +24,7 @@ import ChangePassword from 'components/user/ChangePassword.jsx';
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
 import Sagas from 'api/sagas';
+import actions from 'api/actions.js';
 
 import Airbrake from 'airbrake-js';
 
@@ -71,6 +72,14 @@ class App extends Component {
       reducers,
       compose(applyMiddleware(...middlewares))
     );
+
+    const loggedUser = localStorage.getItem('user');
+    if (loggedUser) {
+      store.dispatch({
+        type: actions.user.logged,
+        payload: JSON.parse(loggedUser),
+      });
+    }
 
     const history = syncHistoryWithStore(browserHistory, store);
 

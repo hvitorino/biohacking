@@ -6,7 +6,7 @@ const models = require('./server/models');
 
 require('./server/config/express.js')(express, app);
 require('./server/config/passport.js')(app, models);
-require('./server/api')(app, models);
+require('./server/api/routers')(app, models);
 
 app.set('port', (process.env.PORT || 3001));
 

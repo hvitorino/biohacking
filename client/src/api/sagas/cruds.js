@@ -1,6 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-
+import { push } from 'react-router-redux';
 import actions, { nextAction } from 'api/actions';
 
 const createConfig = (method = 'GET', payload = {}) => {
@@ -23,12 +23,28 @@ const createConfig = (method = 'GET', payload = {}) => {
 function executeFetch(id, entityUrl, method, payload) {
   const url = (id) ? `/api/${entityUrl}/${id}` : `/api/${entityUrl}`;
   return fetch(url, createConfig(method, payload))
-          .then(response => response.json())
+          .then(response => {
+            if (response.status >= 400) {
+              return response.json().then(({messages}) => {
+                const error = messages.reduce((errors, message) => {
+                  errors[message.path] = message;
+                  return errors;
+                }, {});
+                return { error, statusCode:  response.status};
+              });
+            }
+            return response.json();
+          })
           .then(json => json);
 }
 
+const failure = (payload, type) => ({
+  type: `${type}_ERROR`,
+  payload,
+});
+
 export function* prepareSaga(action) {
-  console.log('Entrou na saga', action);
+  console.log('Entrou na saga de CRUDs', action);
   const { payload } = action;
   const id = (payload) ? payload.id : null;
   const { success } = nextAction(action.type);
@@ -38,7 +54,15 @@ export function* prepareSaga(action) {
                           action.method,
                           action.payload
                         );
-  yield put(success(payback));
+  if (payback.error) {
+    yield put(failure(payback, action.type));
+    if (payback.statusCode === 401) {
+      yield put(push('/login'));
+    }
+  } else {
+    yield put(success(payback));
+  }
+
 }
 
 /**

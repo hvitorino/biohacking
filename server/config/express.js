@@ -47,7 +47,12 @@ module.exports = (express, app) => {
   //app.use(favicon(icoUrl));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+  app.use(expressSession({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie : { httpOnly: true, maxAge: 2419200000 }
+  }));
   app.use(connectFlash());
 
   app.use((req, res, next) => {

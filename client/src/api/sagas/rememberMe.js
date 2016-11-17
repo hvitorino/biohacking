@@ -3,15 +3,14 @@ import { call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import actions from 'api/actions';
 
-function executeFetch(payload) {
-  return fetch('api/login', {
-    method: 'POST',
+function executeFetch() {
+  return fetch('/api/user', {
+    method: 'GET',
     credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
   }).then(response => {
       if (response.status >= 400) {
         return {
@@ -31,8 +30,7 @@ const failure = payload => ({
 });
 
 export function* prepareSaga(action) {
-  console.log('Entrou na saga LOGIN:', action);
-  const payload = yield call(executeFetch, action.payload);
+  const payload = yield call(executeFetch);
   const { error } = payload;
   if (error) {
     yield put(failure(error));
@@ -43,6 +41,6 @@ export function* prepareSaga(action) {
   }
 }
 
-export default function* watchLogin() {
-  yield* takeLatest(actions.user.login, prepareSaga);
+export default function* rememberMe() {
+  yield* takeLatest(actions.user.rememberMe, prepareSaga);
 }

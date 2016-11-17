@@ -4,7 +4,13 @@ import { push } from 'react-router-redux';
 import actions from 'api/actions';
 
 function executeFetch(payload) {
-  return fetch('api/logout')
+  return fetch('api/logout', {
+            credentials: 'include',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            }
+          })
           .then(response => response.json())
           .then(json => json);
 }

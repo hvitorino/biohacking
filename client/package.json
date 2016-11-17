@@ -5,7 +5,7 @@
   "devDependencies": {
     "react-scripts": "0.6.1"
   },
-  "proxy": "http://www.zonaextrema.com.br/",
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "airbrake-js": "^0.5.9",
     "firebase": "^3.5.1",

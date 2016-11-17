@@ -6,6 +6,10 @@ import Users from 'components/user/Users.jsx';
 
 class Login extends Users {
 
+  componentDidMount() {
+    this.props.doRemember();
+  }
+
   createContainer() {
     return (
       <ul className="login-list mdl-list">

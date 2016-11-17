@@ -14,7 +14,8 @@
     "start": "nf start -p $PORT",
     "dev": "nf start -p 3000 --procfile Procfile.dev",
     "server": "node --harmony-async-await server",
-    "server:dev": "nodemon --harmony-async-await server"
+    "server:dev": "nodemon --harmony-async-await server",
+    "server:debug": "nodemon --harmony-async-await --debug-brk --inspect server"
   },
   "author": "Insystem",
   "license": "ISC",

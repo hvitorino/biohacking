@@ -1,4 +1,4 @@
-const Mailer = require('./services/mailer');
+const Mailer = require('../services/mailer');
 
 class Users {
 
@@ -149,6 +149,7 @@ class Users {
     app.get('/api/logout', this.logout.bind(this));
     app.post('/api/reset/password', this.reset.bind(this));
     app.post('/api/change/password', this.change.bind(this));
+    app.get('/api/user', (req, res) => res.send(req.user || {}));
   }
 }
 

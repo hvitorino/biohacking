@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import actions from 'api/actions';
 
 function executeFetch(payload) {
-  return fetch('api/activities', {
+  return fetch('/api/activities', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -39,6 +39,7 @@ export function* prepareSaga(action) {
   const { error } = payload;
   if (error) {
     yield put(failure(error));
+    yield put(push('/login'));
   } else {
     yield put({ type: actions.activities.updateSuccess, payload });
     yield put(push('/activities'));

@@ -21,10 +21,24 @@ class Activities {
   }
 
   constructor(app, models) {
+    const passport = app.get('passport');
     this.app = app;
     this.models = models;
-    app.get('/api/activities', this.getActivities.bind(this));
-    app.post('/api/activities', this.postActivity.bind(this));
+    app.get('/api/activities', (req, res, next) => {
+      const user = req.user;
+      if (user) {
+        next();
+      } else {
+        res.status(401).send({ messages: [
+          {
+            message: 'unlogged_user',
+            type: 'Validation error',
+            path: 'auth',
+          }
+        ] })
+      }
+    }, this.getActivities.bind(this));
+    app.post('/api/activities', passport.authenticate('local'), this.postActivity.bind(this));
   }
 }
 

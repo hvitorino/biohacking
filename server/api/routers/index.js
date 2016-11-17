@@ -4,7 +4,7 @@ const basename  = path.basename(module.filename);
 
 module.exports = (app, models) => {
   const routers       = {};
-  fs.readdirSync(path.resolve('server', 'api'))
+  fs.readdirSync(path.resolve('server', 'api', 'routers'))
     .filter(function(file) {
       return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })

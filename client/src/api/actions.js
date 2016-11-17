@@ -13,6 +13,7 @@ export const user = {
   hasBeenReset: `${NAMESPACE}_USER_HAS_BEEN_RESET_PASSWORD_MESSAGE`,
   change: `${NAMESPACE}_USER_CHANGE_PASSWORD`,
   changeFailure: `${NAMESPACE}_USER_CHANGE_PASSWORD_ERROR`,
+  rememberMe: `${NAMESPACE}_USER_REMEMBER_ME`,
 }
 
 export const activities = {
@@ -81,6 +82,7 @@ export const defaultAction = (dispatch, actionType) => {
 export const doLoginAction = (dispatch) => {
   return {
     doSubmit: defaultAction(dispatch, actions.user.login),
+    doRemember: defaultAction(dispatch, actions.user.rememberMe),
   }
 }
 
