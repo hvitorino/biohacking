@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { doResetAction } from 'api/actions';
-import Users from 'components/user/Users.jsx';
+import Container from 'components/user/Container.jsx';
+import mapStateToProps from 'components/user/mapStateToProps.js';
 
-class ResetPassword extends Users {
+class ResetPassword extends Container {
 
   createContainer() {
     return (
@@ -26,9 +27,9 @@ class ResetPassword extends Users {
           </Link>
         </li>
       </ul>
-    )
+    );
   }
 
 }
 
-export default connect(({ errors, messages }) => ({ errors, messages }), doResetAction)(ResetPassword);
+export default connect(mapStateToProps, doResetAction)(ResetPassword);

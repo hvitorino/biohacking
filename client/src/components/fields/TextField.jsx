@@ -4,6 +4,20 @@ import './TextField.css';
 
 class TextField extends React.Component {
 
+  static propTypes = {
+    onClick: PropTypes.func,
+    onKeyPress: PropTypes.func,
+    value: PropTypes.string,
+    errors: PropTypes.string,
+    type: PropTypes.string,
+    labelName: PropTypes.string,
+    name: PropTypes.string,
+  }
+
+  static contextTypes = {
+    updateForm: PropTypes.func,
+  }
+
   state = {
     value: '',
     id: uuid(),
@@ -13,17 +27,6 @@ class TextField extends React.Component {
     focused: false,
     invalid: false,
     errors: [],
-  }
-
-  static contextTypes = {
-    updateForm: PropTypes.func,
-  }
-
-  onFocus = () => {
-    this.setState({
-      ...this.state,
-      focused: true,
-    });
   }
 
   componentWillMount() {
@@ -38,7 +41,7 @@ class TextField extends React.Component {
       type,
       labelName,
       name,
-      errors: errors || []
+      errors: errors || [],
     });
   }
 
@@ -53,21 +56,14 @@ class TextField extends React.Component {
       value: newValue,
       focused,
       invalid,
-      errors: errors || []
+      errors: errors || [],
     });
   }
 
-  mapErrors = () => {
-    const errors = this.props.errors || [];
-    return errors.map(error => (<b>{error}</b>));
-  }
-
-  handleBlur = () => {
-    const { value } = this.state;
-    const focused = !!value;
+  onFocus = () => {
     this.setState({
       ...this.state,
-      focused,
+      focused: true,
     });
   }
 
@@ -85,19 +81,35 @@ class TextField extends React.Component {
     });
   }
 
-  render () {
+  handleBlur = () => {
+    const { value } = this.state;
+    const focused = !!value;
+    this.setState({
+      ...this.state,
+      focused,
+    });
+  }
+
+  mapErrors = () => {
+    const errors = this.props.errors || [];
+    return errors.map(error => (<b>{error}</b>));
+  }
+
+  render() {
     const { type, labelName, name, focused, invalid, id, value } = this.state;
     const { onClick, onKeyPress } = this.props;
 
-    const fieldType = (type) ? type : "text";
+    const fieldType = (type) ? type : 'text';
     const isFocused = (focused) ? 'is-focused' : '';
     const isInvalid = (invalid) ? 'is-invalid' : '';
     const isHidden = (fieldType === 'hidden') ? 'isHidden' : '';
     const errors = this.mapErrors();
+    const className = `mdl-textfield mdl-textfield--floating-label ${isInvalid} ${isFocused} ${isHidden}`;
     return (
       <div
         key={id}
-        className={`mdl-textfield mdl-js-textfield mdl-textfield--floating-label ${isInvalid} ${isFocused} ${isHidden}`}>
+        className={className}
+      >
         <input
           className="mdl-textfield__input"
           type={fieldType}
@@ -110,7 +122,7 @@ class TextField extends React.Component {
           onClick={onClick}
           onKeyPress={onKeyPress}
         />
-      <label className="mdl-textfield__label" htmlFor={id}>{labelName}</label>
+        <label className="mdl-textfield__label" htmlFor={id}>{labelName}</label>
         <span className="mdl-textfield__error">{errors}</span>
       </div>
     );

@@ -1,43 +1,24 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
 class Form extends React.Component {
 
-  state = {
-    fields: {},
+  static propTypes = {
+    onSubmit: PropTypes.func,
+    children: PropTypes.element,
   }
 
   static childContextTypes = {
     updateForm: PropTypes.func,
   }
 
+  state = {
+    fields: {},
+  }
+
   getChildContext() {
     return {
       updateForm: this.updateForm,
     };
-  }
-
-  updateForm = (fieldName, value) => {
-    const { fields } = this.state;
-    this.setState({
-      fields: {
-        ...fields,
-        [fieldName]: value,
-      }
-    });
-  }
-
-  setValues = (values) => {
-    const { fields } = this.state;
-    this.setState({
-      fields: {
-        ...fields,
-        ...values,
-      }
-    });
-  }
-
-  getValues = () => {
-    return this.state.fields;
   }
 
   onSubmit = () => {
@@ -47,6 +28,28 @@ class Form extends React.Component {
     if (onSubmit) {
       onSubmit(this.state);
     }
+  }
+
+  setValues = (values) => {
+    const { fields } = this.state;
+    this.setState({
+      fields: {
+        ...fields,
+        ...values,
+      },
+    });
+  }
+
+  getValues = () => (this.state.fields)
+
+  updateForm = (fieldName, value) => {
+    const { fields } = this.state;
+    this.setState({
+      fields: {
+        ...fields,
+        [fieldName]: value,
+      },
+    });
   }
 
   render() {

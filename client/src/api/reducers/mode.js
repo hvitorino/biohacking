@@ -1,11 +1,11 @@
-import actions from 'api/actions';
+import actions from 'api/actions.js';
 
 const initialState = ({ state, activity }) => ({
   activity,
   state,
 });
 
-export default (state = initialState({state: 'listing'}), { type, payload: activity }) => {
+export default (state = initialState({ state: 'listing' }), { type, payload: activity }) => {
   if (type === 'ACTIVITIES_EDIT') {
     return initialState({
       state: 'edit',
@@ -18,4 +18,4 @@ export default (state = initialState({state: 'listing'}), { type, payload: activ
     });
   }
   return state;
-}
+};

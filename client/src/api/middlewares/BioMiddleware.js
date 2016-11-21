@@ -1,8 +1,8 @@
-import { NAMESPACE } from 'api/actions';
+import { NAMESPACE } from 'api/actions.js';
 
 function middleware(store) {
-  return function(dispatch) {
-    return function(action) {
+  return dispatch => (
+    (action) => {
       const keys = action.type.split('_');
       if (keys[0] === NAMESPACE) {
         const { user } = store.getState();
@@ -14,8 +14,8 @@ function middleware(store) {
         });
       }
       return dispatch(action);
-    };
-  };
+    }
+  );
 }
 
 export default middleware;

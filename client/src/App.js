@@ -1,60 +1,44 @@
+/* Polyfill */
 import 'whatwg-fetch';
-
+/* Dependencias de monitoramento e integração */
+import 'global/config.js';
+/* Ecossistema React */
 import React, { Component } from 'react';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
-import firebase from 'firebase';
-import ReactGA from 'react-ga';
-import './App.css';
-
+/* Components e Containers */
 import Base from 'Base.jsx';
-
 import Grid from 'components/kinds/Grid.jsx';
-
 import Activities from 'components/activities/Activities.jsx';
 import Search from 'components/activities/Search.jsx';
 import Login from 'components/user/Login.jsx';
 import Register from 'components/user/Register.jsx';
 import ResetPassword from 'components/user/ResetPassword.jsx';
 import ChangePassword from 'components/user/ChangePassword.jsx';
-
+/* API */
 import BioMiddleware from 'api/middlewares/BioMiddleware.js';
 import ApiReducers from 'api/reducers';
 import Sagas from 'api/sagas';
 import actions from 'api/actions.js';
 
-import Airbrake from 'airbrake-js';
-
-var config = {
-  apiKey: "AIzaSyAwFULDzJxhy67MYf5tMTMD3ygQh2pZGks",
-  authDomain: "biohacking-ca69d.firebaseapp.com",
-  databaseURL: "https://biohacking-ca69d.firebaseio.com",
-  storageBucket: "biohacking-ca69d.appspot.com",
-  messagingSenderId: "730944460815"
-};
-
-const airbrake = new Airbrake({
-  projectId: 133132,
-  projectKey: '4a68026f35d09256a77ae10fd065bab2',
-});
-
-window.airbrake = airbrake;
-window.firebase = firebase;
-window.firebase.initializeApp(config);
-window.ReactGA = ReactGA;
-window.ReactGA.initialize('UA-87321481-1');
+/* */
+import './App.css';
 
 class App extends Component {
 
-  render() {
+  logPageView = () => {
+    window.ReactGA.set({ page: window.location.pathname });
+    window.ReactGA.pageview(window.location.pathname);
+  }
 
+  render() {
     const sagaMiddleware = createSagaMiddleware({
       onError: (error) => {
-        airbrake.notify(error);
-      }
+        window.airbrake.notify(error);
+      },
     });
 
     const reducers = combineReducers({
@@ -70,7 +54,7 @@ class App extends Component {
 
     const store = createStore(
       reducers,
-      compose(applyMiddleware(...middlewares))
+      compose(applyMiddleware(...middlewares)),
     );
 
     const loggedUser = localStorage.getItem('user');
@@ -91,11 +75,6 @@ class App extends Component {
       callback();
     };
 
-    function logPageView() {
-      window.ReactGA.set({ page: window.location.pathname });
-      window.ReactGA.pageview(window.location.pathname);
-    }
-
     sagaMiddleware.run(Sagas);
 
     return (
@@ -103,14 +82,14 @@ class App extends Component {
         <Router history={history}>
           <Route path="/" component={Base}>
             <IndexRedirect to="/activities" />
-            <Route path="/search" component={Search} onEnter={validateUser} onUpdate={logPageView} />
-            <Route path="/activities" component={Activities} onEnter={validateUser} onUpdate={logPageView} />
-            <Route path="/new" component={Grid} onEnter={validateUser} onUpdate={logPageView} />
+            <Route path="/search" component={Search} onEnter={validateUser} onUpdate={this.logPageView} />
+            <Route path="/activities" component={Activities} onEnter={validateUser} onUpdate={this.logPageView} />
+            <Route path="/new" component={Grid} onEnter={validateUser} onUpdate={this.logPageView} />
           </Route>
-          <Route path="/login" component={Login} onUpdate={logPageView} />
-          <Route path="/register" component={Register} onUpdate={logPageView} />
-          <Route path="/reset/password" component={ResetPassword} onUpdate={logPageView} />
-          <Route path="/token/:token" component={ChangePassword} onUpdate={logPageView} />
+          <Route path="/login" component={Login} onUpdate={this.logPageView} />
+          <Route path="/register" component={Register} onUpdate={this.logPageView} />
+          <Route path="/reset/password" component={ResetPassword} onUpdate={this.logPageView} />
+          <Route path="/token/:token" component={ChangePassword} onUpdate={this.logPageView} />
         </Router>
       </Provider>
     );

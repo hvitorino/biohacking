@@ -12,4 +12,4 @@ export default {
   mode,
   errors,
   messages,
-}
+};

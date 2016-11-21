@@ -25,10 +25,19 @@
       "jsx": true
     }
   },
+  "settings": {
+    'import/resolver': {
+      "node": {
+        "extensions": ['.js', '.jsx', '.json']
+      }
+    }
+  },
   /* Sobrescrevemos algumas rules do airbnb e do próprio eslint */
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
     "import/no-extraneous-dependencies": 0,
     "new-cap": ["error", {
       "newIsCapExceptions": ["localStorageDB", 'auth'],

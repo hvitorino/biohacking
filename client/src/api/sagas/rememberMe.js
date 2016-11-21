@@ -2,27 +2,7 @@ import { takeLatest } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import actions from 'api/actions';
-
-function executeFetch() {
-  return fetch('/api/user', {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(response => {
-      if (response.status >= 400) {
-        return {
-          error: {
-            'auth/login': response.statusText
-          }
-        }
-      }
-      return response.json();
-    })
-    .then(json => json);
-}
+import defaultFetch from 'api/sagas/fetch/defaultFetch.js';
 
 const failure = payload => ({
   type: actions.user.loginFailure,
@@ -30,7 +10,7 @@ const failure = payload => ({
 });
 
 export function* prepareSaga(action) {
-  const payload = yield call(executeFetch);
+  const payload = yield call(defaultFetch, '/api/user');
   const { error } = payload;
   if (error) {
     yield put(failure(error));

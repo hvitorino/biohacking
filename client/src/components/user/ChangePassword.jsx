@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Users from 'components/user/Users.jsx';
-import { doChangeAction } from 'api/actions';
+import Container from 'components/user/Container.jsx';
+import { doChangeAction } from 'api/actions.js';
+import mapStateToProps from 'components/user/mapStateToProps.js';
 
-class ChangePassword extends Users {
+class ChangePassword extends Container {
 
   static propTypes = {
-    params: PropTypes.object.isRequired,
+    params: PropTypes.shape({
+      token: PropTypes.string,
+    }),
   }
 
   componentDidMount() {
@@ -31,4 +34,4 @@ class ChangePassword extends Users {
   }
 }
 
-export default connect(({ errors, messages }) => ({ errors, messages }), doChangeAction)(ChangePassword);
+export default connect(mapStateToProps, doChangeAction)(ChangePassword);

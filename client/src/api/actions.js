@@ -14,7 +14,7 @@ export const user = {
   change: `${NAMESPACE}_USER_CHANGE_PASSWORD`,
   changeFailure: `${NAMESPACE}_USER_CHANGE_PASSWORD_ERROR`,
   rememberMe: `${NAMESPACE}_USER_REMEMBER_ME`,
-}
+};
 
 export const activities = {
   request: `${NAMESPACE}_ACTIVITIES_REQUEST`,
@@ -23,100 +23,98 @@ export const activities = {
   edit: `${NAMESPACE}_ACTIVITIES_EDIT`,
   update: `${NAMESPACE}_ACTIVITIES_UPDATE`,
   updateSuccess: `${NAMESPACE}_ACTIVITIES_UPDATE_SUCCESS`,
-}
+};
 
 export const kinds = {
   request: `${NAMESPACE}_KINDS_REQUEST`,
   requestSucess: `${NAMESPACE}_KINDS_REQUEST_SUCCESS`,
-}
+};
 
 export const error = {
   login: `${NAMESPACE}_ERROR_LOGIN`,
-}
+};
 
 const actions = {
   error,
   user,
   activities,
   kinds,
-}
+};
 
-export const nextAction = (type) => ({
-  success: (payload) => ({
+export const nextAction = type => ({
+  success: payload => ({
     type: `${type}_SUCCESS`,
-    payload
-  })
+    payload,
+  }),
 });
 
 export const defaultCrudAction = (
-  dispatch, actionType, entity, method = 'GET', url
-) => {
-  return (payload) => {
+  dispatch, actionType, entity, method = 'GET', url,
+) => (
+  payload => (
     dispatch({
       entity,
       method,
       url,
       type: actionType,
       payload,
-    });
-  }
-}
+    })
+  )
+);
 
-export const kindsAction = (dispatch) => {
-  return {
+export const kindsAction = dispatch => (
+  {
     doRequest: defaultCrudAction(dispatch, kinds.request, 'kinds'),
     create: defaultCrudAction(dispatch, activities.update, 'activities', 'POST'),
   }
-}
+);
 
-
-export const defaultAction = (dispatch, actionType) => {
-  return (payload) => {
+export const defaultAction = (dispatch, actionType) => (
+  payload => (
     dispatch({
       type: actionType,
       payload,
-    });
-  }
-}
+    })
+  )
+);
 
-export const doLoginAction = (dispatch) => {
-  return {
+export const doLoginAction = dispatch => (
+  {
     doSubmit: defaultAction(dispatch, actions.user.login),
     doRemember: defaultAction(dispatch, actions.user.rememberMe),
   }
-}
+);
 
-export const doRegisterAction = (dispatch) => {
-  return {
+export const doRegisterAction = dispatch => (
+  {
     doSubmit: defaultAction(dispatch, actions.user.register),
   }
-}
+);
 
-export const doResetAction = (dispatch) => {
-  return {
+export const doResetAction = dispatch => (
+  {
     doSubmit: defaultAction(dispatch, actions.user.reset),
   }
-}
+);
 
-export const doChangeAction = (dispatch) => {
-  return {
+export const doChangeAction = dispatch => (
+  {
     doSubmit: defaultAction(dispatch, actions.user.change),
   }
-}
+);
 
-export const doLogoutAction = (dispatch) => {
-  return {
+export const doLogoutAction = dispatch => (
+  {
     doLogout: defaultAction(dispatch, actions.user.logout),
   }
-}
+);
 
-export const activityMapToDispatch = (dispatch) => {
-  return {
-    doRequest: defaultAction(dispatch, actions.activities.update),
+export const activityMapToDispatch = dispatch => (
+  {
     doRequest: defaultCrudAction(dispatch, actions.activities.request, 'activities'),
-    doSearch:  defaultAction(dispatch, actions.activities.search),
+    doSearch: defaultAction(dispatch, actions.activities.search),
     doUpdate: defaultAction(dispatch, actions.activities.update),
   }
-}
+);
 
 export default actions;

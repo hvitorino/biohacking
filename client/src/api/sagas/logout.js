@@ -2,22 +2,11 @@ import { takeLatest } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import actions from 'api/actions';
-
-function executeFetch(payload) {
-  return fetch('api/logout', {
-            credentials: 'include',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            }
-          })
-          .then(response => response.json())
-          .then(json => json);
-}
+import defaultFetch from 'api/sagas/fetch/defaultFetch.js';
 
 export function* prepareSaga(action) {
   console.log('Entrou na saga Logout:', action);
-  const payload = yield call(executeFetch, action.payload);
+  const payload = yield call(defaultFetch, '/api/logout');
     yield put({ type: actions.user.loaded, payload });
     yield put(push('/login'));
 }

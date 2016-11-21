@@ -1,4 +1,4 @@
-import actions from 'api/actions';
+import actions from 'api/actions.js';
 
 export default (state = {}, { type, payload }) => {
   if (type === (actions.user.logged || actions.user.loaded)) {
@@ -10,4 +10,4 @@ export default (state = {}, { type, payload }) => {
   }
 
   return state;
-}
+};

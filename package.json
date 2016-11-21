@@ -2,7 +2,7 @@
   "name": "biohacking",
   "version": "1.0.0",
   "engines": {
-    "node": "7.0.0"
+    "node": "7.1.0"
   },
   "description": "Biohacking",
   "main": "server.js",
@@ -15,7 +15,8 @@
     "dev": "nf start -p 3000 --procfile Procfile.dev",
     "server": "node --harmony-async-await server",
     "server:dev": "nodemon --harmony-async-await server",
-    "server:debug": "nodemon --harmony-async-await --debug-brk --inspect server"
+    "server:debug": "nodemon --harmony-async-await --debug-brk --inspect server",
+    "eslint": "eslint ./client/src --ext .jsx --ext .js"
   },
   "author": "Insystem",
   "license": "ISC",
@@ -42,6 +43,17 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-config-standard-react": "^4.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.7.1",
+    "eslint-plugin-standard": "^2.0.1",
+    "gherkin": "^4.0.0",
     "nodemon": "^1.11.0"
   }
 }

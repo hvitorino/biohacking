@@ -3,21 +3,29 @@ import Tags from 'components/kinds/Tags.jsx';
 
 class Kind extends React.Component {
 
-  onSave = (event) => {
+  static propTypes = {
+    onSave: PropTypes.func,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    color: PropTypes.string,
+    description: PropTypes.string,
+    id: PropTypes.number,
+  }
+
+  onSave = () => {
     const { onSave, id } = this.props;
-    const { tags : { state : { description } } } = this.refs;
+    const { state: { description } } = this.tagsContainer;
     onSave(id, description);
   }
 
-  render () {
-    const { tags, color, description, onSave } = this.props;
+  render() {
+    const { tags, color, description } = this.props;
     const style = {
       backgroundColor: color,
-    }
+    };
     return (
       <div style={style} className="Kind">
         <button className="mdl-button description" onClick={this.onSave}>{description}</button>
-        <Tags ref="tags" tags={tags} />
+        <Tags ref={(container) => { this.tagsContainer = container; }} tags={tags} />
       </div>
     );
   }

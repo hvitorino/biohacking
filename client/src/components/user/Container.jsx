@@ -5,23 +5,28 @@ import './Login.css';
 
 class Users extends React.Component {
 
+  static propTypes = {
+    doSubmit: PropTypes.func.isRequired,
+    //messages: PropTypes.shape(PropTypes.object),
+    //errors: PropTypes.shape(PropTypes.object),
+  }
+
   doSubmit = () => {
     const { doSubmit } = this.props;
-    doSubmit(this.refs.form.getValues());
+    doSubmit(this.formContainer.getValues());
   }
 
   createContainer() {
-    return (<div></div>);
+    const messages = this.formatMessages();
+    return (<div>{messages}</div>);
   }
 
   createFieldContainer(name, fieldLabel, type = 'text') {
-    let isValid = '';
     const { messages } = this.props;
     const errors = [];
     if (Array.isArray(messages)) {
       const filtered = messages.filter(({ path }) => (path === name));
       if (filtered.length) {
-        isValid = 'is-invalid';
         filtered.forEach(({ message }) => errors.push(<div>{message}</div>));
       }
     }
@@ -36,25 +41,25 @@ class Users extends React.Component {
 
   formatErrors = () => {
     const { errors } = this.props;
-    return Object.keys(errors).map(key => {
+    return Object.keys(errors).map((key) => {
       const error = errors[key];
       const message = (typeof error !== 'string') ? error.message : error;
-      return (<span key={key}>{message}</span>)
+      return (<span key={key}>{message}</span>);
     });
   }
 
   formatMessages = () => {
     const { messages } = this.props;
-    return Object.keys(messages).map(key => {
+    return Object.keys(messages).map((key) => {
       const warning = messages[key];
       const message = (typeof warning !== 'string') ? warning.message : warning;
       return (
         <span className="mdl-color-text--primary" key={key}>{message}</span>
-      )
+      );
     });
   }
 
-  render () {
+  render() {
     const errors = this.formatErrors();
     const messages = this.formatMessages();
     const container = this.createContainer();
@@ -65,7 +70,10 @@ class Users extends React.Component {
             <div className="mdl-card__supporting-text">
               <div className="form-errors">{errors}</div>
               <div className="form-warnings">{messages}</div>
-              <FormContainer ref="form" onSubmit={this.doSubmit}>
+              <FormContainer
+                ref={(form) => { this.formContainer = form; }}
+                onSubmit={this.doSubmit}
+              >
                 {container}
               </FormContainer>
             </div>

@@ -140,12 +140,16 @@ class Users {
     res.send({});
   }
 
+  login(req, res) {
+    res.send(req.user);
+  }
+
   constructor(app, models) {
-    const passport = app.get('passport');
     this.app = app;
     this.models = models;
+    const passport = this.app.get('passport');
     app.post('/api/register', this.create.bind(this));
-    app.post('/api/login', passport.authenticate('local'), (req, res) => res.send(req.user));
+    app.post('/api/login', passport.authenticate('local'), this.login.bind(this));
     app.get('/api/logout', this.logout.bind(this));
     app.post('/api/reset/password', this.reset.bind(this));
     app.post('/api/change/password', this.change.bind(this));

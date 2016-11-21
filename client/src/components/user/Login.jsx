@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { doLoginAction } from 'api/actions';
-import Users from 'components/user/Users.jsx';
+import { doLoginAction } from 'api/actions.js';
+import Container from 'components/user/Container.jsx';
+import mapStateToProps from 'components/user/mapStateToProps.js';
 
-class Login extends Users {
+class Login extends Container {
 
   componentDidMount() {
     this.props.doRemember();
@@ -33,9 +34,9 @@ class Login extends Users {
           </Link>
         </li>
       </ul>
-    )
+    );
   }
 
 }
 
-export default connect(({ user, errors, messages }) => ({ user, errors, messages }), doLoginAction)(Login);
+export default connect(mapStateToProps, doLoginAction)(Login);

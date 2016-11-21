@@ -3,26 +3,20 @@ import uuid from 'uuid';
 import TextField from 'components/fields/TextField.jsx';
 
 class Tags extends React.Component {
-  state = {
-    description: '',
-    selectedTags: {},
-  }
 
   static childContextTypes = {
     updateForm: PropTypes.func,
+  }
+
+  state = {
+    description: '',
+    selectedTags: {},
   }
 
   getChildContext() {
     return {
       updateForm: this.updateForm,
     };
-  }
-
-  updateForm = (fieldName, description) => {
-      this.setState({
-          ...this.state,
-          description,
-      });
   }
 
   onTagClick = (event) => {
@@ -33,8 +27,8 @@ class Tags extends React.Component {
       const desc = description.replace(`${selectedTags[value]}`, '');
       delete selectedTags[value];
       this.setState({
-          description: desc,
-          selectedTags,
+        description: desc,
+        selectedTags,
       });
     } else {
       const desc = description.concat(` ${value}`);
@@ -43,26 +37,32 @@ class Tags extends React.Component {
         [value]: value,
       };
       this.setState({
-          description: desc,
-          selectedTags : newTags,
+        description: desc,
+        selectedTags: newTags,
       });
     }
   }
 
-  render () {
+  updateForm = (fieldName, description) => {
+    this.setState({
+      ...this.state,
+      description,
+    });
+  }
+
+  render() {
     const { tags } = this.props;
     const { selectedTags, description } = this.state;
-    const container = tags.map(tag => {
-      const tagClass = selectedTags[tag] ? "tag-selected" : "";
-
-      return <div key={uuid()} className={`tag ${tagClass}`} onClick={this.onTagClick}>{tag}</div>
+    const container = tags.map((tag) => {
+      const tagClass = selectedTags[tag] ? 'tag-selected' : '';
+      return (<div key={uuid()} className={`tag ${tagClass}`} onClick={this.onTagClick}>{tag}</div>);
     });
     return (
       <div className="Tags">
         {container}
         <TextField name="description" value={description} />
       </div>
-    )
+    );
   }
 }
 

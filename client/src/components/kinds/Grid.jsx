@@ -6,19 +6,19 @@ import './Grid.css';
 
 class Grid extends React.Component {
 
+  static propTypes = {
+    create: PropTypes.func,
+    doRequest: PropTypes.func,
+    kinds: PropTypes.arrayOf(PropTypes.object),
+  }
+
   componentDidMount() {
     this.props.doRequest();
   }
 
-  onSave = (KindId, description) => {
-    const {create} = this.props; //create from kindsAction
-    create({
-      KindId,
-      description,
-    });
-  }
+  onSave = (KindId, description) => (this.props.create({ KindId, description }))
 
-  mapKinds = (kind) => (
+  mapKinds = kind => (
     <Kind onSave={this.onSave} key={`kind-${kind.id}`} {...kind} />
   )
 
@@ -27,7 +27,7 @@ class Grid extends React.Component {
     const container = kinds.map(this.mapKinds, this);
     return (
       <div className="Grid">{container}</div>
-    )
+    );
   }
 }
 

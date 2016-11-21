@@ -6,25 +6,24 @@ import './Activities.css';
 
 class Search extends React.Component {
 
+  static propTypes = {
+    doSearch: PropTypes.func,
+    activities: PropTypes.arrayOf(PropTypes.object),
+  }
+
   componentDidMount() {
     this.props.doSearch();
   }
 
-  mapActivities = (activity) => (<ActivityCompleted key={activity.id} activity={activity} />)
+  mapActivities = activity => (<ActivityCompleted key={activity.id} activity={activity} />)
 
-  render () {
+  render() {
     const { activities } = this.props;
     const container = activities.map(this.mapActivities, this);
     return (
       <div>{container}</div>
-    )
+    );
   }
 }
 
-const mapPropsToState = (state) => {
-  return {
-    activities: state.activities,
-  }
-}
-
-export default connect(mapPropsToState, activityMapToDispatch)(Search);
+export default connect(({ activities }) => ({ activities }), activityMapToDispatch)(Search);
