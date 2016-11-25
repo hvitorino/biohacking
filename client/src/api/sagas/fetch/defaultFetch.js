@@ -1,5 +1,4 @@
 const createConfig = (method = 'GET', payload = {}) => {
-
   const config = {
     method,
     credentials: 'include',
@@ -7,6 +6,7 @@ const createConfig = (method = 'GET', payload = {}) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    redirect: 'follow',
   };
 
   if (method === 'POST' || method === 'PUT') {
@@ -14,30 +14,31 @@ const createConfig = (method = 'GET', payload = {}) => {
   }
 
   return config;
-}
+};
 
+
+export const validateFetch = (response) => {
+  const bioError = {
+    error: {
+      'server/internal': response.statusText || response.message,
+    },
+  };
+  try {
+    return response.json().then(json => (json)).catch(() => (bioError));
+  } catch (err) {
+    return bioError;
+  }
+};
 
 function defaultFetch(url, payload = {}, method = 'GET') {
   return fetch(url, createConfig(method, payload)).then((response) => {
     if (response.status >= 400) {
-      try {
-        return response.json().then(({messages}) => {
-          const error = messages.reduce((errors, message) => {
-            errors[message.path] = message;
-            return errors;
-          }, {});
-          return { error };
-        });
-      } catch (e) {
-        return {
-          error: {
-            'auth/login': response.statusText
-          }
-        }
-      }
+      return validateFetch(response);
     }
     return response.json();
-  }).then(json => json);
+  }).then(json => json).catch((error) => {
+    return validateFetch(error);
+  });
 }
 
 export default defaultFetch;

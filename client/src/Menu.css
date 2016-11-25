@@ -3,9 +3,15 @@ header.mdl-layout__header.mdl-layout__header--transparent {
 }
 
 span.mdl-layout-title {
-    color: #fff;
+  color: #fff;
+  font-size: 3rem;
 }
 
 .mdl-navigation__link .material-icons {
     color: #A6B0A8;
+}
+
+.email {
+  color: #A6B0A8;
+  margin-left: 10px;
 }

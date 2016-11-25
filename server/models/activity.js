@@ -1,15 +1,17 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Activity = sequelize.define('Activity', {
+
+
+module.exports = function (sequelize, DataTypes) {
+  const Activity = sequelize.define('Activity', {
     secret: DataTypes.BOOLEAN,
-    description: DataTypes.TEXT
+    loggedAt: DataTypes.DATE,
+    description: DataTypes.TEXT,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Activity.belongsTo(models.Kind);
         Activity.belongsTo(models.User);
-      }
-    }
+      },
+    },
   });
   return Activity;
 };

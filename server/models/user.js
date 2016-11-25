@@ -4,7 +4,7 @@ const uuid = require('uuid');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     name: DataTypes.STRING,
     hash: DataTypes.STRING,
@@ -17,30 +17,30 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     googleId: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     imageUrl: DataTypes.STRING,
     activationKey: DataTypes.STRING,
     resetPasswordKey: DataTypes.STRING,
-    verified: DataTypes.BOOLEAN
+    verified: DataTypes.BOOLEAN,
   }, {
     instanceMethods: {
-      generateResetPasswordKey: function(callback) {
+      generateResetPasswordKey(callback) {
         const resetPasswordKey = uuid();
         this.set('resetPasswordKey', resetPasswordKey);
         this.update({ resetPasswordKey });
         callback(this);
       },
-      generateHash: function(callback) {
+      generateHash(callback) {
         const updateHash = this.update.bind(this);
         crypto.randomBytes(32, (error, buffer) => {
           const hash = buffer.toString('hex');
           updateHash({ hash }).then(callback);
         });
       },
-      setPassword: function (password) {
+      setPassword(password) {
         const self = this;
-        return new Promise((resolve, reject)  => {
+        return new Promise((resolve, reject) => {
           if (password && typeof password === 'string') {
             crypto.randomBytes(32, (error, buf) => {
               if (error) {
@@ -58,14 +58,14 @@ module.exports = (sequelize, DataTypes) => {
               errors: [{
                 message: 'invalid_password',
                 type: 'Validation error',
-                path: 'password'
-              }]
+                path: 'password',
+              }],
             };
             reject(error);
           }
         });
-      }
-    }
+      },
+    },
   });
   return User;
 };

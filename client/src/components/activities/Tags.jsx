@@ -1,15 +1,15 @@
 import React from 'react';
 
-export default ({ description }) => {
-  const pattern = /\#([^\s]+)/g;
+export default ({ tags }) => {
 
-  const tags = description.replace(pattern, function(a, b) {
-    return `<div class='tag'>${a}</div>`;
-  });
+  const list = tags.map((tag, index) => (
+    <div key={`tag-${index}`} className='tag'>{tag}</div>
+  ));
 
-  return <div
-    className="description"
-    dangerouslySetInnerHTML={{ __html: tags }}
-  />
+  return (
+    <div className="description">
+      {list}
+    </div>
+  )
 
 }

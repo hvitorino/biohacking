@@ -23,14 +23,14 @@ const createConfig = (method = 'GET', payload = {}) => {
 function executeFetch(id, entityUrl, method, payload) {
   const url = (id) ? `/api/${entityUrl}/${id}` : `/api/${entityUrl}`;
   return fetch(url, createConfig(method, payload))
-          .then(response => {
+          .then((response) => {
             if (response.status >= 400) {
-              return response.json().then(({messages}) => {
+              return response.json().then(({ messages }) => {
                 const error = messages.reduce((errors, message) => {
                   errors[message.path] = message;
                   return errors;
                 }, {});
-                return { error, statusCode:  response.status};
+                return { error, statusCode: response.status };
               });
             }
             return response.json();
@@ -52,7 +52,7 @@ export function* prepareSaga(action) {
                           id,
                           action.entity,
                           action.method,
-                          action.payload
+                          action.payload,
                         );
   if (payback.error) {
     yield put(failure(payback, action.type));
@@ -62,7 +62,6 @@ export function* prepareSaga(action) {
   } else {
     yield put(success(payback));
   }
-
 }
 
 /**
@@ -71,7 +70,6 @@ export function* prepareSaga(action) {
  */
 export function* watchEntities() {
   yield* takeEvery([
-    actions.activities.request,
     actions.kinds.request,
   ], prepareSaga);
 }

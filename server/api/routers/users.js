@@ -1,13 +1,17 @@
 const Mailer = require('../services/mailer');
+const Router = require('./router.js');
 
-class Users {
+class Users extends Router {
 
-  redirectErrors(res) {
-    const logger = this.app.get('logger');
-    return (error) => {
-      logger.log('info', 'USER Error:', error);
-      res.status(412).send({ messages: error.errors })
-    };
+  defineRoutes() {
+    const { app } = this;
+    const passport = app.get('passport');
+    app.post('/api/register', this.create.bind(this));
+    app.post('/api/login', passport.authenticate('local'), this.login.bind(this));
+    app.get('/api/logout', this.logout.bind(this));
+    app.post('/api/reset/password', this.reset.bind(this));
+    app.post('/api/change/password', this.change.bind(this));
+    app.get('/api/user', (req, res) => res.send(req.user || {}));
   }
 
   create(req, res, next) {
@@ -15,13 +19,13 @@ class Users {
 
     User.findOne({
       where: {
-        email: req.body.email
-      }
-    }).then(user => {
+        email: req.body.email,
+      },
+    }).then((user) => {
       if (!user) {
         const newUser = User.build({ email: req.body.email });
 
-        newUser.validate().then(error => {
+        newUser.validate().then((error) => {
           if (error) {
             this.redirectErrors(res)(error);
           } else {
@@ -30,7 +34,7 @@ class Users {
               .then(() => {
                 newUser.save()
                        .then(() => {
-                         req.login(newUser, err => {
+                         req.login(newUser, (err) => {
                            if (err) { return next(err); }
                            return res.send(newUser);
                          });
@@ -47,8 +51,8 @@ class Users {
               message: 'email_already_registered',
               type: 'Validation error',
               path: 'email',
-            }
-          ]
+            },
+          ],
         });
       }
     }).catch(this.redirectErrors(res));
@@ -60,7 +64,7 @@ class Users {
       where: {
         email: req.body.email,
       },
-    }).then(user => {
+    }).then((user) => {
       if (!user) {
         const error = {
           errors: [{
@@ -71,7 +75,7 @@ class Users {
         };
         this.redirectErrors(res)(error);
       } else {
-        user.generateResetPasswordKey(user => {
+        user.generateResetPasswordKey((user) => {
           const mailer = new Mailer();
           const url = `http://www.zonaextrema.com.br/token/${user.resetPasswordKey}`;
           const template = `<a href="${url}">Clique pra trocar a senha</a>`;
@@ -85,8 +89,8 @@ class Users {
             console.log(response.body);
             console.log(response.headers);
             res.send({
-              message: 'email_sent'
-            })
+              message: 'email_sent',
+            });
           }).catch((error) => {
             console.log('Error', error);
             this.redirectErrors(res)({
@@ -95,29 +99,28 @@ class Users {
                   message: error.message,
                   type: 'Validation error',
                   path: 'mailer',
-                }
-              ]
+                },
+              ],
             });
           });
         });
       }
     }).catch(this.redirectErrors(res));
-
   }
 
   change(req, res) {
     const User = this.models.User;
     const { token: resetPasswordKey, password } = req.body;
     User.findOne({
-      where: { resetPasswordKey }
-    }).then(user => {
+      where: { resetPasswordKey },
+    }).then((user) => {
       if (!user) {
         const error = {
           errors: [{
             message: 'invalid_token',
             type: 'Validation error',
-            path: 'token'
-          }]
+            path: 'token',
+          }],
         };
         this.redirectErrors(res)(error);
       } else {
@@ -128,9 +131,8 @@ class Users {
                        res.send({});
                      })
                      .catch(this.redirectErrors(res));
-
             })
-            .catch(this.redirectErrors(res));;
+            .catch(this.redirectErrors(res));
       }
     }).catch(this.redirectErrors(res));
   }
@@ -144,17 +146,6 @@ class Users {
     res.send(req.user);
   }
 
-  constructor(app, models) {
-    this.app = app;
-    this.models = models;
-    const passport = this.app.get('passport');
-    app.post('/api/register', this.create.bind(this));
-    app.post('/api/login', passport.authenticate('local'), this.login.bind(this));
-    app.get('/api/logout', this.logout.bind(this));
-    app.post('/api/reset/password', this.reset.bind(this));
-    app.post('/api/change/password', this.change.bind(this));
-    app.get('/api/user', (req, res) => res.send(req.user || {}));
-  }
 }
 
 module.exports = Users;

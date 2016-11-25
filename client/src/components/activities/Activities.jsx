@@ -1,14 +1,22 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { activityMapToDispatch } from 'api/actions';
+import { mapActivitiesDispatchToProps } from 'api/actions';
 import Activity from 'components/activities/Activity.jsx';
 import ActivityEdit from 'components/activities/ActivityEdit.jsx';
 import './Activities.css';
 
 class Activities extends React.Component {
+  static propTypes = {
+    activities: PropTypes.arrayOf(PropTypes.object),
+    mode: PropTypes.shape({
+      state: PropTypes.string.isRequired,
+      activity: PropTypes.object,
+    }),
+    request: PropTypes.func.isRequired,
+  }
 
   componentDidMount() {
-    this.props.doRequest();
+    this.props.request();
   }
 
   mapActivities = (activity) => {
@@ -19,20 +27,15 @@ class Activities extends React.Component {
       <Activity key={key} activity={activity} />;
   }
 
-  render () {
+  render() {
     const { activities } = this.props;
     const container = activities.map(this.mapActivities, this);
     return (
       <div>{container}</div>
-    )
+    );
   }
 }
 
-const mapPropsToState = (state) => {
-  return {
-    activities: state.activities,
-    mode: state.mode,
-  }
-}
+const mapStateToProps = ({ activities, mode }) => ({ activities, mode });
 
-export default connect(mapPropsToState, activityMapToDispatch)(Activities);
+export default connect(mapStateToProps, mapActivitiesDispatchToProps)(Activities);

@@ -1,8 +1,12 @@
+const elasticsearch = require('elasticsearch');
+const connectionString = process.env.SEARCHBOX_SSL_URL;
+const client = new elasticsearch.Client({ host: connectionString });
+
 const express = require('express');
-
 const app = express();
-
 const models = require('./server/models');
+
+app.set('elasticsearch', client);
 
 require('./server/config/express.js')(express, app);
 require('./server/config/passport.js')(app, models);
@@ -13,14 +17,14 @@ app.set('port', (process.env.PORT || 3001));
 app.get('/api/list', (req, res) => {
   res.send({
     id: 1000,
-    message: "Deu certo",
-    tel: "88766666"
+    message: 'Deu certo',
+    tel: '88766666',
   });
 });
 
 app.get('/*', (req, res) => {
   // /token/5776a237-22f8-495a-b5c7-c80d07f79f4e
-  res.sendfile(__dirname + '/client/build/index.html');
+  res.sendfile(`${__dirname}/client/build/index.html`);
 });
 
 app.listen(app.get('port'), () => {

@@ -8,12 +8,12 @@ class Grid extends React.Component {
 
   static propTypes = {
     create: PropTypes.func,
-    doRequest: PropTypes.func,
+    request: PropTypes.func,
     kinds: PropTypes.arrayOf(PropTypes.object),
   }
 
   componentDidMount() {
-    this.props.doRequest();
+    this.props.request();
   }
 
   onSave = (KindId, description) => (this.props.create({ KindId, description }))

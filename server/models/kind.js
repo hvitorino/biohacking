@@ -1,14 +1,15 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Kind = sequelize.define('Kind', {
+
+
+module.exports = function (sequelize, DataTypes) {
+  const Kind = sequelize.define('Kind', {
     color: DataTypes.STRING,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         // associations can be defined here
-      }
-    }
+      },
+    },
   });
   return Kind;
 };

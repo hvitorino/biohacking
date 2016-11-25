@@ -19,8 +19,11 @@ export const user = {
 export const activities = {
   request: `${NAMESPACE}_ACTIVITIES_REQUEST`,
   search: `${NAMESPACE}_ACTIVITIES_SEARCH`,
-  requestSucess: `${NAMESPACE}_ACTIVITIES_REQUEST_SUCCESS`,
+  requestSuccess: `${NAMESPACE}_ACTIVITIES_REQUEST_SUCCESS`,
+  requestFailure: `${NAMESPACE}_ACTIVITIES_REQUEST_FAILURE`,
   edit: `${NAMESPACE}_ACTIVITIES_EDIT`,
+  create: `${NAMESPACE}_ACTIVITIES_CREATE`,
+  createSuccess: `${NAMESPACE}_ACTIVITIES_CREATE_SUCCESS`,
   update: `${NAMESPACE}_ACTIVITIES_UPDATE`,
   updateSuccess: `${NAMESPACE}_ACTIVITIES_UPDATE_SUCCESS`,
 };
@@ -62,13 +65,6 @@ export const defaultCrudAction = (
   )
 );
 
-export const kindsAction = dispatch => (
-  {
-    doRequest: defaultCrudAction(dispatch, kinds.request, 'kinds'),
-    create: defaultCrudAction(dispatch, activities.update, 'activities', 'POST'),
-  }
-);
-
 export const defaultAction = (dispatch, actionType) => (
   payload => (
     dispatch({
@@ -76,6 +72,13 @@ export const defaultAction = (dispatch, actionType) => (
       payload,
     })
   )
+);
+
+export const kindsAction = dispatch => (
+  {
+    request: defaultCrudAction(dispatch, kinds.request, 'kinds'),
+    create: defaultAction(dispatch, activities.create),
+  }
 );
 
 export const doLoginAction = dispatch => (
@@ -116,5 +119,11 @@ export const activityMapToDispatch = dispatch => (
     doUpdate: defaultAction(dispatch, actions.activities.update),
   }
 );
+
+export const mapActivitiesDispatchToProps = dispatch => ({
+  request: defaultAction(dispatch, actions.activities.request),
+  edit: defaultAction(dispatch, actions.activities.edit),
+  update: defaultAction(dispatch, actions.activities.update),
+});
 
 export default actions;

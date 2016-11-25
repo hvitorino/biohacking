@@ -1,40 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { mapActivitiesDispatchToProps } from 'api/actions';
 import Tags from 'components/activities/Tags.jsx';
 
-const Activity = ({ activity, dispatch }) => {
+const Activity = ({ activity, edit }) => {
 
-  const { createdAt, updatedAt, color, description, kind} = activity;
-  const datetime = (updatedAt) ?
-    moment(updatedAt).format('HH:mm') :
-    moment(createdAt).format('HH:mm');
+  const { loggedAt, color, tags, kind } = activity;
+  const date = moment(loggedAt).format('HH:mm');
 
   const style = {
     borderLeft: `1.5rem solid ${color}`,
   };
 
-  const editWrapper = () => {
-    dispatch({
-      type: 'ACTIVITIES_EDIT',
-      payload: activity,
-    })
-  };
-
-  const tags = (description) ? description : '';
+  const editWrapper = () => (edit(activity));
 
   return (
     <div onClick={editWrapper} className="Activity">
       <div className="Kind" style={style}>
         {kind}
         <div className="datetime">
-          {datetime}
+          {date}
         </div>
       </div>
-      <Tags description={tags} />
+      <Tags tags={tags} />
     </div>
   )
 }
 
-
-export default connect(null)(Activity);
+export default connect(null, mapActivitiesDispatchToProps)(Activity);
