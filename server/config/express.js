@@ -1,7 +1,7 @@
 const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const Logentries = require('le_node');
+//const Logentries = require('le_node');
 const winston = require('winston');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
@@ -23,7 +23,7 @@ module.exports = (express, app) => {
         //     maxFiles: 5,
         //     colorize: false
         // }),
-      new Logentries({ token: process.env.LOGENTRIES_TOKEN }),
+      //new Logentries({ token: process.env.LOGENTRIES_TOKEN }),
       new winston.transports.Console({
         level: 'verbose',
         handleExceptions: true,
