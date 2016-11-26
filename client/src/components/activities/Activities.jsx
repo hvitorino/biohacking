@@ -6,6 +6,7 @@ import ActivityEdit from 'components/activities/ActivityEdit.jsx';
 import './Activities.css';
 
 class Activities extends React.Component {
+
   static propTypes = {
     activities: PropTypes.arrayOf(PropTypes.object),
     mode: PropTypes.shape({
@@ -20,22 +21,33 @@ class Activities extends React.Component {
   }
 
   mapActivities = (activity) => {
-    const { mode } = this.props;
-    const key = activity.id;
-    return (mode.state === 'edit' && key === mode.activity.id) ?
-      <ActivityEdit key={key} activity={activity} /> :
-      <Activity key={key} activity={activity} />;
+    const { mode: { state, activity: act } } = this.props;
+    return (state === 'edit' &&
+      activity.id === act.id
+    ) ?
+      <ActivityEdit
+        key={`act-${activity.id}`}
+        activity={activity}
+      /> :
+      <Activity
+        key={`act-${activity.id}`}
+        activity={activity}
+      />;
   }
 
   render() {
     const { activities } = this.props;
-    const container = activities.map(this.mapActivities, this);
+    const list = activities.map(this.mapActivities);
     return (
-      <div>{container}</div>
+      <div>
+        <h2>Lista</h2>
+        {list}
+      </div>
     );
   }
 }
 
-const mapStateToProps = ({ activities, mode }) => ({ activities, mode });
-
-export default connect(mapStateToProps, mapActivitiesDispatchToProps)(Activities);
+export default connect(
+  ({ activities, mode }) => ({ activities, mode }),
+  mapActivitiesDispatchToProps,
+)(Activities);

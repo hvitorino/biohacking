@@ -10,6 +10,6 @@ export default ({ tags }) => {
     <div className="description">
       {list}
     </div>
-  )
+  );
 
-}
+};

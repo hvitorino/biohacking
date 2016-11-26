@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { mapActivitiesDispatchToProps } from 'api/actions';
@@ -7,6 +7,7 @@ import Tags from 'components/activities/Tags.jsx';
 const Activity = ({ activity, edit }) => {
 
   const { loggedAt, color, tags, kind } = activity;
+
   const date = moment(loggedAt).format('HH:mm');
 
   const style = {
@@ -26,6 +27,16 @@ const Activity = ({ activity, edit }) => {
       <Tags tags={tags} />
     </div>
   )
+};
+
+Activity.propTypes = {
+  edit: PropTypes.func.isRequired,
+  activity: PropTypes.shape({
+    loggedAt: PropTypes.string,
+    color: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    kind: PropTypes.string,
+  }),
 }
 
 export default connect(null, mapActivitiesDispatchToProps)(Activity);

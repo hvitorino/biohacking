@@ -41,7 +41,9 @@ class Activities extends Router {
     const { user } = req;
     const { id: UserId } = user;
     const { KindId, description } = req.body;
+    const loggedAt = moment().toDate();
     this.models.Activity.create({
+      loggedAt,
       KindId,
       description,
       UserId,

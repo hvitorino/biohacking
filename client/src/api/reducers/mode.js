@@ -6,7 +6,7 @@ const initialState = ({ state, activity }) => ({
 });
 
 export default (state = initialState({ state: 'listing' }), { type, payload: activity }) => {
-  if (type === 'ACTIVITIES_EDIT') {
+  if (type === actions.activities.edit) {
     return initialState({
       state: 'edit',
       activity,
