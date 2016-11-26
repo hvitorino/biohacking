@@ -1,46 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
-import moment from 'moment';
-import { activityMapToDispatch } from 'api/actions';
+import { mapActivitiesDispatchToProps } from 'api/actions';
+import FormContainer from 'components/fields/Form.jsx';
 import TextField from 'components/fields/TextField.jsx';
 
 class ActivityEdit extends React.Component {
 
-  state = {
-    description: ''
-  }
-
-  static childContextTypes = {
-    updateForm: PropTypes.func,
-  }
-
-  getChildContext() {
-    return {
-      updateForm: this.updateForm,
-    };
-  }
-
-  updateForm = (name, description) => {
-    this.setState({
-      ...this.state,
-      description,
-    }, this.onSave);
-  }
-
-  onSave = debounce(() => {
-    const { doUpdate } = this.props;
-    doUpdate({
-      ...this.state,
-    });
-  }, 3000);
-
   onEnter = (event) => {
-    const { doUpdate } = this.props;
     if (event.key === 'Enter') {
-      doUpdate({
-        ...this.state,
-      });
+      console.log('mandou salvar');
     }
   }
 
@@ -49,7 +18,7 @@ class ActivityEdit extends React.Component {
     this.setState({ ...activity });
   }
 
-  render () {
+  render() {
     const { activity: { kind, color } } = this.props;
     const { description } = this.state;
     const style = {
@@ -62,16 +31,17 @@ class ActivityEdit extends React.Component {
         <div className="Kind" style={style}>
           {kind}
         </div>
-        <div className="description">
-          <TextField
-            onKeyPress={onKeyPress}
-            onChange={this.onChange}
-            value={description}
-          />
-        </div>
+        <FormContainer>
+          <div className="description">
+            <TextField
+              onKeyPress={onKeyPress}
+              value={description}
+            />
+          </div>
+        </FormContainer>
       </div>
     );
   }
 }
 
-export default connect(null, activityMapToDispatch)(ActivityEdit);
+export default connect(null, mapActivitiesDispatchToProps)(ActivityEdit);

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import FormContainer from 'components/user/Form.jsx';
+import FormContainer from 'components/fields/Form.jsx';
 import TextField from 'components/fields/TextField.jsx';
 import './Login.css';
 

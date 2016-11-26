@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { activityMapToDispatch } from 'api/actions';
+import { mapSearchDispatchToProps } from 'api/actions';
 import ActivityCompleted from 'components/activities/ActivityCompleted.jsx';
 import './Activities.css';
 
 class Search extends React.Component {
 
   static propTypes = {
-    doSearch: PropTypes.func,
+    search: PropTypes.func,
     activities: PropTypes.arrayOf(PropTypes.object),
   }
 
   componentDidMount() {
-    this.props.doSearch();
+    this.props.search();
   }
 
   mapActivities = activity => (<ActivityCompleted key={activity.id} activity={activity} />)
@@ -26,4 +26,4 @@ class Search extends React.Component {
   }
 }
 
-export default connect(({ activities }) => ({ activities }), activityMapToDispatch)(Search);
+export default connect(({ activities }) => ({ activities }), mapSearchDispatchToProps)(Search);

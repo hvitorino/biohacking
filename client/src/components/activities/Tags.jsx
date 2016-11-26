@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-export default ({ tags }) => {
-
+const Tags = ({ tags }) => {
   const list = tags.map((tag, index) => (
-    <div key={`tag-${index}`} className='tag'>{tag}</div>
+    <div key={`tag-${index}`} className="tag">{tag}</div>
   ));
 
   return (
@@ -11,5 +10,10 @@ export default ({ tags }) => {
       {list}
     </div>
   );
-
 };
+
+Tags.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.string),
+};
+
+export default Tags;
