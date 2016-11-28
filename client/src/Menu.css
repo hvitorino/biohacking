@@ -5,6 +5,7 @@ header.mdl-layout__header.mdl-layout__header--transparent {
 span.mdl-layout-title {
   color: #fff;
   font-size: 3rem;
+  line-height: 2rem;
 }
 
 .mdl-navigation__link .material-icons {
