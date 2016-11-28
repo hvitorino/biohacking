@@ -1,9 +1,24 @@
 import actions from 'api/actions.js';
 
 export default (state = [], { type, payload }) => {
-  console.log(type);
+
   if (type === actions.activities.requestSuccess) {
     return payload;
+  }
+
+  if (type === actions.activities.updateSuccess) {
+    return [
+      ...state.map((item) => {
+        return (item.id === payload.id) ? payload : item;
+      }),
+    ];
+  }
+
+  if (type === actions.activities.createSuccess) {
+    return [
+      ...state,
+      payload,
+    ];
   }
   return state;
 };

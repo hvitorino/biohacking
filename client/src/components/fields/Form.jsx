@@ -9,6 +9,7 @@ class Form extends React.Component {
 
   static childContextTypes = {
     updateForm: PropTypes.func,
+    getValue: PropTypes.func,
   }
 
   state = {
@@ -18,6 +19,7 @@ class Form extends React.Component {
   getChildContext() {
     return {
       updateForm: this.updateForm,
+      getValue: this.getValue,
     };
   }
 
@@ -50,6 +52,11 @@ class Form extends React.Component {
         [fieldName]: value,
       },
     });
+  }
+
+  getValue = (fieldName) => {
+    const { fields } = this.state;
+    return fields[fieldName];
   }
 
   render() {

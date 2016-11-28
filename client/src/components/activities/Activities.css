@@ -1,3 +1,11 @@
+.activities h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  color: #646464;
+  font-family: Roboto;
+}
+
 .Activity {
   display: flex;
   flex-direction: row;

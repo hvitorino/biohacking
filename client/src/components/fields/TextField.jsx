@@ -16,6 +16,7 @@ class TextField extends React.Component {
 
   static contextTypes = {
     updateForm: PropTypes.func,
+    getValue: PropTypes.func,
   }
 
   state = {
@@ -46,10 +47,23 @@ class TextField extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { value: oldValue } = this.state;
+    const { value: oldValue, name } = this.state;
     const { errors, value } = nextProps;
     const invalid = !!errors;
-    const newValue = (value) ? String(value) : oldValue;
+
+    let newValue = oldValue;
+    if (value) {
+      newValue = String(value);
+    } else {
+      const { getValue } = this.context;
+      if (getValue) {
+        const contextValue = getValue(name);
+        if (contextValue) {
+          newValue = String(contextValue);
+        }
+      }
+    }
+
     const focused = !!newValue;
     this.setState({
       ...this.state,

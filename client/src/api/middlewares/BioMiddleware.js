@@ -3,6 +3,9 @@ import actions, { NAMESPACE } from 'api/actions.js';
 function middleware(store) {
   return dispatch => (
     (action) => {
+
+      console.log(action.type, action.payload);
+
       const keys = action.type.split('_');
       if (keys[0] === NAMESPACE) {
         const { user } = store.getState();

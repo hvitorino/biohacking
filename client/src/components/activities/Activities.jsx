@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { mapActivitiesDispatchToProps } from 'api/actions';
@@ -36,11 +37,12 @@ class Activities extends React.Component {
   }
 
   render() {
+    const today = moment().format('MMM Do YYYY');
     const { activities } = this.props;
     const list = activities.map(this.mapActivities);
     return (
-      <div>
-        <h2>Lista</h2>
+      <div className="activities">
+        <h2>{today}</h2>
         {list}
       </div>
     );

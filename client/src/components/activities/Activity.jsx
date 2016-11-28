@@ -5,7 +5,6 @@ import { mapActivitiesDispatchToProps } from 'api/actions';
 import Tags from 'components/activities/Tags.jsx';
 
 const Activity = ({ activity, edit }) => {
-
   const { loggedAt, color, tags, kind } = activity;
 
   const date = moment(loggedAt).format('HH:mm');
@@ -26,7 +25,7 @@ const Activity = ({ activity, edit }) => {
       </div>
       <Tags tags={tags} />
     </div>
-  )
+  );
 };
 
 Activity.propTypes = {

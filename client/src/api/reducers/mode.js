@@ -12,8 +12,16 @@ export default (state = initialState({ state: 'listing' }), { type, payload: act
       activity,
     });
   }
+  if (type === actions.activities.updateSuccess) {
+    return initialState({
+      ...state,
+      state: 'listing',
+    });
+  }
+
   if (type === actions.activities.request) {
     return initialState({
+      ...state,
       state: 'listing',
     });
   }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { mapSearchDispatchToProps } from 'api/actions';
-import ActivityCompleted from 'components/activities/ActivityCompleted.jsx';
+import Activity from 'components/activities/Activity.jsx';
 import './Activities.css';
 
 class Search extends React.Component {
@@ -15,7 +15,7 @@ class Search extends React.Component {
     this.props.search();
   }
 
-  mapActivities = activity => (<ActivityCompleted key={activity.id} activity={activity} />)
+  mapActivities = activity => (<Activity key={activity.id} activity={activity} />)
 
   render() {
     const { activities } = this.props;

@@ -20,6 +20,13 @@ class Activities extends Router {
       index: 'activities',
       type: 'activity',
       body: {
+        sort: [
+          {
+            loggedAt: {
+              order: 'asc'
+            }
+          }
+        ],
         query: {
           bool: {
             filter: [
@@ -49,8 +56,7 @@ class Activities extends Router {
       UserId,
     }).then((model) => {
       const tags = new LastTags(this.models, this.app.get('elasticsearch'));
-      tags.update(model);
-      res.send(model);
+      tags.update(model, activity => res.send(activity));
     }).catch(this.redirectErrors(res));
   }
 
@@ -78,8 +84,7 @@ class Activities extends Router {
         activity.update(body, { fields: ['description'] })
                 .then(() => {
                   const tags = new LastTags(this.models, this.app.get('elasticsearch'));
-                  tags.update(activity);
-                  res.send(activity);
+                  tags.update(activity, indexed => res.send(indexed));
                 })
                 .catch(this.redirectErrors(res));
       } else {

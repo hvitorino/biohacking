@@ -31,7 +31,11 @@ export const validateFetch = (response) => {
 };
 
 function defaultFetch(url, payload = {}, method = 'GET') {
-  return fetch(url, createConfig(method, payload)).then((response) => {
+
+  const newUrl = (method === 'PUT') ?
+    `${url}/${payload.id}` : url;
+
+  return fetch(newUrl, createConfig(method, payload)).then((response) => {
     if (response.status >= 400) {
       return validateFetch(response);
     }

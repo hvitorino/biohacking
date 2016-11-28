@@ -21,7 +21,7 @@ class LastTags {
     this.models = models;
   }
 
-  update(activity) {
+  update(activity, callback) {
     const pattern = /\#([^\s]+)/g;
 
     activity.reload({
@@ -39,9 +39,10 @@ class LastTags {
       this.elasticsearch.index({
         index: 'activities',
         type: 'activity',
+        refresh: true,
         id,
         body,
-      }, (error, response) => console.log(error, response));
+      }, () => callback(body));
     });
 
     // this.models.Activity.findAll({
