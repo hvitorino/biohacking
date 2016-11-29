@@ -1,6 +1,6 @@
-// https://www.elastic.co/guide/en/elasticsearch/reference/2.3/query-filter-context.html
-// const elasticsearch = require('elasticsearch');
-// const connectionString = process.env.SEARCHBOX_SSL_URL;
+const elasticsearch = require('elasticsearch');
+const connectionString = process.env.SEARCHBOX_SSL_URL;
+
 // const client = new elasticsearch.Client({ host: connectionString });
 //
 // models = require('./server/models')
@@ -8,17 +8,61 @@
 // models.Activity.findAll({where: { UserId: 1 }}).then(list =>
 //   list.forEach(activity => {
 //     const indexer = new LastTags(models, client);
-//     indexer.update(activity);
+//     indexer.update(activity, (response) => {
+//       console.log("Response", response);
+//     });
 //   })
 // )
+
+
+// const connectionString = process.env.SEARCHBOX_SSL_URL;
+// const client = new elasticsearch.Client({ host: connectionString });
+// models = require('./server/models')
+// LastTags = require('./server/api/services/lastTags.js')
+// const indexer = new LastTags(models, client);
+// indexer.find(1).then((response) => console.log(JSON.stringify(response)))
 
 const moment = require('moment');
 
 class LastTags {
 
-  constructor(models, elasticsearch) {
-    this.elasticsearch = elasticsearch;
+  constructor(models) {
     this.models = models;
+  }
+
+  find(UserId) {
+    const client = new elasticsearch.Client({ host: connectionString });
+    const json = {
+      index: 'activities',
+      body: {
+        "query": {
+          "bool": {
+            "filter": [
+              {
+                "term": {
+                  "UserId": UserId
+                }
+              }
+            ]
+          }
+        },
+        "aggs": {
+          "kinds": {
+            "terms": {
+              "field": "KindId"
+            },
+            "aggs": {
+              "top_tags": {
+                "terms": {
+                  "field": "description"
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+    return client.search(json);
   }
 
   update(activity, callback) {
@@ -35,8 +79,8 @@ class LastTags {
       const { color, description: kind } = json.Kind;
       const tags = description.split(pattern).filter(item => item.trim());
       const body = { id, secret, description, loggedAt, UserId, KindId, color, kind, tags };
-
-      this.elasticsearch.index({
+      const client = new elasticsearch.Client({ host: connectionString });
+      client.index({
         index: 'activities',
         type: 'activity',
         refresh: true,
