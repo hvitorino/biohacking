@@ -3,7 +3,7 @@ import { fork } from 'redux-saga/effects';
 import { watchEntities } from 'api/sagas/cruds.js';
 import watchLogin from 'api/sagas/login.js';
 import watchRegister from 'api/sagas/register.js';
-import watchActivities, { saveActivities, updateActivities } from 'api/sagas/activities.js';
+import watchActivities, { saveActivities, updateActivities, deleteActivities } from 'api/sagas/activities.js';
 import watchLogout from 'api/sagas/logout.js';
 import watchReset from 'api/sagas/reset.js';
 import changePassword from 'api/sagas/changePassword.js';
@@ -22,6 +22,7 @@ export default function* rootSaga() {
   yield fork(rememberMe);
   yield fork(saveActivities);
   yield fork(updateActivities);
+  yield fork(deleteActivities);
   yield fork(search);
   yield fork(swipe);
 }

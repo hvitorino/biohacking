@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { mapActivitiesDispatchToProps } from 'api/actions';
 import Activity from 'components/activities/Activity.jsx';
 import ActivityEdit from 'components/activities/ActivityEdit.jsx';
+import ActivityRemove from 'components/activities/ActivityRemove.jsx';
 import './Activities.css';
 
 class Activities extends React.Component {
@@ -23,17 +24,22 @@ class Activities extends React.Component {
 
   mapActivities = (activity) => {
     const { mode: { state, activity: act } } = this.props;
-    return (state === 'edit' &&
-      activity.id === act.id
-    ) ?
-      <ActivityEdit
+    if (state === 'edit' && activity.id === act.id ) {
+      return <ActivityEdit
         key={`act-${activity.id}`}
         activity={activity}
-      /> :
-      <Activity
+      />
+    } else if (state === 'remove' && activity.id === act.id ) {
+      return <ActivityRemove
         key={`act-${activity.id}`}
         activity={activity}
-      />;
+      />
+    } else {
+      return <Activity
+        key={`act-${activity.id}`}
+        activity={activity}
+      />
+    }
   }
 
   render() {

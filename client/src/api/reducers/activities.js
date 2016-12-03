@@ -21,5 +21,14 @@ export default (state = [], { type, payload }) => {
       payload,
     ];
   }
+
+  if (type === actions.activities.deleteSuccess) {
+    return [
+      ...state.filter((item) => {
+        return item.id !== payload.id;
+      }),
+    ];
+  }
+
   return state;
 };

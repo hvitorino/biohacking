@@ -27,6 +27,9 @@ export const activities = {
   createSuccess: `${NAMESPACE}_ACTIVITIES_CREATE_SUCCESS`,
   update: `${NAMESPACE}_ACTIVITIES_UPDATE`,
   updateSuccess: `${NAMESPACE}_ACTIVITIES_UPDATE_SUCCESS`,
+  remove: `${NAMESPACE}_ACTIVITIES_REMOVE`,
+  delete: `${NAMESPACE}_ACTIVITIES_DELETE`,
+  deleteSuccess: `${NAMESPACE}_ACTIVITIES_DELETE_SUCCESS`,
 };
 
 export const swipe = {
@@ -130,6 +133,8 @@ export const mapActivitiesDispatchToProps = dispatch => ({
   request: defaultAction(dispatch, actions.activities.request),
   edit: defaultAction(dispatch, actions.activities.edit),
   update: defaultAction(dispatch, actions.activities.update),
+  remove: defaultAction(dispatch, actions.activities.remove),
+  delete: defaultAction(dispatch, actions.activities.delete),
 });
 
 export default actions;

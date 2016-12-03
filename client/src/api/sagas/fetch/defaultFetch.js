@@ -32,7 +32,7 @@ export const validateFetch = (response) => {
 
 function defaultFetch(url, payload = {}, method = 'GET') {
 
-  const newUrl = (method === 'PUT') ?
+  const newUrl = (method === 'PUT' || method === 'DELETE') ?
     `${url}/${payload.id}` : url;
 
   return fetch(newUrl, createConfig(method, payload)).then((response) => {

@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Hammer from 'react-hammerjs';
 import moment from 'moment';
 import { mapActivitiesDispatchToProps } from 'api/actions';
 import Tags from 'components/activities/Tags.jsx';
 
-const Activity = ({ activity, edit }) => {
+const Activity = ({ activity, edit, remove }) => {
   const { loggedAt, color, tags, kind } = activity;
 
   const date = moment(loggedAt).format('HH:mm');
@@ -13,22 +14,19 @@ const Activity = ({ activity, edit }) => {
     borderLeft: `1.5rem solid ${color}`,
   };
 
-  const editWrapper = () => (edit(activity));
+  const removeWrapper = () => (remove(activity));
 
   return (
-    <div>
-      <div className="remove" style={style}>
-
-      </div>
-      <div onClick={editWrapper} className="Activity">
-        <div className="Kind" >
+    <div className="Activity">
+      <Hammer onPress={removeWrapper}>
+        <div className="Kind" style={style}>
           {kind}
           <div className="datetime">
             {date}
           </div>
         </div>
-        <Tags tags={tags} />
-      </div>
+      </Hammer>
+      <Tags tags={tags} />
     </div>
   );
 };

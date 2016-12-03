@@ -12,6 +12,12 @@ export default (state = initialState({ state: 'listing' }), { type, payload: act
       activity,
     });
   }
+  if (type === actions.activities.remove) {
+    return initialState({
+      state: 'remove',
+      activity,
+    });
+  }
   if (type === actions.activities.updateSuccess) {
     return initialState({
       ...state,

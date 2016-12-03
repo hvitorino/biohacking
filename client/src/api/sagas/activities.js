@@ -42,12 +42,27 @@ export function* saveSaga(action) {
   }
 }
 
+export function* deleteSaga(action) {
+  const payload = yield call(defaultFetch, '/api/activities', action.payload, 'DELETE');
+  const { error } = payload;
+  if (error) {
+    yield put(failure(error));
+    yield put(push('/login'));
+  } else {
+    yield put({ type: actions.activities.deleteSuccess, payload });
+  }
+}
+
 export function* updateActivities() {
   yield* takeLatest(actions.activities.update, updateSaga);
 }
 
 export function* saveActivities() {
   yield* takeLatest(actions.activities.create, saveSaga);
+}
+
+export function* deleteActivities() {
+  yield* takeLatest(actions.activities.delete, deleteSaga);
 }
 
 export default function* watchActivities() {
