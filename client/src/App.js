@@ -13,7 +13,7 @@ import createSagaMiddleware from 'redux-saga';
 import Base from 'Base.jsx';
 import Grid from 'components/kinds/Grid.jsx';
 import Activities from 'components/activities/Activities.jsx';
-import Search from 'components/activities/Search.jsx';
+import Search from 'components/search/Search.jsx';
 import Login from 'components/user/Login.jsx';
 import Register from 'components/user/Register.jsx';
 import ResetPassword from 'components/user/ResetPassword.jsx';

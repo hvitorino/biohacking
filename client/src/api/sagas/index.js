@@ -8,6 +8,7 @@ import watchLogout from 'api/sagas/logout.js';
 import watchReset from 'api/sagas/reset.js';
 import changePassword from 'api/sagas/changePassword.js';
 import rememberMe from 'api/sagas/rememberMe.js';
+import search from 'api/sagas/search.js';
 
 export default function* rootSaga() {
   yield fork(watchEntities);
@@ -20,4 +21,5 @@ export default function* rootSaga() {
   yield fork(rememberMe);
   yield fork(saveActivities);
   yield fork(updateActivities);
+  yield fork(search);
 }

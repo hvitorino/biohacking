@@ -2,7 +2,8 @@ import actions from 'api/actions.js';
 
 export default (state = [], { type, payload }) => {
 
-  if (type === actions.activities.requestSuccess) {
+  if (type === actions.activities.requestSuccess ||
+      type === actions.activities.searchSuccess) {
     return payload;
   }
 

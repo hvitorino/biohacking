@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { mapSearchDispatchToProps } from 'api/actions';
+import Filter from 'components/search/Filter.jsx';
 import Activity from 'components/activities/Activity.jsx';
-import './Activities.css';
+import '../activities/Activities.css';
 
 class Search extends React.Component {
 
@@ -11,17 +12,20 @@ class Search extends React.Component {
     activities: PropTypes.arrayOf(PropTypes.object),
   }
 
-  componentDidMount() {
-    this.props.search();
+  componentWillMount() {
+    this.props.clean([]);
   }
 
   mapActivities = activity => (<Activity key={activity.id} activity={activity} />)
 
   render() {
-    const { activities } = this.props;
+    const { activities, search } = this.props;
     const container = activities.map(this.mapActivities, this);
     return (
-      <div>{container}</div>
+      <div>
+        <Filter />
+        {container}
+      </div>
     );
   }
 }

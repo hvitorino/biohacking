@@ -19,6 +19,7 @@ export const user = {
 export const activities = {
   request: `${NAMESPACE}_ACTIVITIES_REQUEST`,
   search: `${NAMESPACE}_ACTIVITIES_SEARCH`,
+  searchSuccess: `${NAMESPACE}_ACTIVITIES_SEARCH_SUCCESS`,
   requestSuccess: `${NAMESPACE}_ACTIVITIES_REQUEST_SUCCESS`,
   requestFailure: `${NAMESPACE}_ACTIVITIES_REQUEST_FAILURE`,
   edit: `${NAMESPACE}_ACTIVITIES_EDIT`,
@@ -115,6 +116,7 @@ export const doLogoutAction = dispatch => (
 export const mapSearchDispatchToProps = dispatch => (
   {
     search: defaultAction(dispatch, actions.activities.search),
+    clean: defaultAction(dispatch, actions.activities.searchSuccess),
   }
 );
 
