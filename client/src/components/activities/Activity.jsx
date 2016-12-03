@@ -16,14 +16,19 @@ const Activity = ({ activity, edit }) => {
   const editWrapper = () => (edit(activity));
 
   return (
-    <div onClick={editWrapper} className="Activity">
-      <div className="Kind" style={style}>
-        {kind}
-        <div className="datetime">
-          {date}
-        </div>
+    <div className="Activity">
+      <div className="remove" style={style}>
+
       </div>
-      <Tags tags={tags} />
+      <div onClick={editWrapper} className="Activity">
+        <div className="Kind" >
+          {kind}
+          <div className="datetime">
+            {date}
+          </div>
+        </div>
+        <Tags tags={tags} />
+      </div>
     </div>
   );
 };
