@@ -5,6 +5,7 @@ import { mapActivitiesDispatchToProps } from 'api/actions';
 import Activity from 'components/activities/Activity.jsx';
 import ActivityEdit from 'components/activities/ActivityEdit.jsx';
 import ActivityRemove from 'components/activities/ActivityRemove.jsx';
+import Snackbar from 'components/snackbar/Snackbar.jsx';
 import './Activities.css';
 
 class Activities extends React.Component {
@@ -50,6 +51,7 @@ class Activities extends React.Component {
       <div className="activities">
         <h2>{today}</h2>
         {list}
+        <Snackbar />
       </div>
     );
   }

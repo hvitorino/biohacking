@@ -12,22 +12,6 @@ class Base extends React.Component {
     onSwipeRight:  PropTypes.func,
   }
 
-  // onSwipeLeft = () => {
-  //   if (this.props.location.pathname === '/activities') {
-  //     this.context.router.push('/new');
-  //   } else if (this.props.location.pathname === '/search') {
-  //     this.context.router.push('/activities');
-  //   }
-  // }
-  //
-  // onSwipeRight = () => {
-  //   if (this.props.location.pathname === '/new') {
-  //     this.context.router.push('/activities');
-  //   } else if (this.props.location.pathname === '/activities') {
-  //     this.context.router.push('/search');
-  //   }
-  // }
-
   render () {
     const { children, onSwipeLeft, onSwipeRight } = this.props;
     return (
