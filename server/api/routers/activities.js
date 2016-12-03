@@ -64,7 +64,7 @@ class Activities extends Router {
       description,
       UserId,
     }).then((model) => {
-      const tags = new LastTags(this.models, this.app.get('elasticsearch'));
+      const tags = new LastTags(this.models);
       tags.update(model, activity => res.send(activity));
     }).catch(this.redirectErrors(res));
   }
@@ -92,7 +92,7 @@ class Activities extends Router {
       if (activity) {
         activity.update(body, { fields: ['description'] })
                 .then(() => {
-                  const tags = new LastTags(this.models, this.app.get('elasticsearch'));
+                  const tags = new LastTags(this.models);
                   tags.update(activity, indexed => res.send(indexed));
                 })
                 .catch(this.redirectErrors(res));
@@ -113,7 +113,12 @@ class Activities extends Router {
     .then((activity) => {
       if (activity) {
         activity.destroy()
-                .then(() => res.send(activity))
+                .then(() => {
+                  const tags = new LastTags(this.models);
+                  tags.delete(activity).then(() => {
+                    res.send(activity);
+                  });
+                })
                 .catch(this.redirectErrors(res));
       } else {
         this.notFound(res);

@@ -30,6 +30,11 @@ class LastTags {
     this.models = models;
   }
 
+  delete({ id }) {
+    const client = new elasticsearch.Client({ host: connectionString });
+    return client.delete({ index: 'activities', type: 'activity', id });
+  }
+
   find(UserId) {
     const client = new elasticsearch.Client({ host: connectionString });
     const json = {
