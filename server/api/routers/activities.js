@@ -1,3 +1,5 @@
+const elasticsearch = require('elasticsearch');
+const connectionString = process.env.SEARCHBOX_SSL_URL;
 const moment = require('moment');
 const Router = require('./router.js');
 const LastTags = require('../services/lastTags.js');
@@ -14,7 +16,7 @@ class Activities extends Router {
 
   getActivities(req, res) {
     const user = req.user;
-    const client = this.app.get('elasticsearch');
+    const client = new elasticsearch.Client({ host: connectionString });
     const { id: UserId } = user;
     client.search({
       index: 'activities',
@@ -40,7 +42,14 @@ class Activities extends Router {
           }
         }
       }
-    }, (error, response) => res.send(response.hits.hits.map(item => item._source)));
+    }, (error, response) => {
+      if (response && response.hits) {
+        res.send(response.hits.hits.map(item => item._source));
+      } else {
+        res.send([]);
+      }
+      client.close();
+    });
 
   }
 
