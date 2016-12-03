@@ -16,7 +16,7 @@ const Activity = ({ activity, edit }) => {
   const editWrapper = () => (edit(activity));
 
   return (
-    <div className="Activity">
+    <div>
       <div className="remove" style={style}>
 
       </div>
