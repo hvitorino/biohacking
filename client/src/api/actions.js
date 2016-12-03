@@ -29,6 +29,11 @@ export const activities = {
   updateSuccess: `${NAMESPACE}_ACTIVITIES_UPDATE_SUCCESS`,
 };
 
+export const swipe = {
+  left: `${NAMESPACE}_SWIPE_LEFT`,
+  right: `${NAMESPACE}_SWIPE_RIGHT`,
+}
+
 export const kinds = {
   request: `${NAMESPACE}_KINDS_REQUEST`,
   requestSucess: `${NAMESPACE}_KINDS_REQUEST_SUCCESS`,
@@ -43,6 +48,7 @@ const actions = {
   user,
   activities,
   kinds,
+  swipe,
 };
 
 export const nextAction = type => ({

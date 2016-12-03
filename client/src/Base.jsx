@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Hammer from 'react-hammerjs';
 import Menu from 'Menu.jsx';
+import actions from 'api/actions';
 
 class Base extends React.Component {
 
@@ -44,7 +45,7 @@ class Base extends React.Component {
 
 export default connect(null, (dispatch) => {
   return {
-    onSwipeLeft: () => dispatch({ type: 'GO_LEFT' }),
-    onSwipeRight: () => dispatch({ type: 'GO_RIGHT' }),
+    onSwipeLeft: () => dispatch({ type: actions.swipe.left }),
+    onSwipeRight: () => dispatch({ type: actions.swipe.right }),
   }
 })(Base);
