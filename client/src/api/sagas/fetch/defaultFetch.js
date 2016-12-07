@@ -31,7 +31,6 @@ export const validateFetch = (response) => {
 };
 
 function defaultFetch(url, payload = {}, method = 'GET') {
-
   const newUrl = (method === 'PUT' || method === 'DELETE') ?
     `${url}/${payload.id}` : url;
 
@@ -40,9 +39,7 @@ function defaultFetch(url, payload = {}, method = 'GET') {
       return validateFetch(response);
     }
     return response.json();
-  }).then(json => json).catch((error) => {
-    return validateFetch(error);
-  });
+  }).then(json => json).catch(error => (validateFetch(error)));
 }
 
 export default defaultFetch;

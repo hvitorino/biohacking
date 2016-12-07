@@ -7,8 +7,8 @@ class Users extends React.Component {
 
   static propTypes = {
     doSubmit: PropTypes.func.isRequired,
-    //messages: PropTypes.shape(PropTypes.object),
-    //errors: PropTypes.shape(PropTypes.object),
+    messages: PropTypes.shape(PropTypes.object),
+    errors: PropTypes.shape(PropTypes.object),
   }
 
   doSubmit = () => {

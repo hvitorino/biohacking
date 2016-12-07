@@ -8,7 +8,7 @@ import '../activities/Activities.css';
 class Search extends React.Component {
 
   static propTypes = {
-    search: PropTypes.func,
+    clean: PropTypes.func,
     activities: PropTypes.arrayOf(PropTypes.object),
   }
 
@@ -19,7 +19,7 @@ class Search extends React.Component {
   mapActivities = activity => (<Activity key={activity.id} activity={activity} />)
 
   render() {
-    const { activities, search } = this.props;
+    const { activities } = this.props;
     const container = activities.map(this.mapActivities, this);
     return (
       <div>

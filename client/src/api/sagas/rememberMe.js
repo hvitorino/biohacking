@@ -9,7 +9,7 @@ const failure = payload => ({
   payload,
 });
 
-export function* prepareSaga(action) {
+export function* prepareSaga() {
   const payload = yield call(defaultFetch, '/api/user');
   const { error } = payload;
   if (error) {

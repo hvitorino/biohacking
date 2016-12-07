@@ -26,10 +26,12 @@ function executeFetch(id, entityUrl, method, payload) {
           .then((response) => {
             if (response.status >= 400) {
               return response.json().then(({ messages }) => {
-                const error = messages.reduce((errors, message) => {
-                  errors[message.path] = message;
-                  return errors;
-                }, {});
+                const error = messages.reduce((errors, message) => (
+                  {
+                    ...errors,
+                    [message.path]: message,
+                  }
+                ), {});
                 return { error, statusCode: response.status };
               });
             }
@@ -44,7 +46,6 @@ const failure = (payload, type) => ({
 });
 
 export function* prepareSaga(action) {
-  console.log('Entrou na saga de CRUDs', action);
   const { payload } = action;
   const id = (payload) ? payload.id : null;
   const { success } = nextAction(action.type);

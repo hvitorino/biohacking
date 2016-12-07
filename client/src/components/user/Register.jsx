@@ -32,7 +32,6 @@ class Register extends Container {
       </ul>
     );
   }
-
 }
 
 export default connect(mapStateToProps, doRegisterAction)(Register);

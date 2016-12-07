@@ -5,7 +5,7 @@ import actions from 'api/actions';
 import defaultFetch from 'api/sagas/fetch/defaultFetch.js';
 
 const failure = payload => ({
-  type: actions.user.requestFailure,
+  type: actions.activities.requestFailure,
   payload,
 });
 

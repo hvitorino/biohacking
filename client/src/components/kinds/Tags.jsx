@@ -4,6 +4,10 @@ import TextField from 'components/fields/TextField.jsx';
 
 class Tags extends React.Component {
 
+  static propTypes = {
+    tags: PropTypes.arrayOf(PropTypes.string),
+  }
+
   static childContextTypes = {
     updateForm: PropTypes.func,
   }
@@ -23,7 +27,7 @@ class Tags extends React.Component {
     const { selectedTags, description } = this.state;
     const value = event.target.innerText;
 
-    if (!!selectedTags[value]) {
+    if (selectedTags[value]) {
       const desc = description.replace(`${selectedTags[value]}`, '');
       delete selectedTags[value];
       this.setState({

@@ -10,7 +10,6 @@ const failure = payload => ({
 });
 
 export function* prepareSaga(action) {
-  console.log('Entrou na saga CHANGE PASSWORD:', action);
   const payload = yield call(defaultFetch, '/api/change/password', action.payload, 'POST');
   const { error } = payload;
   if (error) {

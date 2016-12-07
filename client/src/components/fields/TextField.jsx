@@ -113,7 +113,7 @@ class TextField extends React.Component {
     const { type, labelName, name, focused, invalid, id, value } = this.state;
     const { onClick, onKeyPress } = this.props;
 
-    const fieldType = (type) ? type : 'text';
+    const fieldType = type || 'text';
     const isFocused = (focused) ? 'is-focused' : '';
     const isInvalid = (invalid) ? 'is-invalid' : '';
     const isHidden = (fieldType === 'hidden') ? 'isHidden' : '';

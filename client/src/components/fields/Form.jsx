@@ -44,6 +44,11 @@ class Form extends React.Component {
 
   getValues = () => (this.state.fields)
 
+  getValue = (fieldName) => {
+    const { fields } = this.state;
+    return fields[fieldName];
+  }
+
   updateForm = (fieldName, value) => {
     const { fields } = this.state;
     this.setState({
@@ -52,11 +57,6 @@ class Form extends React.Component {
         [fieldName]: value,
       },
     });
-  }
-
-  getValue = (fieldName) => {
-    const { fields } = this.state;
-    return fields[fieldName];
   }
 
   render() {

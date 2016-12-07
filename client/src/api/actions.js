@@ -35,7 +35,7 @@ export const activities = {
 export const swipe = {
   left: `${NAMESPACE}_SWIPE_LEFT`,
   right: `${NAMESPACE}_SWIPE_RIGHT`,
-}
+};
 
 export const kinds = {
   request: `${NAMESPACE}_KINDS_REQUEST`,
