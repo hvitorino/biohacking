@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import actions from 'api/actions';
 import defaultFetch from 'api/sagas/fetch/defaultFetch.js';
 
-export function* prepareSaga(action) {
+export function* prepareSaga() {
   const payload = yield call(defaultFetch, '/api/logout');
   yield put({ type: actions.user.loaded, payload });
   yield put(push('/login'));

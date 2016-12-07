@@ -134,7 +134,7 @@ export const mapActivitiesDispatchToProps = dispatch => ({
   edit: defaultAction(dispatch, actions.activities.edit),
   update: defaultAction(dispatch, actions.activities.update),
   remove: defaultAction(dispatch, actions.activities.remove),
-  delete: defaultAction(dispatch, actions.activities.delete),
+  onDelete: defaultAction(dispatch, actions.activities.delete),
 });
 
 export default actions;

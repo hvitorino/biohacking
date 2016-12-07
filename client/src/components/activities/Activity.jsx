@@ -15,30 +15,34 @@ const Activity = ({ activity, edit, remove }) => {
   };
 
   const removeWrapper = () => (remove(activity));
+  const editWrapper = () => (edit(activity));
 
   return (
-    <div className="Activity">
-      <Hammer onPress={removeWrapper}>
-        <div className="Kind" style={style}>
-          {kind}
-          <div className="datetime">
-            {date}
+    <Hammer onTap={editWrapper}>
+      <div className="Activity">
+        <Hammer onPress={removeWrapper}>
+          <div className="Kind" style={style}>
+            {kind}
+            <div className="datetime">
+              {date}
+            </div>
           </div>
-        </div>
-      </Hammer>
-      <Tags tags={tags} />
-    </div>
+        </Hammer>
+        <Tags tags={tags} />
+      </div>
+    </Hammer>
   );
 };
 
 Activity.propTypes = {
   edit: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
   activity: PropTypes.shape({
     loggedAt: PropTypes.string,
     color: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     kind: PropTypes.string,
   }),
-}
+};
 
 export default connect(null, mapActivitiesDispatchToProps)(Activity);

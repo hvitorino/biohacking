@@ -24,29 +24,20 @@ class Activities extends React.Component {
 
   mapActivities = (activity) => {
     const { mode: { state, activity: act } } = this.props;
-    if (state === 'edit' && activity.id === act.id ) {
-      return <ActivityEdit
-        key={`act-${activity.id}`}
-        activity={activity}
-      />
-    } else if (state === 'remove' && activity.id === act.id ) {
-      return <ActivityRemove
-        key={`act-${activity.id}`}
-        activity={activity}
-      />
-    } else {
-      return <Activity
-        key={`act-${activity.id}`}
-        activity={activity}
-      />
+    const key = `act-${activity.id}`;
+    if (state === 'edit' && activity.id === act.id) {
+      return (<ActivityEdit key={key} activity={activity} />);
+    } else if (state === 'remove' && activity.id === act.id) {
+      return (<ActivityRemove key={key} activity={activity} />);
     }
+
+    return (<Activity key={key} activity={activity} />);
   }
 
   render() {
     const today = moment().format('MMM Do YYYY');
     const { activities } = this.props;
     const list = activities.map(this.mapActivities);
-    const onTimeout = () => {};
     return (
       <div className="activities">
         <h2>{today}</h2>
