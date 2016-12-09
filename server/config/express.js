@@ -40,8 +40,10 @@ module.exports = (express, app) => {
     },
   };
 
-  app.use(morgan('combined', { stream: logger.stream }));
-  app.set('logger', logger);
+  //if(process.env.NODE_ENV !== 'test') {
+  	app.use(morgan('combined', { stream: logger.stream }));
+    app.set('logger', logger);
+  //}
 
   app.use(cookieParser());
   // app.use(favicon(icoUrl));

@@ -16,7 +16,11 @@
     "server": "node --harmony-async-await server",
     "server:dev": "nodemon --harmony-async-await server",
     "server:debug": "nodemon --harmony-async-await --debug-brk --inspect server",
-    "eslint": "eslint ./client/src --ext .jsx --ext .js"
+    "eslint": "eslint ./client/src --ext .jsx --ext .js",
+    "spec:api": "NODE_ENV=test mocha test/server/**/*-test.js --timeout 10000",
+    "spec": "cross-env NODE_ENV=test mocha -w test/client/src/dev.setup.js test/client/src/**/*-test.js",
+    "test": "cross-env NODE_ENV=test mocha test/client/src/dev.setup.js test/client/src/**/*-test.js",
+    "spec:cov": "nyc --reporter=html npm test"
   },
   "author": "Insystem",
   "license": "ISC",
@@ -44,7 +48,24 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.9",
+    "babel-plugin-istanbul": "2.0.3",
+    "babel-plugin-resolver": "^1.1.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "chai": "3.5.0",
+    "chai-http": "^3.0.0",
+    "cross-env": "3.1.3",
+    "enzyme": "2.6.0",
     "eslint": "^3.10.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-config-standard": "^6.2.1",
@@ -54,7 +75,32 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "^6.7.1",
     "eslint-plugin-standard": "^2.0.1",
+    "fetch-mock": "5.5.0",
     "gherkin": "^4.0.0",
-    "nodemon": "^1.11.0"
+    "istanbul": "1.0.0-alpha.2",
+    "jsdom": "9.8.3",
+    "mocha": "3.2.0",
+    "nodemon": "^1.11.0",
+    "nyc": "8.4.0",
+    "react": "^15.4.1",
+    "react-addons-test-utils": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.13.0",
+    "sinon": "^1.17.6",
+    "supertest": "^2.0.1",
+    "webpack": "^1.14.0"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
   }
 }

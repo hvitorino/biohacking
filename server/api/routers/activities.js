@@ -55,7 +55,11 @@ class Activities extends Router {
 
   create(req, res) {
     const { user } = req;
+    //console.log("*********", user);
+    const logger = this.app.get('logger');
+    logger.info(user);
     const { id: UserId } = user;
+
     const { KindId, description } = req.body;
     const loggedAt = moment().toDate();
     this.models.Activity.create({
