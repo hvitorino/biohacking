@@ -20,7 +20,7 @@
     "spec:api": "NODE_ENV=test mocha test/server/**/*-test.js --timeout 10000",
     "spec": "cross-env NODE_ENV=test mocha -w test/client/src/dev.setup.js test/client/src/**/*-test.js",
     "test": "cross-env NODE_ENV=test mocha test/client/src/dev.setup.js test/client/src/**/*-test.js",
-    "spec:cov": "nyc --reporter=html npm test"
+    "spec:cov": "nyc --reporter=html --reporter=lcov npm test"
   },
   "author": "Insystem",
   "license": "ISC",
@@ -32,6 +32,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "foreman": "^2.0.0",
+    "immutable": "^3.8.1",
     "le_node": "^1.6.8",
     "moment": "^2.15.2",
     "morgan": "^1.7.0",

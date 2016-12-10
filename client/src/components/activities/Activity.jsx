@@ -6,7 +6,7 @@ import { mapActivitiesDispatchToProps } from 'api/actions';
 import Tags from 'components/activities/Tags.jsx';
 
 const Activity = ({ activity, edit, remove }) => {
-  const { loggedAt, color, tags, kind } = activity;
+  const { loggedAt, color, kind } = activity;
 
   const date = moment(loggedAt).format('HH:mm');
 
@@ -28,7 +28,6 @@ const Activity = ({ activity, edit, remove }) => {
             </div>
           </div>
         </Hammer>
-        <Tags tags={tags} />
       </div>
     </Hammer>
   );
@@ -40,7 +39,6 @@ Activity.propTypes = {
   activity: PropTypes.shape({
     loggedAt: PropTypes.string,
     color: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
     kind: PropTypes.string,
   }),
 };

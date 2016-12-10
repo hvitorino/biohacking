@@ -1,9 +1,25 @@
+import Immutable from 'immutable';
 import actions from 'api/actions.js';
 
-export default (state = [], { type, payload }) => {
+const factory = (json) => ({
+  id: '',
+  loggedAt: '',
+  color: '',
+  kind: '',
+  ...json,
+});
+const Activity = Immutable.Record(factory());
+
+//import Activity, { factory } from 'api/models/Activity.js';
+
+export default (state = Immutable.List([]), { type, payload }) => {
   if (type === actions.activities.requestSuccess ||
       type === actions.activities.searchSuccess) {
-    return payload;
+    return Immutable.List(payload.map(({
+        id, loggedAt, color, kind
+    }) => new Activity({
+      id, loggedAt, color, kind
+    })));
   }
 
   if (type === actions.activities.updateSuccess) {

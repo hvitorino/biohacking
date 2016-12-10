@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import actions from 'api/actions';
 import defaultFetch from 'api/sagas/fetch/defaultFetch.js';
 
-const failure = payload => ({
+export const failure = payload => ({
   type: actions.user.registerFailure,
   payload,
 });
